@@ -6,12 +6,11 @@ export default function Cards({ card }) {
       <img
         src={getImage(card.cover)}
         alt={card.name}
-        className="w-96 h-48 object-cover rounded-2xl ml-20"
+        className="w-96 h-48 object-cover rounded-2xl ml-8"
       />
-      <div className="p-4 flex flex-row text- gap-2 ml-16">
-        {/* Date Block */}
+      <div className="p-4 flex flex-row text- gap-4 ml-8">
         <div className="text-center w-16">
-          <p className="text-sm font-semibold text-gray-500">
+          <p className="text-sm font-semibold text-blue-500">
             {card.month.toUpperCase()}
           </p>
           <p className="text-2xl font-bold text-gray-900 leading-none">
@@ -19,8 +18,7 @@ export default function Cards({ card }) {
           </p>
         </div>
 
-        {/* Details Block */}
-        <div className="w-56">
+        <div className="w-60 ">
           <h3 className="text-sm font-bold text-gray-800">{card.name}</h3>
           <p className="text-xs text-gray-500 mt-1">{card.description}</p>
         </div>
