@@ -1,60 +1,146 @@
 const Footer = () => {
-    return (
-        <footer className="footer bg-base-300 text-base-content p-10">
-            <nav>
-                <h6 className="footer-title">Services</h6>
-                <a className="link link-hover">Branding</a>
-                <a className="link link-hover">Design</a>
-                <a className="link link-hover">Marketing</a>
-                <a className="link link-hover">Advertisement</a>
-            </nav>
-            <nav>
-                <h6 className="footer-title">Company</h6>
-                <a className="link link-hover">About us</a>
-                <a className="link link-hover">Contact</a>
-                <a className="link link-hover">Jobs</a>
-                <a className="link link-hover">Press kit</a>
-            </nav>
-            <nav>
-                <h6 className="footer-title">Social</h6>
-                <div className="grid grid-flow-col gap-4">
-                    <a>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            className="fill-current">
-                            <path
-                                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
-                        </svg>
-                    </a>
-                    <a>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            className="fill-current">
-                            <path
-                                d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-                        </svg>
-                    </a>
-                    <a>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            className="fill-current">
-                            <path
-                                d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-                        </svg>
-                    </a>
-                </div>
-            </nav>
-        </footer>
-    );
+  return (
+    <footer className="bg-[#070a48] text-white p-10">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between gap-10">
+        {/* Left section: Logo & Description */}
+        <div className="sm:w-1/3 space-y-4">
+          <div className="flex items-center space-x-2 font-bold text-xl">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-7 w-7"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 8c-1.5-2-4.5-2-6 0-1.5 2-1.5 5 0 7 1.5 2 4.5 2 6 0 1.5-2 1.5-5 0-7z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 8c1.5-2 4.5-2 6 0 1.5 2 1.5 5 0 7-1.5 2-4.5 2-6 0-1.5-2-1.5-5 0-7z"
+              />
+            </svg>
+            <span>TickFest</span>
+          </div>
+          <p className="text-sm leading-relaxed">
+            Eventick is a global self-service ticketing platform for live
+            experiences that allows anyone to create, share, find and attend
+            events that fuel their passions and enrich their lives.
+          </p>
+          {/* Social Icons */}
+          <div className="flex space-x-3 mt-4">
+            <a
+              href="https://www.facebook.com/"
+              className="bg-[#3b5998] hover:bg-[#2d4373] p-2 rounded-full"
+            >
+              {/* facebook icon  */}
+              <svg
+                className="h-5 w-5 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M22 12.073C22 6.476 17.523 2 12 2S2 6.476 2 12.073c0 5.012 3.657 9.16 8.438 9.88v-6.99h-2.54v-2.89h2.54v-2.205c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.774-1.63 1.565v1.875h2.773l-.443 2.89h-2.33v6.99C18.343 21.233 22 17.085 22 12.073z" />
+              </svg>
+            </a>
+            <a
+              href="https://x.com/"
+              className="bg-[#1da1f2] hover:bg-[#0d95e8] p-2 rounded-full"
+            >
+              <svg
+                className="h-5 w-5 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M23 3a10.9 10.9 0 01-3.14.86 4.48 4.48 0 001.97-2.48 9.22 9.22 0 01-2.9 1.11 4.48 4.48 0 00-7.64 4.09A12.8 12.8 0 013 4.15a4.48 4.48 0 001.39 5.99 4.48 4.48 0 01-2.03-.56v.06a4.48 4.48 0 003.6 4.4 4.52 4.52 0 01-2.02.08 4.48 4.48 0 004.18 3.12A9 9 0 013 19.54a12.72 12.72 0 006.92 2.03c8.3 0 12.85-6.88 12.85-12.85 0-.2 0-.39-.02-.58A9.22 9.22 0 0023 3z" />
+              </svg>
+            </a>
+            <a
+              href="https://www.youtube.com/"
+              className="bg-red-600 hover:bg-red-700 p-2 rounded-full"
+            >
+              <svg
+                className="h-5 w-5 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19.615 3.184c-1.588-.12-7.997-.12-7.997-.12s-6.408 0-7.997.12c-1.81.137-3.24 1.558-3.377 3.366-.12 1.586-.12 4.894-.12 4.894s0 3.308.12 4.894c.137 1.808 1.567 3.229 3.377 3.366 1.59.12 7.997.12 7.997.12s6.408 0 7.997-.12c1.81-.137 3.24-1.558 3.377-3.366.12-1.586.12-4.894.12-4.894s0-3.308-.12-4.894c-.137-1.808-1.567-3.229-3.377-3.366zM10.065 15.568v-7.136l6.092 3.568-6.092 3.568z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        {/* Middle sections: Links */}
+        <div className="flex flex-col sm:flex-row sm:space-x-20 sm:w-2/3">
+          <nav className="space-y-2">
+            <h6 className="font-semibold mb-3">Plan Events</h6>
+            <a href="#" className="text-sm hover:underline block">
+              Create and Set Up
+            </a>
+            <a href="#" className="text-sm hover:underline block">
+              Sell Tickets
+            </a>
+            <a href="#" className="text-sm hover:underline block">
+              Online RSVP
+            </a>
+            <a href="#" className="text-sm hover:underline block">
+              Online Events
+            </a>
+          </nav>
+          <nav className="space-y-2">
+            <h6 className="font-semibold mb-3">Eventick</h6>
+            <a href="#" className="text-sm hover:underline block">
+              About Us
+            </a>
+            <a href="#" className="text-sm hover:underline block">
+              Press
+            </a>
+            <a href="#" className="text-sm hover:underline block">
+              Contact Us
+            </a>
+            <a href="#" className="text-sm hover:underline block">
+              Help Center
+            </a>
+            <a href="#" className="text-sm hover:underline block">
+              How it Works
+            </a>
+            <a href="#" className="text-sm hover:underline block">
+              Privacy
+            </a>
+            <a href="#" className="text-sm hover:underline block">
+              Terms
+            </a>
+          </nav>
+          <nav className="space-y-2">
+            <h6 className="font-semibold mb-3">Stay In The Loop</h6>
+            <p className="text-xs max-w-xs leading-relaxed mb-2">
+              Join our mailing list to stay in the loop with our newest for
+              Event and concert
+            </p>
+            <form className="flex flex-col gap-2 lg:flex-row">
+              <input
+                type="email"
+                placeholder="Enter your email address.."
+                className="rounded-full py-2 px-4 text-black w-full max-w-xs focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-full px-6 whitespace-nowrap"
+              >
+                Subscibe Now
+              </button>
+            </form>
+          </nav>
+        </div>
+      </div>
+      <div className="border-t border-gray-700 mt-10 pt-4 text-center text-xs">
+        Copyright © 2025 TickFest. All rights reserved.
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;
