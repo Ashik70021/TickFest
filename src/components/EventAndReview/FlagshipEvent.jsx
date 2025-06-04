@@ -1,7 +1,6 @@
 import Marquee from "react-fast-marquee";
 import { getData } from "../../data/cards";
 import getImage from "../../utills/grtImage";
-
 export default function FlagshipEvents() {
     const cards = getData();
     return (
