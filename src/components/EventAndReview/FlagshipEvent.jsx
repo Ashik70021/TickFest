@@ -5,6 +5,7 @@ export default function FlagshipEvents() {
     const cards = getData();
     return (
         <>
+            {/* addding flagship events section */}
             <div className="text-center flex flex-col gap-2">
                 <h1 className="text-3xl font-bold ">
                     Flagship Events in Review: Made Easy with Tickfest Ticketing
