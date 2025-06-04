@@ -1,6 +1,7 @@
 import Navbar from "../components/header/Navbar"
 import Footer from "../components/footer/Footer"
 import { Outlet } from "react-router-dom";
+import FlagshipEvents from "../components/EventAndReview/FlagshipEvent";
 const MainLayout = () => {
     return (
         <div>
@@ -8,6 +9,7 @@ const MainLayout = () => {
                 <Navbar></Navbar>
             </div>
             <div className="min-h-screen">
+                <FlagshipEvents />
                 <Outlet></Outlet>
             </div>
             <div>
