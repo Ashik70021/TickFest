@@ -2,7 +2,7 @@ import TwoPeople from "../../assets/image-6.png";
 
 export default function MakeOwnEvent() {
   return (
-    <div className="w-full h-[252px] top-[1907px] mx-auto bg-[#EEE1FF] flex items-center  justify-between px-10 mb-10">
+    <div className="mt-10 w-full h-[252px] top-[1907px] mx-auto bg-[#EEE1FF] flex items-center  justify-between px-10 mb-10">
       <div className="w-1/2 h-full flex  items-center justify-center ">
         <div className=" w-[544px] h-[303px] left-28 bottom-12  relative ">
           <img
