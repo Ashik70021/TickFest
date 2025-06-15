@@ -8,7 +8,6 @@ const Landing = () => {
         <div>
             <Banner></Banner>
             <CardList></CardList>
-
             <MakeOwnEvent></MakeOwnEvent>
             <FlagshipEvents></FlagshipEvents>
             <Partner></Partner>
