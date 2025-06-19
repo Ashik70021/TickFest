@@ -4,7 +4,7 @@ const Banner = () => {
             {/* Background Image with Blur */}
             <div className="absolute inset-0">
                 <img
-                    src="/../Images/banner2.png"
+                    src="/../src/assets/Images/banner2.png"
                     alt="Banner Background"
                     className="w-full h-full object-cover blur-sm"
                 />
@@ -16,7 +16,7 @@ const Banner = () => {
                 {/* Left Image */}
                 <div className="w-full md:w-1/2 flex justify-center mb-10 md:mb-0">
                     <img
-                        src="../../Images/banner1.png"
+                        src="/../src/assets/Images/banner1.png"
                         alt="Side Visual"
                         className="w-full h-full"
                     />
