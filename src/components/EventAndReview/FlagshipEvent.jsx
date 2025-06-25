@@ -10,7 +10,7 @@ export default function FlagshipEvents() {
                     Flagship Events in Review: Made Easy with Tickfest Ticketing
                 </h1>
                 <p className="text-xl">
-                    We're proud to showcase the success of our previous flagship events,
+                    We are proud to showcase the success of our previous flagship events,
                     where Tickify provided exceptional ticketing solutions from start to
                     finish.
                 </p>
