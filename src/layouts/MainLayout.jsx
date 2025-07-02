@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-import FlagshipEvents from "../components/EventAndReview/FlagshipEvent";
 import Navbar from "../components/header/Navbar";
 import Footer from "../components/footer/Footer";
 const MainLayout = () => {
