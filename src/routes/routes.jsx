@@ -4,6 +4,7 @@ import Landing from "../components/Pages/Landing";
 import AdminDashboard from "../layouts/AdminDashboard";
 import AdminDashboardHome from "../components/Pages/AdminDashboard/AdminDashboardHome"; 
 import AdminManageEvent from "../components/Pages/AdminDashboard/AdminManageEvent";
+import AdminEvents from "../components/Pages/AdminDashboard/AdminEvents";
 
 
 export const router = createBrowserRouter([
@@ -23,7 +24,7 @@ export const router = createBrowserRouter([
     element: <AdminDashboard />,
     children: [
       {
-        path: "admindashboardhome", 
+        path: "adminhome", 
         element: <AdminDashboardHome />, 
       },
       {
