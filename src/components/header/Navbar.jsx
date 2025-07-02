@@ -29,7 +29,7 @@ const Navbar = () => {
 
                 </div>
                 <div className="navbar-end">
-                    <Link to="/admindashboard"><a><button type="button" className="px-8 py-3 font-semibold rounded-full bg-[#f5167e] text-white">Signin</button></a></Link>
+                    <Link to="/admindashboardhome"><a><button type="button" className="px-8 py-3 font-semibold rounded-full bg-[#f5167e] text-white">Signin</button></a></Link>
                 </div>
             </nav>
         </div>
