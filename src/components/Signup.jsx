@@ -12,7 +12,7 @@ const Signup = () => {
                         alt="logo"
                     />
                     <p className="text-lg md:text-xl font-bold pl-2 tracking-wide">
-                        HEXASHOP
+                        TickFest
                     </p>
                 </div>
 
