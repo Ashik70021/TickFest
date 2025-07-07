@@ -5,6 +5,8 @@ import AdminDashboard from "../layouts/AdminDashboard";
 import AdminDashboardHome from "../components/Pages/AdminDashboard/AdminDashboardHome"; 
 import AdminManageEvent from "../components/Pages/AdminDashboard/AdminManageEvent";
 import AdminEvents from "../components/Pages/AdminDashboard/AdminEvents";
+import Signin from "../components/Signin";
+import Signup from "../components/Signup";
 
 
 export const router = createBrowserRouter([
@@ -15,6 +17,14 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Landing />,
+      },
+      {
+        path: "/signin",
+        element: <Signin></Signin>
+      },
+      {
+        path: "/signup",
+        element: <Signup></Signup>
       },
     ],
   },
