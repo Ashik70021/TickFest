@@ -52,13 +52,6 @@ const partners = [
     name: "Microsoft",
     url: "https://microsoft.com",
     imgSrc:
-      "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
-    alt: "Microsoft Logo",
-  },
-  {
-    name: "Microsoft",
-    url: "https://microsoft.com",
-    imgSrc:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/768px-Microsoft_logo_%282012%29.svg.png",
     alt: "Microsoft Logo",
   },
@@ -78,7 +71,7 @@ const Partner = () => {
         partnerships.
       </p>
 
-      <div className="flex flex-wrap justify-center items-center gap-10">
+      {/* <div className="flex flex-wrap justify-center items-center gap-10">
         {partners.map(({ name, url, imgSrc, alt }) => (
           <a
             key={name}
@@ -92,6 +85,26 @@ const Partner = () => {
               src={imgSrc}
               alt={alt}
               className="max-h-12 object-contain"
+              loading="lazy"
+            />
+          </a>
+        ))}
+      </div> */}
+
+            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10">
+        {partners.map(({ name, url, imgSrc, alt }) => (
+          <a
+            key={name}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block"
+            aria-label={name}
+          >
+            <img
+              src={imgSrc}
+              alt={alt}
+              className="h-8 w-full lg:h-16 md:h-12 max-w-[180px] object-contain transition-all duration-200"
               loading="lazy"
             />
           </a>
