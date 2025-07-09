@@ -1,6 +1,18 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
 
 const Signin = () => {
+    const { user, setUser , googleSignIn } = useContext(AuthContext);
+
+
+    const handleGoogleSignIn = () => {
+        googleSignIn()
+            .then(result => {
+                setUser(result.user);
+                console.log(user);
+            })
+    }
     return (
         <div className="max-w-md mx-auto mt-10 mb-10 p-8 bg-white shadow-md border border-gray-200 rounded-lg">
             <div className="p-4">
@@ -17,7 +29,7 @@ const Signin = () => {
 
                 {/* form section */}
                 <div>
-                    <form action="" className=" space-y-6">
+                    <form action="" className="space-y-6">
                         {/* Email */}
                         <div>
                             <label htmlFor="email" className="block text-gray-600 font-semibold mb-1">
@@ -73,6 +85,7 @@ const Signin = () => {
                         {/* Google Sign In */}
                         <button
                             type="button"
+                            onClick={handleGoogleSignIn}
                             className="w-full flex items-center justify-center gap-3 py-3 text-white font-semibold rounded-lg bg-gradient-to-r from-gray-800 to-black hover:from-black hover:to-gray-900 transition duration-300"
                         >
                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" className="h-5 w-5" />
