@@ -4,9 +4,12 @@ import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './routes/routes.jsx'
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import AuthProvider from './Providers/AuthProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 )

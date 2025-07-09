@@ -4,7 +4,6 @@ import { FaBars } from "react-icons/fa";
 
 const AdminDashboard = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
     return (
