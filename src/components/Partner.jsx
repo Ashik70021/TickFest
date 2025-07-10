@@ -60,55 +60,94 @@ const partners = [
 
 const Partner = () => {
   return (
-    <section className="py-10 bg-white text-center max-w-7xl mx-auto px-4">
-      <h2 className="text-5xl font-bold text-[#242565] mb-2">
-        Meet our Partner
-      </h2>
-      <p className="text-base text-gray-600 max-w-3xl mx-auto mb-8">
-        We are proud to collaborate with some of the most innovative and
-        influential brands across various industries. Their trust in our
-        services drives us to continually deliver excellence and create lasting
-        partnerships.
-      </p>
+    <section className="relative py-20 bg-gradient-to-br from-gray-50 to-white overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute inset-0">
+        <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-br from-[#B13BFF]/10 to-transparent rounded-full"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-gradient-to-tl from-[#471396]/10 to-transparent rounded-full"></div>
+      </div>
 
-      {/* <div className="flex flex-wrap justify-center items-center gap-10">
-        {partners.map(({ name, url, imgSrc, alt }) => (
-          <a
-            key={name}
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block max-h-12"
-            aria-label={name}
-          >
-            <img
-              src={imgSrc}
-              alt={alt}
-              className="max-h-12 object-contain"
-              loading="lazy"
-            />
-          </a>
-        ))}
-      </div> */}
+      <div className="relative z-10 text-center max-w-7xl mx-auto px-6">
+        {/* Enhanced Header */}
+        <div className="mb-16">
+          <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#B13BFF]/20 to-[#471396]/20 rounded-full border border-[#B13BFF]/30 mb-8">
+            <span className="text-[#B13BFF] mr-2">🤝</span>
+            <span className="text-[#090040] font-semibold">Trusted Partners</span>
+          </div>
+          
+          <h2 className="text-4xl md:text-5xl font-black text-[#090040] mb-6">
+            Meet Our <span className="bg-gradient-to-r from-[#471396] to-[#B13BFF] bg-clip-text text-transparent">Amazing Partners</span>
+          </h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            We are proud to collaborate with industry leaders and innovative brands who share our vision of creating exceptional event experiences worldwide.
+          </p>
+        </div>
 
-            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10">
-        {partners.map(({ name, url, imgSrc, alt }) => (
-          <a
-            key={name}
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block"
-            aria-label={name}
-          >
-            <img
-              src={imgSrc}
-              alt={alt}
-              className="h-8 w-full lg:h-16 md:h-12 max-w-[180px] object-contain transition-all duration-200"
-              loading="lazy"
-            />
-          </a>
-        ))}
+        {/* Enhanced Partners Grid */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-xl border border-[#B13BFF]/10">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8 items-center">
+            {partners.map(({ name, url, imgSrc, alt }, index) => (
+              <a
+                key={name}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-4 rounded-2xl bg-white shadow-lg hover:shadow-xl border border-gray-100 hover:border-[#B13BFF]/30 transition-all duration-300 transform hover:-translate-y-2"
+                aria-label={name}
+                style={{
+                  animationDelay: `${index * 0.1}s`,
+                  animationFillMode: 'both'
+                }}
+              >
+                {/* Hover gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#B13BFF]/5 to-[#471396]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                
+                <img
+                  src={imgSrc}
+                  alt={alt}
+                  className="relative z-10 h-8 md:h-12 w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110"
+                  loading="lazy"
+                />
+                
+                {/* Partner name tooltip */}
+                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 translate-y-full opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <div className="bg-[#090040] text-white text-xs px-3 py-1 rounded-lg whitespace-nowrap">
+                    {name}
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Trust indicators */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="text-center p-6 bg-white/60 backdrop-blur-sm rounded-2xl border border-[#B13BFF]/10">
+            <div className="text-3xl font-bold text-[#B13BFF] mb-2">500+</div>
+            <div className="text-gray-600 font-medium">Global Partners</div>
+          </div>
+          <div className="text-center p-6 bg-white/60 backdrop-blur-sm rounded-2xl border border-[#B13BFF]/10">
+            <div className="text-3xl font-bold text-[#471396] mb-2">99.9%</div>
+            <div className="text-gray-600 font-medium">Uptime Guarantee</div>
+          </div>
+          <div className="text-center p-6 bg-white/60 backdrop-blur-sm rounded-2xl border border-[#B13BFF]/10">
+            <div className="text-3xl font-bold text-[#B13BFF] mb-2">24/7</div>
+            <div className="text-gray-600 font-medium">Partner Support</div>
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-16">
+          <p className="text-gray-600 mb-6">Interested in partnering with us?</p>
+          <button className="bg-gradient-to-r from-[#471396] to-[#B13BFF] hover:from-[#B13BFF] hover:to-[#471396] text-white font-bold px-8 py-4 rounded-2xl shadow-xl hover:shadow-[#B13BFF]/30 transform hover:-translate-y-1 transition-all duration-300">
+            <span className="flex items-center justify-center gap-2">
+              Become a Partner
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </span>
+          </button>
+        </div>
       </div>
     </section>
   );
