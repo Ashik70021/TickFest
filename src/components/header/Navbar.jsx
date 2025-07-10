@@ -4,8 +4,11 @@ import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
+
 const Navbar = () => {
-    const { user, logOut } = useContext(AuthContext);
+    const { user, logOut, loading } = useContext(AuthContext);
+
+    if (loading) return <div>Loading...</div>;
 
     const handleSignOut = () => {
         logOut()
@@ -60,10 +63,21 @@ const Navbar = () => {
                                         <img src={user?.photoURL || "/default-avatar.png"} alt="user" />
                                     </div>
                                 </button>
-                                <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-50 p-3 shadow bg-white text-black rounded-box w-52">
-                                    <li><span className="font-semibold">{user?.displayName || "User"}</span></li>
-                                    <li><Link to="/admindashboard/adminhome">Dashboard</Link></li>
-                                    <li><button onClick={handleSignOut}>Sign Out</button></li>
+                                <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-50 p-4 shadow bg-white text-black rounded-box w-64">
+                                    <li className="flex border-b border-gray-200 mb-2">
+                                        <div>
+                                            <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-300">
+                                                <img src={user?.photoURL || "/default-avatar.png"} alt="user" className="w-full h-full object-cover" />
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="font-semibold text-base">{user?.displayName || "User"}</span>
+                                                <span className="text-xs text-gray-500">{user?.email || "No email"}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li><Link to="/profile" className="hover:bg-gray-100 rounded-md">Profile</Link></li>
+                                    <li><Link to="/admindashboard/adminhome" className="hover:bg-gray-100 rounded-md">Dashboard</Link></li>
+                                    <li><button onClick={handleSignOut} className="hover:bg-gray-100 rounded-md">Logout</button></li>
                                 </ul>
                             </div>
                         ) : (
