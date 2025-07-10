@@ -3,7 +3,24 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 
 const Signin = () => {
-    const { user, setUser , googleSignIn } = useContext(AuthContext);
+    const { signIn, user, setUser, googleSignIn } = useContext(AuthContext);
+
+    const handleLogin = event => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        
+        console.log(email, password)
+        
+        signIn(email, password)
+            .then(result => {
+                // const user = result.user;
+                // console.log(user)
+                setUser(result.user);
+                console.log(user);
+            })
+    }
 
 
     const handleGoogleSignIn = () => {
@@ -29,7 +46,7 @@ const Signin = () => {
 
                 {/* form section */}
                 <div>
-                    <form action="" className="space-y-6">
+                    <form onSubmit={handleLogin} action="" className="space-y-6">
                         {/* Email */}
                         <div>
                             <label htmlFor="email" className="block text-gray-600 font-semibold mb-1">

@@ -1,6 +1,51 @@
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
 
 const Signup = () => {
+    const { createUser, updateUserProfile } = useContext(AuthContext);
+
+    const [formData, setFormData] = useState({
+        name: '',
+        image: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        type: 'User'
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(formData);
+
+        createUser(formData.email, formData.password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                updateUserProfile(formData.name, formData.image)
+                    .then(() => {
+                        // Create user entry in Database
+                        // const userInfo = {
+                        //     name: formData.name,
+                        //     image: formData.image,
+                        //     email: formData.email,
+                        //     type: formData.type
+                        // }
+                    })
+                    .catch(error => console.log(error))
+                // setUser(loggedUser);
+                // console.log(user);
+            })
+    };
+
+
     return (
         <div className="max-w-md mx-auto mt-10 mb-10 p-8 bg-white shadow-lg border border-gray-200 rounded-lg">
             <div className="p-4">
@@ -22,7 +67,7 @@ const Signup = () => {
                 </h1>
 
                 {/* Form */}
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Full Name */}
                     <div>
                         <label
@@ -34,8 +79,12 @@ const Signup = () => {
                         <input
                             id="fullname"
                             type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
                             placeholder="Write Your Name"
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                            required
                         />
                     </div>
 
@@ -50,8 +99,12 @@ const Signup = () => {
                         <input
                             id="email"
                             type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
                             placeholder="you@email.com"
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                            required
                         />
                     </div>
 
@@ -66,8 +119,12 @@ const Signup = () => {
                         <input
                             id="password"
                             type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
                             placeholder="Create a password"
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                            required
                         />
                     </div>
 
@@ -82,8 +139,12 @@ const Signup = () => {
                         <input
                             id="confirmPassword"
                             type="password"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
                             placeholder="Confirm your password"
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                            required
                         />
                     </div>
 
