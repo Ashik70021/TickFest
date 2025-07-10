@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_apiKey,
@@ -7,7 +8,11 @@ const firebaseConfig = {
   storageBucket: import.meta.env.VITE_storageBucket,
   messagingSenderId: import.meta.env.VITE_messagingSenderId,
   appId: import.meta.env.VITE_appId,
+  measurementId: import.meta.env.VITE_measurementId,
 };
 
 
+// Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+export default auth;
