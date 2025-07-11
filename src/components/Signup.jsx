@@ -1,18 +1,35 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
+import axios from "axios";
 
 const Signup = () => {
     const { createUser, updateUserProfile, googleSignIn } = useContext(AuthContext);
+    const fileInputRef = useRef(null);
     
     const [formData, setFormData] = useState({
         name: '',
-        image: '',
         email: '',
         password: '',
         confirmPassword: '',
         type: 'User'
     });
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setSelectedFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewUrl(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,27 +39,116 @@ const Signup = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const saveUserToDatabase = async (userData, imageFile) => {
+        try {
+            let response;
+            if (imageFile) {
+                const formDataToSend = new FormData();
+                formDataToSend.append('profileImage', imageFile);
+                formDataToSend.append('userData', JSON.stringify(userData));
+                
+                response = await axios.post(
+                    `${import.meta.env.VITE_API_URL}/user/save`,
+                    formDataToSend,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                );
+            } else {
+                // For Google Sign-in or no image upload
+                response = await axios.post(
+                    `${import.meta.env.VITE_API_URL}/user/save`,
+                    userData,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+            }
+            return response.data;
+        } catch (error) {
+            console.error('Error saving user to database:', error);
+            throw error;
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+        setError(null);
+
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords don't match!");
+            setError("Passwords don't match!");
+            setIsLoading(false);
             return;
         }
 
-        createUser(formData.email, formData.password)
-            .then(result => {
-                updateUserProfile(formData.name, formData.image)
-                    .then(() => {
-                        alert("Register successfully");
-                    });
+        try {
+            // Create Firebase user
+            const userCredential = await createUser(formData.email, formData.password);
+            
+            // Save user to database
+            const userData = {
+                User_ID: userCredential.user.uid,
+                Name: formData.name,
+                Email: formData.email,
+                User_Type: formData.type
+            };
+
+            const dbResponse = await saveUserToDatabase(userData, selectedFile);
+            
+            // Update Firebase profile
+            await updateUserProfile(
+                formData.name, 
+                dbResponse.imageUrl || ''
+            );
+
+            alert("Registration successful!");
+            // Reset form
+            setFormData({
+                name: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                type: 'User'
             });
+            setSelectedFile(null);
+            setPreviewUrl(null);
+            
+        } catch (err) {
+            setError(err.message || 'Registration failed');
+            console.error('Registration error:', err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    const handleGoogleSignIn = () => {
-        googleSignIn()
-            .then(result => {
-                // Handle successful Google sign-in
-            });
+    const handleGoogleSignIn = async () => {
+        try {
+            setIsLoading(true);
+            const result = await googleSignIn();
+            
+            // Save Google user to database
+            const userData = {
+                User_ID: result.user.uid,
+                Name: result.user.displayName,
+                Email: result.user.email,
+                User_Type: 'User',
+                Img: result.user.photoURL
+            };
+
+            await saveUserToDatabase(userData);
+            alert("Google sign in successful!");
+            
+        } catch (err) {
+            setError(err.message || 'Google sign in failed');
+            console.error('Google sign in error:', err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -111,7 +217,38 @@ const Signup = () => {
                     <div className="max-w-md mx-auto">
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Create your account</h2>
                         
+                        {error && (
+                            <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-md">
+                                {error}
+                            </div>
+                        )}
+
                         <form onSubmit={handleSubmit} className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Profile Image
+                                </label>
+                                <div className="mt-1 flex items-center space-x-4">
+                                    {previewUrl && (
+                                        <div className="w-20 h-20 rounded-full overflow-hidden">
+                                            <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
+                                        </div>
+                                    )}
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        onChange={handleFileChange}
+                                        accept="image/*"
+                                        className="block w-full text-sm text-gray-500
+                                            file:mr-4 file:py-2 file:px-4
+                                            file:rounded-full file:border-0
+                                            file:text-sm file:font-semibold
+                                            file:bg-[#471396] file:text-white
+                                            hover:file:bg-[#B13BFF]"
+                                    />
+                                </div>
+                            </div>
+
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                                     Full Name
@@ -125,21 +262,6 @@ const Signup = () => {
                                     onChange={handleChange}
                                     className="block w-full px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#471396] focus:border-[#471396] text-sm sm:text-base"
                                     placeholder="Enter your full name"
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Profile Image URL
-                                </label>
-                                <input
-                                    type="url"
-                                    name="image"
-                                    id="image"
-                                    value={formData.image}
-                                    onChange={handleChange}
-                                    className="block w-full px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#471396] focus:border-[#471396] text-sm sm:text-base"
-                                    placeholder="Enter image URL"
                                 />
                             </div>
 
@@ -193,9 +315,11 @@ const Signup = () => {
 
                             <button
                                 type="submit"
-                                className="w-full flex justify-center py-2.5 sm:py-3 px-4 border border-transparent rounded-md shadow-sm text-sm sm:text-base font-medium text-white bg-[#471396] hover:bg-[#B13BFF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#471396] transition-all duration-200"
+                                disabled={isLoading}
+                                className={`w-full bg-[#471396] text-white py-2 rounded-md
+                                    ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#B13BFF]'}`}
                             >
-                                Create Account
+                                {isLoading ? 'Signing up...' : 'Sign Up'}
                             </button>
                         </form>
 
