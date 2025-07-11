@@ -1,36 +1,75 @@
-import axios from "axios";
 import { useState } from "react";
-
+import axios from "axios";
 
 const AdminManageEvent = () => {
     const [bannerPreview, setBannerPreview] = useState(null);
-    // console.log(bannerPreview);
-    const [inputs, setInputs] = useState({})
-    
+    const [inputs, setInputs] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
+        setInputs(values => ({...values, [name]: value}));
+    };
 
-        setInputs(values => ({ ...values, [name]: value }));
-    }
     const handleBannerChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setBannerPreview(URL.createObjectURL(file));
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setBannerPreview(reader.result);
+                setInputs(values => ({...values, banner: file}));
+            };
+            reader.readAsDataURL(file);
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:80/tickfest/event/save', inputs).then(function (response) {
-            console.log(response.data);
-        });
-        console.log(inputs)
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const formData = new FormData();
+            Object.keys(inputs).forEach(key => {
+                formData.append(key, inputs[key]);
+            });
+
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/event/save`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            );
+
+            if (response.data.status === 1) {
+                setInputs({});
+                setBannerPreview(null);
+                alert('Event created successfully!');
+            } else {
+                throw new Error(response.data.message || 'Failed to create event');
+            }
+        } catch (err) {
+            setError(err.message || 'An error occurred while creating the event');
+            console.error('Error creating event:', err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto mt-6">
             <h2 className="text-2xl font-bold text-[#242565] mb-4">Create New Event</h2>
+
+            {error && (
+                <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-md">
+                    {error}
+                </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Event Name */}
@@ -162,9 +201,14 @@ const AdminManageEvent = () => {
                 {/* Submit */}
                 <button
                     type="submit"
-                    className="bg-[#f5167e] text-white px-6 py-3 rounded-md font-semibold hover:bg-[#e40d6e] transition"
+                    disabled={isLoading}
+                    className={`bg-[#f5167e] text-white px-6 py-3 rounded-md font-semibold transition
+                        ${isLoading 
+                            ? 'opacity-50 cursor-not-allowed' 
+                            : 'hover:bg-[#e40d6e]'
+                        }`}
                 >
-                    Create Event
+                    {isLoading ? 'Creating Event...' : 'Create Event'}
                 </button>
             </form>
         </div>
