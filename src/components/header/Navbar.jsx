@@ -1,7 +1,18 @@
 import { Link } from "react-router-dom";
-
+import { useContext } from "react";
+import { AuthContext } from "../../Providers/AuthProvider";
+import { FaUser, FaTicketAlt, FaHeart, FaCog, FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleSignOut = () => {
+        logOut()
+            .then(() => {
+                // Handle successful logout
+            })
+            .catch(error => console.log(error));
+    };
 
     const link = <>
         <li className='text-lg font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>
@@ -29,10 +40,62 @@ const Navbar = () => {
             </Link>
         </li>
     </>
+    const userDrawerContent = (
+        <ul className="p-4 w-80 min-h-full bg-gradient-to-br from-[#090040] to-[#471396] text-white">
+            {/* User Profile Section */}
+            <div className="flex items-center gap-4 p-4 border-b border-[#B13BFF]/30">
+                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#B13BFF]">
+                    <img 
+                        src={user?.photoURL || "/default-avatar.png"} 
+                        alt="user" 
+                        className="w-full h-full object-cover"
+                    />
+                </div>
+                <div>
+                    <h3 className="font-bold text-lg">{user?.displayName || "User"}</h3>
+                    <p className="text-sm text-gray-300">{user?.email}</p>
+                </div>
+            </div>
+
+            {/* Menu Items */}
+            <div className="mt-4 space-y-2">
+                <Link to="/profile" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
+                    <FaUser className="text-[#B13BFF]" />
+                    <span>Profile</span>
+                </Link>
+                <Link to="/my-tickets" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
+                    <FaTicketAlt className="text-[#B13BFF]" />
+                    <span>My Tickets</span>
+                </Link>
+                <Link to="/wishlist" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
+                    <FaHeart className="text-[#B13BFF]" />
+                    <span>Wishlist</span>
+                </Link>
+                <Link to="/settings" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
+                    <FaCog className="text-[#B13BFF]" />
+                    <span>Settings</span>
+                </Link>
+                {user?.email === 'admin@tickfest.com' && (
+                    <Link to="/admindashboard/adminhome" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
+                        <FaCog className="text-[#B13BFF]" />
+                        <span>Admin Dashboard</span>
+                    </Link>
+                )}
+                <button 
+                    onClick={handleSignOut}
+                    className="flex items-center gap-3 p-3 w-full hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300 text-left"
+                >
+                    <FaSignOutAlt className="text-[#B13BFF]" />
+                    <span>Sign Out</span>
+                </button>
+            </div>
+        </ul>
+    );
+
     return (
         <div className="text-white bg-gradient-to-r from-[#090040] via-[#471396] to-[#090040] backdrop-blur-lg relative z-50 shadow-2xl shadow-[#471396]/20">
-            <nav className='navbar pl-4 md:pl-8 pr-4 md:pr-8 py-4'>
-                <div className="navbar-start">
+            <nav className='navbar pl-4 md:pl-8 pr-4 md:pr-8 py-4 justify-between'>
+                <div className="navbar-start w-1/4">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden hover:bg-[#B13BFF]/20 transition-all duration-300">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
@@ -45,26 +108,39 @@ const Navbar = () => {
                         tick<span className="text-[#B13BFF]">Fest</span>
                     </a>
                 </div>
-                <div className="navbar-center hidden lg:flex text-white">
+                <div className="navbar-center hidden lg:flex text-white flex-1 justify-center">
                     <ul className="menu menu-horizontal px-4 gap-6">
                         {link}
                     </ul>
                 </div>
-                <div className="navbar-end gap-4">
-                    <Link to="/signin">
-                        <button type="button" className="group relative px-8 py-3 font-bold rounded-2xl bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white shadow-lg hover:shadow-[#B13BFF]/40 transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#471396] to-[#B13BFF] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            <span className="relative">Sign In</span>
-                        </button>
-                    </Link>
-                    <Link to="/admindashboard/adminhome">
-                        <button type="button" className="group relative px-8 py-3 font-bold rounded-2xl bg-gradient-to-r from-[#090040] to-[#471396] text-white border-2 border-[#B13BFF]/50 hover:border-[#B13BFF] shadow-lg hover:shadow-[#471396]/40 transform hover:-translate-y-1 transition-all duration-300">
-                            <span className="relative">Dashboard</span>
-                        </button>
-                    </Link>
+                <div className="navbar-end w-1/4 justify-end">
+                    {user ? (
+                        <div className="drawer drawer-end">
+                            <input id="user-drawer" type="checkbox" className="drawer-toggle" />
+                            <div className="drawer-content flex justify-end">
+                                <label htmlFor="user-drawer" className="btn btn-circle btn-ghost avatar hover:bg-[#B13BFF]/20">
+                                    <div className="w-10 rounded-full ring-2 ring-[#B13BFF] ring-offset-2 ring-offset-[#090040]">
+                                        <img src={user?.photoURL || "/default-avatar.png"} alt="user" />
+                                    </div>
+                                </label>
+                            </div> 
+                            <div className="drawer-side z-[100]">
+                                <label htmlFor="user-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
+                                {userDrawerContent}
+                            </div>
+                        </div>
+                    ) : (
+                        <Link to="/signin">
+                            <button type="button" className="group relative px-8 py-3 font-bold rounded-2xl bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white shadow-lg hover:shadow-[#B13BFF]/40 transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                                <div className="absolute inset-0 bg-gradient-to-r from-[#471396] to-[#B13BFF] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <span className="relative">Sign In</span>
+                            </button>
+                        </Link>
+                    )}
                 </div>
             </nav>
         </div>
     );
 };
+
 export default Navbar;
