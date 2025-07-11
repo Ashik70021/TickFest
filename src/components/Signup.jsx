@@ -225,31 +225,6 @@ const Signup = () => {
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">
-                                    Profile Image
-                                </label>
-                                <div className="mt-1 flex items-center space-x-4">
-                                    {previewUrl && (
-                                        <div className="w-20 h-20 rounded-full overflow-hidden">
-                                            <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
-                                        </div>
-                                    )}
-                                    <input
-                                        type="file"
-                                        ref={fileInputRef}
-                                        onChange={handleFileChange}
-                                        accept="image/*"
-                                        className="block w-full text-sm text-gray-500
-                                            file:mr-4 file:py-2 file:px-4
-                                            file:rounded-full file:border-0
-                                            file:text-sm file:font-semibold
-                                            file:bg-[#471396] file:text-white
-                                            hover:file:bg-[#B13BFF]"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                                     Full Name
                                 </label>
@@ -263,6 +238,54 @@ const Signup = () => {
                                     className="block w-full px-3 py-2 sm:py-2.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#471396] focus:border-[#471396] text-sm sm:text-base"
                                     placeholder="Enter your full name"
                                 />
+                            </div>
+
+                            <div className="flex items-start space-x-6">
+                                <div className="flex-grow">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Profile Image
+                                    </label>
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        onChange={handleFileChange}
+                                        accept="image/*"
+                                        className="block w-full text-sm text-gray-500
+                                            file:mr-4 file:py-2 file:px-4
+                                            file:rounded-full file:border-0
+                                            file:text-sm file:font-semibold
+                                            file:bg-[#471396] file:text-white
+                                            hover:file:bg-[#B13BFF]
+                                            focus:outline-none"
+                                    />
+                                </div>
+                                <div className="flex-shrink-0">
+                                    {previewUrl ? (
+                                        <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-[#471396] shadow-lg transform transition-all duration-300 hover:scale-105">
+                                            <img 
+                                                src={previewUrl} 
+                                                alt="Preview" 
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="w-24 h-24 rounded-full border-4 border-dashed border-[#471396]/40 flex items-center justify-center bg-gray-50 text-gray-400">
+                                            <svg 
+                                                className="w-12 h-12" 
+                                                fill="none" 
+                                                stroke="currentColor" 
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path 
+                                                    strokeLinecap="round" 
+                                                    strokeLinejoin="round" 
+                                                    strokeWidth="2" 
+                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" 
+                                                />
+                                            </svg>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
                             <div>
