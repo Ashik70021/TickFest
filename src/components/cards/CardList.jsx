@@ -1,8 +1,39 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getData } from "../../data/cards";
 import Cards from "./Cards";
 
 export default function CardList() {
-  const cardItems = getData();
+  const [cardItems, setCardItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const cards = await getData();
+        // Show only the latest 6 events for the landing page
+        const latestEvents = cards.slice(0, 6);
+        setCardItems(latestEvents);
+      } catch (error) {
+        console.error("Error loading cards:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCards();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#B13BFF] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading events...</p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
       {/* Background decorations */}
@@ -58,9 +89,12 @@ export default function CardList() {
         <div className="mt-20 text-center">
           <div className="space-y-6">
             <p className="text-gray-600 font-medium">
-              Showing {cardItems.length} of 200+ amazing events
+              Showing {cardItems.length} of 12+ amazing events
             </p>
-            <button className="group relative bg-gradient-to-r from-[#471396] to-[#B13BFF] hover:from-[#B13BFF] hover:to-[#471396] text-white font-bold px-12 py-4 rounded-2xl shadow-xl hover:shadow-[#B13BFF]/30 transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+            <Link
+              to="/events"
+              className="group relative inline-block bg-gradient-to-r from-[#471396] to-[#B13BFF] hover:from-[#B13BFF] hover:to-[#471396] text-white font-bold px-12 py-4 rounded-2xl shadow-xl hover:shadow-[#B13BFF]/30 transform hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+            >
               <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <span className="relative flex items-center justify-center gap-3">
                 Load More Events
@@ -78,7 +112,7 @@ export default function CardList() {
                   />
                 </svg>
               </span>
-            </button>
+            </Link>
           </div>
         </div>
 
