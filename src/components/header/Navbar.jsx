@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { FaUser, FaTicketAlt, FaHeart, FaCog, FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const location = useLocation();
 
     const handleSignOut = () => {
         logOut()
@@ -14,29 +15,33 @@ const Navbar = () => {
             .catch(error => console.log(error));
     };
 
+    const isActiveLink = (path) => {
+        return location.pathname === path;
+    };
+
     const link = <>
-        <li className='text-lg font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>
-            <Link to="/" className="relative group">
+        <li className='text-xl font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>
+            <Link to="/" className={`relative group ${isActiveLink('/') ? 'text-[#B13BFF]' : ''}`}>
                 Home
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] group-hover:w-full transition-all duration-300"></span>
+                <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] transition-all duration-300 ${isActiveLink('/') ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </Link>
         </li>
-        <li className='text-lg font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>
-            <Link to="/events" className="relative group">
+        <li className='text-xl font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>
+            <Link to="/events" className={`relative group ${isActiveLink('/events') ? 'text-[#B13BFF]' : ''}`}>
                 Events
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] group-hover:w-full transition-all duration-300"></span>
+                <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] transition-all duration-300 ${isActiveLink('/events') ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </Link>
         </li>
-        <li className='text-lg font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>
-            <Link to="/activities" className="relative group">
+        <li className='text-xl font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>
+            <Link to="/activities" className={`relative group ${isActiveLink('/activities') ? 'text-[#B13BFF]' : ''}`}>
                 Activities
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] group-hover:w-full transition-all duration-300"></span>
+                <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] transition-all duration-300 ${isActiveLink('/activities') ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </Link>
         </li>
-        <li className='text-lg font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>
-            <Link to="/contact us" className="relative group">
+        <li className='text-xl font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>
+            <Link to="/contact us" className={`relative group ${isActiveLink('/contact us') ? 'text-[#B13BFF]' : ''}`}>
                 Contact us
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] group-hover:w-full transition-all duration-300"></span>
+                <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] transition-all duration-300 ${isActiveLink('/contact us') ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </Link>
         </li>
     </>
@@ -109,7 +114,7 @@ const Navbar = () => {
                     </a>
                 </div>
                 <div className="navbar-center hidden lg:flex text-white flex-1 justify-center">
-                    <ul className="menu menu-horizontal px-4 gap-6">
+                    <ul className="menu-horizontal gap-12">
                         {link}
                     </ul>
                 </div>
