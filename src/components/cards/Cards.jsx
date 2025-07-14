@@ -1,8 +1,26 @@
+import { useNavigate } from "react-router-dom";
 import getImage from "../../utills/grtImage";
 
 export default function Cards({ card }) {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    if (card.id) {
+      navigate(`/events/${card.id}`);
+    }
+  };
+
+  const handleButtonClick = (e) => {
+    e.stopPropagation();
+    if (card.id) {
+      navigate(`/events/${card.id}`);
+    }
+  };
   return (
-    <div className="group relative bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-[#B13BFF]/30 flex flex-col transform hover:-translate-y-3 border border-gray-100 hover:border-[#B13BFF]/20 w-full">
+    <div
+      onClick={handleCardClick}
+      className="group relative bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-[#B13BFF]/30 flex flex-col transform hover:-translate-y-3 border border-gray-100 hover:border-[#B13BFF]/20 w-full cursor-pointer"
+    >
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#B13BFF]/5 to-[#471396]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -145,7 +163,10 @@ export default function Cards({ card }) {
         </div>
 
         {/* Full-width enhanced action button */}
-        <button className="group/btn relative w-full bg-gradient-to-r from-[#471396] via-[#B13BFF] to-[#471396] hover:from-[#B13BFF] hover:via-[#471396] hover:to-[#B13BFF] text-white font-bold py-3 px-6 rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl hover:shadow-[#B13BFF]/40 overflow-hidden flex-shrink-0">
+        <button
+          onClick={handleButtonClick}
+          className="group/btn relative w-full bg-gradient-to-r from-[#471396] via-[#B13BFF] to-[#471396] hover:from-[#B13BFF] hover:via-[#471396] hover:to-[#B13BFF] text-white font-bold py-3 px-6 rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl hover:shadow-[#B13BFF]/40 overflow-hidden flex-shrink-0"
+        >
           {/* Button background animation */}
           <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"></div>
 
