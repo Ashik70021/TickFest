@@ -1,0 +1,858 @@
+{
+  "events": [
+    {
+      "id": "concert-1",
+      "name": "Let's Vibe with Oni Hasan ft All Stars",
+      "slug": "lets-vibe-with-oni-hasan-ft-all-stars",
+      "category": "Concert",
+      "cover": "image-1.jpg",
+      "gallery": ["image-1.jpg", "image-2.jpg", "image-3.jpg"],
+      "date": "25",
+      "month": "DEC",
+      "year": "2024",
+      "fullDate": "2024-12-25T19:00:00Z",
+      "time": "7:00 PM",
+      "endTime": "11:00 PM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "International Convention City Bashundhara (ICCB)",
+      "venueAddress": "Plot 1/A, Purbachal Express Highway, Bashundhara R/A, Dhaka 1229",
+      "coordinates": {
+        "latitude": 23.7749,
+        "longitude": 90.4226
+      },
+      "description": "Get ready to vibe with the sensational Oni Hasan and his all-star lineup! This electrifying concert promises an unforgettable night of music, energy, and pure entertainment.",
+      "fullDescription": "Experience the magic of live music with Oni Hasan, one of Bangladesh's most celebrated artists, as he takes the stage with an incredible lineup of all-star performers. This spectacular concert event promises to be an evening filled with chart-topping hits, mesmerizing performances, and an electric atmosphere that will keep you dancing all night long.",
+      "organizer": {
+        "name": "Dhaka Broadcast",
+        "logo": "dhaka-broadcast-logo.png",
+        "contact": "+880 1234567890",
+        "email": "info@dhakabroadcast.com"
+      },
+      "artists": [
+        {
+          "name": "Oni Hasan",
+          "role": "Main Artist",
+          "bio": "Acclaimed singer-songwriter known for his powerful vocals and stage presence."
+        },
+        {
+          "name": "All Stars Band",
+          "role": "Supporting Artists",
+          "bio": "A collective of talented musicians bringing diverse sounds to the stage."
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "General Admission",
+          "price": 1500,
+          "currency": "BDT",
+          "description": "Standing area with great view of the stage",
+          "available": true,
+          "remaining": 500
+        },
+        {
+          "name": "VIP",
+          "price": 3000,
+          "currency": "BDT",
+          "description": "Premium seating with exclusive access",
+          "available": true,
+          "remaining": 100
+        }
+      ],
+      "featured": true,
+      "createdAt": "2024-12-01T10:00:00Z"
+    },
+    {
+      "id": "concert-2",
+      "name": "Dhaka Rock Night 2024",
+      "slug": "dhaka-rock-night-2024",
+      "category": "Concert",
+      "cover": "image-2.jpg",
+      "gallery": ["image-2.jpg", "image-3.jpg", "image-4.jpg"],
+      "date": "15",
+      "month": "NOV",
+      "year": "2024",
+      "fullDate": "2024-11-15T20:00:00Z",
+      "time": "8:00 PM",
+      "endTime": "12:00 AM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "Dhaka Arena",
+      "venueAddress": "Gulshan Avenue, Dhaka 1212",
+      "coordinates": {
+        "latitude": 23.7947,
+        "longitude": 90.4069
+      },
+      "description": "The ultimate rock experience featuring Bangladesh's top rock bands in one electrifying night of pure rock and roll energy.",
+      "fullDescription": "Get ready to rock the night away at Dhaka Rock Night 2024! This epic musical event brings together the best rock bands from Bangladesh for an unforgettable evening of hard-hitting performances, incredible guitar solos, and thunderous drums that will shake the very foundations of the venue.",
+      "organizer": {
+        "name": "Rock Nation BD",
+        "logo": "rock-nation-logo.png",
+        "contact": "+880 1987654321",
+        "email": "info@rocknationbd.com"
+      },
+      "artists": [
+        {
+          "name": "Warfaze",
+          "role": "Headliner",
+          "bio": "Legendary Bangladeshi rock band with decades of experience."
+        },
+        {
+          "name": "Artcell",
+          "role": "Featured Artist",
+          "bio": "Progressive rock pioneers of Bangladesh."
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "General Admission",
+          "price": 1200,
+          "currency": "BDT",
+          "description": "Standing area with full stage view",
+          "available": true,
+          "remaining": 800
+        },
+        {
+          "name": "Premium",
+          "price": 2500,
+          "currency": "BDT",
+          "description": "Reserved seating with VIP access",
+          "available": true,
+          "remaining": 150
+        }
+      ],
+      "featured": true,
+      "createdAt": "2024-11-01T12:00:00Z"
+    },
+    {
+      "id": "sports-1",
+      "name": "Dhaka Premier League Cricket Final",
+      "slug": "dhaka-premier-league-cricket-final",
+      "category": "Sports",
+      "cover": "image-3.jpg",
+      "gallery": ["image-3.jpg", "image-4.jpg", "image-5.jpg"],
+      "date": "20",
+      "month": "DEC",
+      "year": "2024",
+      "fullDate": "2024-12-20T14:00:00Z",
+      "time": "2:00 PM",
+      "endTime": "10:00 PM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "Sher-e-Bangla National Cricket Stadium",
+      "venueAddress": "Mirpur, Dhaka 1216",
+      "coordinates": {
+        "latitude": 23.7780,
+        "longitude": 90.3691
+      },
+      "description": "The most anticipated cricket match of the year! Watch the best teams battle for the championship title in this thrilling final match.",
+      "fullDescription": "Experience the excitement of Bangladesh's premier cricket tournament as the top two teams face off in the ultimate showdown. This high-stakes match promises exceptional gameplay, nail-biting moments, and unforgettable cricket action that will keep you on the edge of your seat.",
+      "organizer": {
+        "name": "Bangladesh Cricket Board",
+        "logo": "bcb-logo.png",
+        "contact": "+880 1555666777",
+        "email": "info@bcb.gov.bd"
+      },
+      "teams": [
+        {
+          "name": "Dhaka Dominators",
+          "logo": "dominators-logo.png",
+          "captain": "Mushfiqur Rahim"
+        },
+        {
+          "name": "Chittagong Challengers",
+          "logo": "challengers-logo.png",
+          "captain": "Tamim Iqbal"
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "General Stand",
+          "price": 500,
+          "currency": "BDT",
+          "description": "Open seating in general stands",
+          "available": true,
+          "remaining": 5000
+        },
+        {
+          "name": "Premium Gallery",
+          "price": 1500,
+          "currency": "BDT",
+          "description": "Covered seating with better view",
+          "available": true,
+          "remaining": 1200
+        },
+        {
+          "name": "VIP Box",
+          "price": 5000,
+          "currency": "BDT",
+          "description": "Exclusive VIP box with refreshments",
+          "available": true,
+          "remaining": 50
+        }
+      ],
+      "featured": true,
+      "createdAt": "2024-11-10T09:00:00Z"
+    },
+    {
+      "id": "sports-2",
+      "name": "Dhaka Marathon 2024",
+      "slug": "dhaka-marathon-2024",
+      "category": "Sports",
+      "cover": "image-4.jpg",
+      "gallery": ["image-4.jpg", "image-5.jpg", "image-6.jpg"],
+      "date": "10",
+      "month": "JAN",
+      "year": "2025",
+      "fullDate": "2025-01-10T06:00:00Z",
+      "time": "6:00 AM",
+      "endTime": "12:00 PM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "National Parliament Area",
+      "venueAddress": "Sher-e-Bangla Nagar, Dhaka 1207",
+      "coordinates": {
+        "latitude": 23.7626,
+        "longitude": 90.3785
+      },
+      "description": "Join thousands of runners in Dhaka's biggest marathon event. Multiple race categories for all fitness levels with prizes and medals for winners.",
+      "fullDescription": "The Dhaka Marathon 2024 is the city's premier running event that brings together professional athletes, amateur runners, and fitness enthusiasts from across Bangladesh and beyond. Choose from full marathon, half marathon, or fun run categories and experience the thrill of running through Dhaka's iconic landmarks.",
+      "organizer": {
+        "name": "Dhaka Athletics Federation",
+        "logo": "daf-logo.png",
+        "contact": "+880 1777888999",
+        "email": "info@dhakamarathon.com"
+      },
+      "raceCategories": [
+        {
+          "name": "Full Marathon",
+          "distance": "42.195 km",
+          "startTime": "6:00 AM",
+          "prizes": "Cash prizes for top 10 finishers"
+        },
+        {
+          "name": "Half Marathon",
+          "distance": "21.1 km",
+          "startTime": "7:00 AM",
+          "prizes": "Medals for top 20 finishers"
+        },
+        {
+          "name": "Fun Run",
+          "distance": "5 km",
+          "startTime": "8:00 AM",
+          "prizes": "Participation medals for all"
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "Full Marathon Registration",
+          "price": 2000,
+          "currency": "BDT",
+          "description": "Includes race bib, timing chip, and finisher medal",
+          "available": true,
+          "remaining": 500
+        },
+        {
+          "name": "Half Marathon Registration",
+          "price": 1500,
+          "currency": "BDT",
+          "description": "Includes race bib, timing chip, and finisher medal",
+          "available": true,
+          "remaining": 1000
+        },
+        {
+          "name": "Fun Run Registration",
+          "price": 800,
+          "currency": "BDT",
+          "description": "Includes race bib and participation medal",
+          "available": true,
+          "remaining": 2000
+        }
+      ],
+      "featured": false,
+      "createdAt": "2024-11-15T11:00:00Z"
+    },
+    {
+      "id": "theatre-1",
+      "name": "Hamlet - The Tragedy of Denmark",
+      "slug": "hamlet-the-tragedy-of-denmark",
+      "category": "Theatre",
+      "cover": "image-5.jpg",
+      "gallery": ["image-5.jpg", "image-6.jpg", "image-1.jpg"],
+      "date": "5",
+      "month": "FEB",
+      "year": "2025",
+      "fullDate": "2025-02-05T19:30:00Z",
+      "time": "7:30 PM",
+      "endTime": "10:30 PM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "Bangladesh National Theatre",
+      "venueAddress": "Segun Bagicha, Dhaka 1000",
+      "coordinates": {
+        "latitude": 23.7370,
+        "longitude": 90.3990
+      },
+      "description": "Experience Shakespeare's timeless masterpiece in this powerful Bengali adaptation. A haunting tale of revenge, madness, and moral complexity.",
+      "fullDescription": "Witness the tragic tale of Prince Hamlet in this exceptional Bengali adaptation of Shakespeare's greatest work. Our talented cast brings this classical drama to life with powerful performances, stunning stage design, and authentic period costumes that transport you to the royal court of Denmark.",
+      "organizer": {
+        "name": "Theatre Arts Bangladesh",
+        "logo": "tab-logo.png",
+        "contact": "+880 1234567890",
+        "email": "info@theatrebd.com"
+      },
+      "cast": [
+        {
+          "name": "Asaduzzaman Noor",
+          "role": "Hamlet",
+          "bio": "Renowned actor and director with over 30 years of theatre experience."
+        },
+        {
+          "name": "Mamunur Rashid",
+          "role": "Claudius",
+          "bio": "Veteran theatre artist and playwright."
+        },
+        {
+          "name": "Sara Zaker",
+          "role": "Gertrude",
+          "bio": "Acclaimed actress and theatre director."
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "Standard Seating",
+          "price": 800,
+          "currency": "BDT",
+          "description": "Regular theatre seating with good view",
+          "available": true,
+          "remaining": 200
+        },
+        {
+          "name": "Premium Seating",
+          "price": 1500,
+          "currency": "BDT",
+          "description": "Front row and balcony premium seats",
+          "available": true,
+          "remaining": 80
+        }
+      ],
+      "featured": true,
+      "createdAt": "2024-12-05T15:00:00Z"
+    },
+    {
+      "id": "theatre-2",
+      "name": "Munier Chowdhury's Kabor",
+      "slug": "munier-chowdhurys-kabor",
+      "category": "Theatre",
+      "cover": "image-6.jpg",
+      "gallery": ["image-6.jpg", "image-1.jpg", "image-2.jpg"],
+      "date": "18",
+      "month": "JAN",
+      "year": "2025",
+      "fullDate": "2025-01-18T20:00:00Z",
+      "time": "8:00 PM",
+      "endTime": "10:00 PM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "Shilpakala Academy",
+      "venueAddress": "Segun Bagicha, Dhaka 1000",
+      "coordinates": {
+        "latitude": 23.7359,
+        "longitude": 90.3985
+      },
+      "description": "A timeless Bengali drama exploring themes of sacrifice, love, and social justice. One of the most powerful works of Bangladeshi theatre.",
+      "fullDescription": "Experience the dramatic intensity of Munier Chowdhury's masterpiece 'Kabor' (The Grave), a play that delves deep into the human psyche and social consciousness. This production brings together Bangladesh's finest theatre artists to present a story that resonates with contemporary issues while honoring our rich cultural heritage.",
+      "organizer": {
+        "name": "Dhaka Theatre",
+        "logo": "dhaka-theatre-logo.png",
+        "contact": "+880 1987654321",
+        "email": "info@dhakatheatre.com"
+      },
+      "cast": [
+        {
+          "name": "Ataur Rahman",
+          "role": "Lead Character",
+          "bio": "Distinguished theatre actor with numerous awards."
+        },
+        {
+          "name": "Rokeya Prachy",
+          "role": "Supporting Lead",
+          "bio": "Celebrated actress known for dramatic roles."
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "General Admission",
+          "price": 600,
+          "currency": "BDT",
+          "description": "Standard theatre seating",
+          "available": true,
+          "remaining": 300
+        },
+        {
+          "name": "Reserved Seating",
+          "price": 1200,
+          "currency": "BDT",
+          "description": "Premium reserved seats with better view",
+          "available": true,
+          "remaining": 100
+        }
+      ],
+      "featured": false,
+      "createdAt": "2024-12-08T16:00:00Z"
+    },
+    {
+      "id": "conference-1",
+      "name": "Digital Bangladesh Summit 2024",
+      "slug": "digital-bangladesh-summit-2024",
+      "category": "Conference",
+      "cover": "image-1.jpg",
+      "gallery": ["image-1.jpg", "image-2.jpg", "image-3.jpg"],
+      "date": "28",
+      "month": "NOV",
+      "year": "2024",
+      "fullDate": "2024-11-28T09:00:00Z",
+      "time": "9:00 AM",
+      "endTime": "6:00 PM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "Pan Pacific Sonargaon Hotel",
+      "venueAddress": "107 Kazi Nazrul Islam Avenue, Dhaka 1215",
+      "coordinates": {
+        "latitude": 23.7557,
+        "longitude": 90.3900
+      },
+      "description": "The premier technology conference in Bangladesh featuring industry leaders, government officials, and tech innovators discussing the future of digital transformation.",
+      "fullDescription": "Join Bangladesh's most prestigious technology conference where industry pioneers, government leaders, and tech innovators come together to shape the digital future of our nation. This comprehensive event covers AI, blockchain, fintech, e-governance, and digital infrastructure with actionable insights for businesses and policymakers.",
+      "organizer": {
+        "name": "Digital Bangladesh Foundation",
+        "logo": "dbf-logo.png",
+        "contact": "+880 1666777888",
+        "email": "info@digitalbd.gov.bd"
+      },
+      "speakers": [
+        {
+          "name": "Dr. Zunaid Ahmed Palak",
+          "role": "Keynote Speaker",
+          "bio": "State Minister for ICT, Bangladesh",
+          "topic": "Vision 2041: Building Smart Bangladesh"
+        },
+        {
+          "name": "Syed Mohammad Kamal",
+          "role": "Featured Speaker",
+          "bio": "Country Manager, Google Bangladesh",
+          "topic": "AI Revolution in South Asia"
+        },
+        {
+          "name": "Sabrina Karim",
+          "role": "Panel Speaker",
+          "bio": "CEO, Tech Startup Bangladesh",
+          "topic": "Fintech Innovation in Bangladesh"
+        }
+      ],
+      "agenda": [
+        {
+          "time": "9:00 AM - 10:00 AM",
+          "session": "Registration & Welcome Coffee"
+        },
+        {
+          "time": "10:00 AM - 11:00 AM",
+          "session": "Keynote: Vision 2041 - Building Smart Bangladesh"
+        },
+        {
+          "time": "11:30 AM - 12:30 PM",
+          "session": "Panel Discussion: AI & Machine Learning in Bangladesh"
+        },
+        {
+          "time": "2:00 PM - 3:00 PM",
+          "session": "Fintech Revolution: Digital Payments & Banking"
+        },
+        {
+          "time": "3:30 PM - 4:30 PM",
+          "session": "E-Governance & Digital Services"
+        },
+        {
+          "time": "5:00 PM - 6:00 PM",
+          "session": "Networking Reception"
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "Standard Pass",
+          "price": 3000,
+          "currency": "BDT",
+          "description": "Access to all sessions, lunch, and networking",
+          "available": true,
+          "remaining": 200
+        },
+        {
+          "name": "Premium Pass",
+          "price": 5000,
+          "currency": "BDT",
+          "description": "VIP seating, exclusive networking, and gift bag",
+          "available": true,
+          "remaining": 75
+        },
+        {
+          "name": "Student Pass",
+          "price": 1000,
+          "currency": "BDT",
+          "description": "Special rate for students with valid ID",
+          "available": true,
+          "remaining": 100
+        }
+      ],
+      "featured": true,
+      "createdAt": "2024-10-15T10:00:00Z"
+    },
+    {
+      "id": "conference-2",
+      "name": "Healthcare Innovation Conference 2024",
+      "slug": "healthcare-innovation-conference-2024",
+      "category": "Conference",
+      "cover": "image-2.jpg",
+      "gallery": ["image-2.jpg", "image-3.jpg", "image-4.jpg"],
+      "date": "12",
+      "month": "DEC",
+      "year": "2024",
+      "fullDate": "2024-12-12T08:30:00Z",
+      "time": "8:30 AM",
+      "endTime": "5:30 PM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "Dhaka Medical College Hospital",
+      "venueAddress": "Secretariat Road, Dhaka 1000",
+      "coordinates": {
+        "latitude": 23.7297,
+        "longitude": 90.4072
+      },
+      "description": "Explore the latest innovations in healthcare technology, telemedicine, and medical research. Leading healthcare professionals share insights on improving patient care.",
+      "fullDescription": "This comprehensive healthcare conference brings together medical professionals, researchers, and technology innovators to discuss breakthrough developments in healthcare delivery, medical technology, and patient care systems. Learn about the latest trends in telemedicine, AI in diagnostics, and healthcare management.",
+      "organizer": {
+        "name": "Bangladesh Medical Association",
+        "logo": "bma-logo.png",
+        "contact": "+880 1777666555",
+        "email": "info@bma.org.bd"
+      },
+      "speakers": [
+        {
+          "name": "Prof. Dr. Abul Kalam Azad",
+          "role": "Chief Guest",
+          "bio": "Director General, Health Services, Bangladesh",
+          "topic": "Future of Healthcare in Bangladesh"
+        },
+        {
+          "name": "Dr. Samanta Lal Sen",
+          "role": "Keynote Speaker",
+          "bio": "Chief Coordinator, National Burn Institute",
+          "topic": "Advanced Burn Care & Plastic Surgery"
+        },
+        {
+          "name": "Dr. Rashida Khan",
+          "role": "Panel Speaker",
+          "bio": "Head of Telemedicine, Square Hospitals",
+          "topic": "Telemedicine: Bridging Healthcare Gaps"
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "Medical Professional",
+          "price": 2500,
+          "currency": "BDT",
+          "description": "For registered doctors and healthcare professionals",
+          "available": true,
+          "remaining": 150
+        },
+        {
+          "name": "Student/Intern",
+          "price": 1000,
+          "currency": "BDT",
+          "description": "For medical students and interns",
+          "available": true,
+          "remaining": 80
+        },
+        {
+          "name": "General Attendee",
+          "price": 1500,
+          "currency": "BDT",
+          "description": "For other interested participants",
+          "available": true,
+          "remaining": 70
+        }
+      ],
+      "featured": false,
+      "createdAt": "2024-11-20T13:00:00Z"
+    },
+    {
+      "id": "festival-1",
+      "name": "Dhaka Food Festival 2024",
+      "slug": "dhaka-food-festival-2024",
+      "category": "Festival",
+      "cover": "image-3.jpg",
+      "gallery": ["image-3.jpg", "image-4.jpg", "image-5.jpg"],
+      "date": "22",
+      "month": "DEC",
+      "year": "2024",
+      "fullDate": "2024-12-22T11:00:00Z",
+      "time": "11:00 AM",
+      "endTime": "11:00 PM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "Hatirjheel Amphitheatre",
+      "venueAddress": "Hatirjheel, Tejgaon, Dhaka 1215",
+      "coordinates": {
+        "latitude": 23.7548,
+        "longitude": 90.4066
+      },
+      "description": "A culinary extravaganza showcasing the best of Bangladeshi cuisine alongside international flavors. Food stalls, cooking competitions, and cultural performances.",
+      "fullDescription": "Indulge in a gastronomic journey at Dhaka's premier food festival! Experience the rich flavors of traditional Bangladeshi cuisine, explore international food stalls, watch live cooking demonstrations by celebrity chefs, and enjoy cultural performances. This family-friendly event celebrates the diverse culinary heritage of our nation.",
+      "organizer": {
+        "name": "Dhaka Food & Culture Association",
+        "logo": "dfca-logo.png",
+        "contact": "+880 1888999000",
+        "email": "info@dhakafoodfest.com"
+      },
+      "highlights": [
+        {
+          "activity": "Traditional Food Stalls",
+          "description": "Over 100 stalls featuring authentic Bangladeshi dishes"
+        },
+        {
+          "activity": "International Cuisine",
+          "description": "Food from Thai, Chinese, Indian, and Middle Eastern cuisines"
+        },
+        {
+          "activity": "Cooking Competitions",
+          "description": "Live cooking contests with celebrity chef judges"
+        },
+        {
+          "activity": "Cultural Performances",
+          "description": "Traditional music and dance performances"
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "General Entry",
+          "price": 200,
+          "currency": "BDT",
+          "description": "Access to all food stalls and performances",
+          "available": true,
+          "remaining": 2000
+        },
+        {
+          "name": "Family Package",
+          "price": 600,
+          "currency": "BDT",
+          "description": "Entry for 2 adults and 2 children under 12",
+          "available": true,
+          "remaining": 500
+        },
+        {
+          "name": "VIP Pass",
+          "price": 1000,
+          "currency": "BDT",
+          "description": "Skip lines, VIP seating, and exclusive chef meet & greet",
+          "available": true,
+          "remaining": 100
+        }
+      ],
+      "featured": true,
+      "createdAt": "2024-11-25T14:00:00Z"
+    },
+    {
+      "id": "festival-2",
+      "name": "Dhaka Book Fair 2025",
+      "slug": "dhaka-book-fair-2025",
+      "category": "Festival",
+      "cover": "image-4.jpg",
+      "gallery": ["image-4.jpg", "image-5.jpg", "image-6.jpg"],
+      "date": "1",
+      "month": "FEB",
+      "year": "2025",
+      "fullDate": "2025-02-01T10:00:00Z",
+      "time": "10:00 AM",
+      "endTime": "9:00 PM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "Bangla Academy",
+      "venueAddress": "Burdwan Road, Dhaka 1000",
+      "coordinates": {
+        "latitude": 23.7275,
+        "longitude": 90.3989
+      },
+      "description": "Bangladesh's largest book fair featuring thousands of books, author meet & greets, literary discussions, and cultural programs celebrating Bengali literature.",
+      "fullDescription": "Join the celebration of Bengali literature and culture at the historic Dhaka Book Fair! This month-long festival brings together publishers, authors, and book lovers from across the country. Discover new publications, meet your favorite authors, attend literary discussions, and enjoy cultural programs in the heart of Dhaka.",
+      "organizer": {
+        "name": "Bangla Academy",
+        "logo": "bangla-academy-logo.png",
+        "contact": "+880 1999000111",
+        "email": "info@banglaacademy.org.bd"
+      },
+      "highlights": [
+        {
+          "activity": "Book Stalls",
+          "description": "Over 500 stalls with books in Bengali and English"
+        },
+        {
+          "activity": "Author Sessions",
+          "description": "Meet & greet with renowned authors and poets"
+        },
+        {
+          "activity": "Literary Discussions",
+          "description": "Panel discussions on contemporary literature"
+        },
+        {
+          "activity": "Cultural Programs",
+          "description": "Poetry recitations, music, and dance performances"
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "Free Entry",
+          "price": 0,
+          "currency": "BDT",
+          "description": "Free entry to all book stalls and basic programs",
+          "available": true,
+          "remaining": 999999
+        },
+        {
+          "name": "Special Events Pass",
+          "price": 500,
+          "currency": "BDT",
+          "description": "Access to exclusive author sessions and VIP programs",
+          "available": true,
+          "remaining": 200
+        }
+      ],
+      "featured": false,
+      "createdAt": "2024-12-10T09:00:00Z"
+    },
+    {
+      "id": "comedy-1",
+      "name": "Dhaka Comedy Club - Stand Up Special",
+      "slug": "dhaka-comedy-club-stand-up-special",
+      "category": "Comedy",
+      "cover": "image-5.jpg",
+      "gallery": ["image-5.jpg", "image-6.jpg", "image-1.jpg"],
+      "date": "30",
+      "month": "DEC",
+      "year": "2024",
+      "fullDate": "2024-12-30T20:00:00Z",
+      "time": "8:00 PM",
+      "endTime": "10:30 PM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "Dhaka Club",
+      "venueAddress": "Ramna, Dhaka 1000",
+      "coordinates": {
+        "latitude": 23.7341,
+        "longitude": 90.3962
+      },
+      "description": "Get ready for a night of non-stop laughter with Bangladesh's funniest stand-up comedians. Perfect way to end the year with humor and joy!",
+      "fullDescription": "Ring in the New Year with the biggest comedy event of 2024! Our lineup of Bangladesh's most talented stand-up comedians will have you laughing until your sides hurt. From observational humor to satirical commentary on daily life, this special show promises an evening of pure entertainment and laughter.",
+      "organizer": {
+        "name": "Dhaka Comedy Club",
+        "logo": "dcc-logo.png",
+        "contact": "+880 1777888999",
+        "email": "info@dhakacomedy.com"
+      },
+      "comedians": [
+        {
+          "name": "Naveed Mahbub",
+          "bio": "Popular comedian known for his witty social commentary",
+          "style": "Observational Comedy"
+        },
+        {
+          "name": "Zitu Ahsan",
+          "bio": "Rising star in Bangladesh's comedy scene",
+          "style": "Storytelling Comedy"
+        },
+        {
+          "name": "Shafiq Tuhin",
+          "bio": "Veteran comedian with decades of experience",
+          "style": "Satirical Comedy"
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "General Seating",
+          "price": 1000,
+          "currency": "BDT",
+          "description": "Standard seating with full show access",
+          "available": true,
+          "remaining": 150
+        },
+        {
+          "name": "Premium Seating",
+          "price": 1800,
+          "currency": "BDT",
+          "description": "Front row seats with complimentary refreshments",
+          "available": true,
+          "remaining": 50
+        }
+      ],
+      "featured": true,
+      "createdAt": "2024-12-01T17:00:00Z"
+    },
+    {
+      "id": "comedy-2",
+      "name": "Roast Night - Celebrity Edition",
+      "slug": "roast-night-celebrity-edition",
+      "category": "Comedy",
+      "cover": "image-6.jpg",
+      "gallery": ["image-6.jpg", "image-1.jpg", "image-2.jpg"],
+      "date": "8",
+      "month": "FEB",
+      "year": "2025",
+      "fullDate": "2025-02-08T21:00:00Z",
+      "time": "9:00 PM",
+      "endTime": "11:30 PM",
+      "location": "Dhaka, Bangladesh",
+      "venue": "German Club",
+      "venueAddress": "Gulshan Avenue, Dhaka 1212",
+      "coordinates": {
+        "latitude": 23.7926,
+        "longitude": 90.4080
+      },
+      "description": "The ultimate roast night where popular celebrities get hilariously roasted by top comedians. Adult humor and celebrity guests guaranteed!",
+      "fullDescription": "Experience the most entertaining celebrity roast night in Dhaka! Watch as popular celebrities from entertainment, sports, and media get lovingly roasted by our panel of expert comedians. This adults-only event features unfiltered humor, celebrity guests, and unexpected moments that will leave you in stitches.",
+      "organizer": {
+        "name": "Roast Masters BD",
+        "logo": "rmbd-logo.png",
+        "contact": "+880 1666555444",
+        "email": "info@roastmasters.com"
+      },
+      "roastees": [
+        {
+          "name": "Chanchal Chowdhury",
+          "profession": "Actor",
+          "bio": "Renowned Bangladeshi actor and comedian"
+        },
+        {
+          "name": "Mosharraf Karim",
+          "profession": "Actor",
+          "bio": "Popular television and film actor"
+        }
+      ],
+      "roasters": [
+        {
+          "name": "Rafsan Haq",
+          "bio": "Master of roast comedy and social media star"
+        },
+        {
+          "name": "Tawhid Afridi",
+          "bio": "Stand-up comedian and content creator"
+        }
+      ],
+      "ticketTypes": [
+        {
+          "name": "Standard Entry",
+          "price": 1500,
+          "currency": "BDT",
+          "description": "Regular seating with show access",
+          "available": true,
+          "remaining": 120
+        },
+        {
+          "name": "VIP Experience",
+          "price": 3000,
+          "currency": "BDT",
+          "description": "Premium seating with meet & greet opportunity",
+          "available": true,
+          "remaining": 40
+        }
+      ],
+      "featured": false,
+      "createdAt": "2024-12-15T18:00:00Z"
+    }
+  ]
+}
