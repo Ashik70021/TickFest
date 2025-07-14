@@ -103,7 +103,7 @@ export default function CardList() {
         </div>
 
         {/* Categories Filter Section */}
-        <div className="mt-16 w-full max-w-4xl">
+        {/* <div className="mt-16 w-full max-w-4xl">
           <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-[#B13BFF]/10">
             <h3 className="text-2xl font-bold text-[#090040] text-center mb-8">Browse by Category</h3>
             <div className="flex flex-wrap justify-center gap-4">
@@ -117,7 +117,7 @@ export default function CardList() {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -41,6 +41,40 @@ export default function EventDetails() {
     fetchEvent();
   }, [eventId]);
 
+  // Helper function to get available tabs based on event data
+  const getAvailableTabs = () => {
+    if (!event) return [];
+    
+    const tabs = [
+      { id: 'details', label: 'Event Details' }
+    ];
+
+    // Add performers tab based on event type
+    if (event.artists || event.speakers || event.cast || event.comedians || event.teams) {
+      let label = 'Performers';
+      if (event.artists) label = 'Artists';
+      if (event.speakers) label = 'Speakers';
+      if (event.cast) label = 'Cast';
+      if (event.comedians) label = 'Comedians';
+      if (event.teams) label = 'Teams';
+      tabs.push({ id: 'performers', label });
+    }
+
+    // Add agenda tab for conferences
+    if (event.agenda) {
+      tabs.push({ id: 'agenda', label: 'Agenda' });
+    }
+
+    // Add race categories for sports
+    if (event.raceCategories) {
+      tabs.push({ id: 'categories', label: 'Race Categories' });
+    }
+
+    tabs.push({ id: 'venue', label: 'Venue Info' });
+    
+    return tabs;
+  };
+
   const handleTicketSelection = (ticket) => {
     setSelectedTicket(ticket);
   };
@@ -169,17 +203,12 @@ export default function EventDetails() {
           {/* Left Column - Event Details */}
           <div className="lg:col-span-2">
             {/* Navigation Tabs */}
-            <div className="flex border-b border-gray-200 mb-6">
-              {[
-                { id: 'details', label: 'Event Details' },
-                { id: 'artists', label: 'Artists' },
-                { id: 'venue', label: 'Venue Info' },
-                { id: 'rules', label: 'Rules' }
-              ].map((tab) => (
+            <div className="flex border-b border-gray-200 mb-6 overflow-x-auto">
+              {getAvailableTabs().map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-6 py-3 font-semibold transition-colors ${activeTab === tab.id
+                  className={`px-6 py-3 font-semibold transition-colors whitespace-nowrap ${activeTab === tab.id
                       ? 'border-b-2 border-[#B13BFF] text-[#B13BFF]'
                       : 'text-gray-600 hover:text-[#B13BFF]'
                     }`}
@@ -196,63 +225,171 @@ export default function EventDetails() {
                   <div>
                     <h2 className="text-2xl font-bold text-[#090040] mb-4">About This Event</h2>
                     <p className="text-gray-700 leading-relaxed mb-6">
-                      {event.fullDescription}
+                      {event.fullDescription || event.description}
                     </p>
                   </div>
 
-                  <div>
-                    <h3 className="text-xl font-bold text-[#090040] mb-4">Event Highlights</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {(event.highlights || []).map((highlight, index) => (
-                        <div key={index} className="flex items-center gap-3 p-3 bg-gradient-to-r from-[#B13BFF]/5 to-[#471396]/5 rounded-xl">
-                          <svg className="w-5 h-5 text-[#B13BFF] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          <span className="text-gray-700 font-medium">{highlight}</span>
-                        </div>
-                      ))}
+                  {/* Event Highlights */}
+                  {event.highlights && event.highlights.length > 0 && (
+                    <div>
+                      <h3 className="text-xl font-bold text-[#090040] mb-4">Event Highlights</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {event.highlights.map((highlight, index) => (
+                          <div key={index} className="flex items-start gap-3 p-4 bg-gradient-to-r from-[#B13BFF]/5 to-[#471396]/5 rounded-xl">
+                            <svg className="w-5 h-5 text-[#B13BFF] flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            <div>
+                              <h4 className="font-semibold text-[#090040] mb-1">{highlight.activity}</h4>
+                              <p className="text-gray-600 text-sm">{highlight.description}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
-                  <div>
-                    <h3 className="text-xl font-bold text-[#090040] mb-4">Amenities</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {(event.amenities || []).map((amenity, index) => (
-                        <div key={index} className="flex items-center gap-3 p-3 bg-green-50 rounded-xl">
-                          <svg className="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          <span className="text-gray-700 font-medium">{amenity}</span>
-                        </div>
-                      ))}
+                  {/* Amenities */}
+                  {event.amenities && event.amenities.length > 0 && (
+                    <div>
+                      <h3 className="text-xl font-bold text-[#090040] mb-4">Amenities</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {event.amenities.map((amenity, index) => (
+                          <div key={index} className="flex items-center gap-3 p-3 bg-green-50 rounded-xl">
+                            <svg className="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span className="text-gray-700 font-medium">{amenity}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
+
+                  {/* Rules */}
+                  {event.rules && event.rules.length > 0 && (
+                    <div>
+                      <h3 className="text-xl font-bold text-[#090040] mb-4">Event Rules & Guidelines</h3>
+                      <div className="space-y-3">
+                        {event.rules.map((rule, index) => (
+                          <div key={index} className="flex items-start gap-3 p-4 bg-yellow-50 rounded-xl border border-yellow-200">
+                            <svg className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.864-.833-2.634 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            <p className="text-gray-700 font-medium">{rule}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Organizer Info */}
+                  {event.organizer && (
+                    <div className="border-t pt-6">
+                      <h3 className="text-xl font-bold text-[#090040] mb-4">Organized By</h3>
+                      <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-[#B13BFF]/5 to-[#471396]/5 rounded-xl">
+                        <div className="w-16 h-16 bg-gradient-to-br from-[#B13BFF] to-[#471396] rounded-full flex items-center justify-center">
+                          <span className="text-white font-bold text-xl">{event.organizer.name ? event.organizer.name[0] : 'O'}</span>
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-[#090040]">{event.organizer.name}</h4>
+                          <p className="text-gray-600">{event.organizer.contact}</p>
+                          <p className="text-gray-600">{event.organizer.email}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
-              {activeTab === 'artists' && (
+              {activeTab === 'performers' && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-[#090040] mb-4">
                     {event.artists && event.artists.length > 0 ? 'Performing Artists' :
                       event.speakers && event.speakers.length > 0 ? 'Featured Speakers' :
-                        event.performers && event.performers.length > 0 ? 'Performers' :
+                        event.cast && event.cast.length > 0 ? 'Cast Members' :
                           event.comedians && event.comedians.length > 0 ? 'Comedians' :
                             event.teams && event.teams.length > 0 ? 'Teams' :
                               'Participants'}
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {(event.artists || event.speakers || event.performers || event.comedians || event.teams || []).map((person, index) => (
+                    {(event.artists || event.speakers || event.cast || event.comedians || event.teams || []).map((person, index) => (
                       <div key={index} className="bg-gradient-to-br from-[#B13BFF]/5 to-[#471396]/5 p-6 rounded-2xl">
                         <div className="flex items-center gap-4 mb-4">
                           <div className="w-16 h-16 bg-gradient-to-br from-[#B13BFF] to-[#471396] rounded-full flex items-center justify-center">
-                            <span className="text-white font-bold text-xl">{person.name[0]}</span>
+                            <span className="text-white font-bold text-xl">{person.name ? person.name[0] : 'P'}</span>
                           </div>
                           <div>
                             <h3 className="text-lg font-bold text-[#090040]">{person.name}</h3>
                             <p className="text-[#B13BFF] font-semibold">{person.role || person.captain || person.type}</p>
                           </div>
                         </div>
-                        <p className="text-gray-700">{person.bio || person.description || person.achievements}</p>
+                        <p className="text-gray-700 mb-3">{person.bio || person.description || person.achievements}</p>
+                        {person.topic && (
+                          <p className="text-sm text-gray-600 italic">Topic: {person.topic}</p>
+                        )}
+                        {person.logo && (
+                          <div className="mt-3">
+                            <img src={person.logo} alt={`${person.name} logo`} className="h-8 w-auto" />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'agenda' && event.agenda && (
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold text-[#090040] mb-4">Event Agenda</h2>
+                  <div className="space-y-4">
+                    {event.agenda.map((item, index) => (
+                      <div key={index} className="flex gap-4 p-4 bg-gradient-to-r from-[#B13BFF]/5 to-[#471396]/5 rounded-xl">
+                        <div className="flex-shrink-0">
+                          <div className="w-2 h-2 bg-[#B13BFF] rounded-full mt-2"></div>
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <svg className="w-4 h-4 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span className="text-[#B13BFF] font-semibold">{item.time}</span>
+                          </div>
+                          <h4 className="font-bold text-[#090040]">{item.session}</h4>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'categories' && event.raceCategories && (
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold text-[#090040] mb-4">Race Categories</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {event.raceCategories.map((category, index) => (
+                      <div key={index} className="bg-gradient-to-br from-[#B13BFF]/5 to-[#471396]/5 p-6 rounded-2xl">
+                        <h3 className="text-lg font-bold text-[#090040] mb-2">{category.name}</h3>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <svg className="w-4 h-4 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
+                            </svg>
+                            <span className="text-gray-700">Distance: {category.distance}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <svg className="w-4 h-4 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span className="text-gray-700">Start Time: {category.startTime}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <svg className="w-4 h-4 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span className="text-gray-700">{category.prizes}</span>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -276,21 +413,6 @@ export default function EventDetails() {
                         <p className="text-gray-600">{event.location}</p>
                       </div>
                     </div>
-
-                    {event.organizer && (
-                      <div className="border-t pt-4">
-                        <h4 className="font-bold text-[#090040] mb-2">Organizer</h4>
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-gradient-to-br from-[#B13BFF] to-[#471396] rounded-full flex items-center justify-center">
-                            <span className="text-white font-bold">{event.organizer.name ? event.organizer.name[0] : 'O'}</span>
-                          </div>
-                          <div>
-                            <p className="font-semibold text-[#090040]">{event.organizer.name || 'Event Organizer'}</p>
-                            <p className="text-gray-600 text-sm">{event.organizer.contact || event.organizer.email}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
 
                   {/* Interactive Map */}
@@ -310,40 +432,6 @@ export default function EventDetails() {
                       venueAddress={event.venueAddress}
                       coordinates={event.coordinates}
                     />
-
-                    {/* Additional Map Info */}
-                    <div className="mt-4 p-4 bg-gray-50 rounded-xl">
-                      <div className="flex flex-wrap items-center justify-between gap-4 text-sm">
-                        <div className="flex items-center gap-2">
-                          <svg className="w-4 h-4 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          <span className="text-gray-700">Click the marker for directions</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <svg className="w-4 h-4 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                          </svg>
-                          <span className="text-gray-700">Use mouse wheel to zoom</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'rules' && (
-                <div className="space-y-6">
-                  <h2 className="text-2xl font-bold text-[#090040] mb-4">Event Rules & Guidelines</h2>
-                  <div className="space-y-4">
-                    {(event.rules || []).map((rule, index) => (
-                      <div key={index} className="flex items-start gap-3 p-4 bg-yellow-50 rounded-xl border border-yellow-200">
-                        <svg className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.864-.833-2.634 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                        </svg>
-                        <p className="text-gray-700 font-medium">{rule}</p>
-                      </div>
-                    ))}
                   </div>
                 </div>
               )}
