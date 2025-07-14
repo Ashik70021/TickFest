@@ -15,6 +15,7 @@ import Signup from "../components/Signup";
 import EventDetails from "../components/EventDetails/EventDetails";
 import Checkout from "../components/Checkout/Checkout";
 import ErrorBoundary from "../components/common/ErrorBoundary";
+import AdminAnalytics from "../components/Pages/AdminDashboard/AdminAnalytics";
 
 
 export const router = createBrowserRouter([
@@ -72,6 +73,10 @@ export const router = createBrowserRouter([
       {
         path: "users",
         element: <AdminUsers />,
+      },
+      {
+        path: "analytics",
+        element: <AdminAnalytics />,
       },
       {
         path: "tickets",
