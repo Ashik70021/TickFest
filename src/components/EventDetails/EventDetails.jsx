@@ -22,11 +22,11 @@ export default function EventDetails() {
         }
         const data = await response.json();
         const eventData = data.events.find(event => event.id === eventId);
-        
+
         if (!eventData) {
           throw new Error('Event not found');
         }
-        
+
         setEvent(eventData);
         if (eventData.ticketTypes && eventData.ticketTypes.length > 0) {
           setSelectedTicket(eventData.ticketTypes[0]);
@@ -54,17 +54,17 @@ export default function EventDetails() {
 
   const handleBookNow = () => {
     if (!selectedTicket) return;
-    
+
     const bookingData = {
       event: event,
       ticket: selectedTicket,
       quantity: quantity,
       total: selectedTicket.price * quantity
     };
-    
+
     // Store booking data in localStorage for checkout
     localStorage.setItem('bookingData', JSON.stringify(bookingData));
-    
+
     // Navigate to checkout page (you'll need to create this)
     navigate('/checkout');
   };
@@ -108,7 +108,7 @@ export default function EventDetails() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-[#090040]/60 to-[#B13BFF]/40"></div>
-        
+
         {/* Event Header Info */}
         <div className="absolute bottom-0 left-0 right-0 p-8">
           <div className="container mx-auto">
@@ -149,7 +149,7 @@ export default function EventDetails() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Quick Action Button */}
               <div className="flex-shrink-0">
                 <button
@@ -163,7 +163,7 @@ export default function EventDetails() {
           </div>
         </div>
       </div>
-  {/* Main Content */}
+      {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Event Details */}
@@ -179,11 +179,10 @@ export default function EventDetails() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-6 py-3 font-semibold transition-colors ${
-                    activeTab === tab.id
+                  className={`px-6 py-3 font-semibold transition-colors ${activeTab === tab.id
                       ? 'border-b-2 border-[#B13BFF] text-[#B13BFF]'
                       : 'text-gray-600 hover:text-[#B13BFF]'
-                  }`}
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -200,7 +199,7 @@ export default function EventDetails() {
                       {event.fullDescription}
                     </p>
                   </div>
-                  
+
                   <div>
                     <h3 className="text-xl font-bold text-[#090040] mb-4">Event Highlights</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -235,11 +234,11 @@ export default function EventDetails() {
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-[#090040] mb-4">
                     {event.artists && event.artists.length > 0 ? 'Performing Artists' :
-                     event.speakers && event.speakers.length > 0 ? 'Featured Speakers' :
-                     event.performers && event.performers.length > 0 ? 'Performers' :
-                     event.comedians && event.comedians.length > 0 ? 'Comedians' :
-                     event.teams && event.teams.length > 0 ? 'Teams' :
-                     'Participants'}
+                      event.speakers && event.speakers.length > 0 ? 'Featured Speakers' :
+                        event.performers && event.performers.length > 0 ? 'Performers' :
+                          event.comedians && event.comedians.length > 0 ? 'Comedians' :
+                            event.teams && event.teams.length > 0 ? 'Teams' :
+                              'Participants'}
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {(event.artists || event.speakers || event.performers || event.comedians || event.teams || []).map((person, index) => (
@@ -263,7 +262,7 @@ export default function EventDetails() {
               {activeTab === 'venue' && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-[#090040] mb-4">Venue Information</h2>
-                  
+
                   {/* Venue Details */}
                   <div className="bg-gradient-to-br from-[#B13BFF]/5 to-[#471396]/5 p-6 rounded-2xl">
                     <h3 className="text-xl font-bold text-[#090040] mb-3">{event.venue}</h3>
@@ -277,7 +276,7 @@ export default function EventDetails() {
                         <p className="text-gray-600">{event.location}</p>
                       </div>
                     </div>
-                    
+
                     {event.organizer && (
                       <div className="border-t pt-4">
                         <h4 className="font-bold text-[#090040] mb-2">Organizer</h4>
@@ -305,13 +304,13 @@ export default function EventDetails() {
                         <span>Interactive Map</span>
                       </div>
                     </div>
-                    
-                    <VenueMap 
+
+                    <VenueMap
                       venue={event.venue}
                       venueAddress={event.venueAddress}
                       coordinates={event.coordinates}
                     />
-                    
+
                     {/* Additional Map Info */}
                     <div className="mt-4 p-4 bg-gray-50 rounded-xl">
                       <div className="flex flex-wrap items-center justify-between gap-4 text-sm">
@@ -350,3 +349,123 @@ export default function EventDetails() {
               )}
             </div>
           </div>
+
+          {/* Right Column - Ticket Booking */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-6" id="tickets">
+              <h2 className="text-2xl font-bold text-[#090040] mb-6">Select Tickets</h2>
+
+              {/* Ticket Types */}
+              <div className="space-y-4 mb-6">
+                {(event.ticketTypes || []).map((ticket) => (
+                  <div
+                    key={ticket.id}
+                    onClick={() => handleTicketSelection(ticket)}
+                    className={`p-4 rounded-xl cursor-pointer transition-all ${selectedTicket?.id === ticket.id
+                        ? 'bg-gradient-to-r from-[#B13BFF]/10 to-[#471396]/10 border-2 border-[#B13BFF]'
+                        : 'bg-gray-50 border-2 border-gray-200 hover:border-[#B13BFF]/50'
+                      }`}
+                  >
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h3 className="font-bold text-[#090040]">{ticket.name}</h3>
+                        <p className="text-sm text-gray-600">{ticket.description}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-bold text-[#B13BFF]">৳{ticket.price}</p>
+                        {ticket.originalPrice > ticket.price && (
+                          <p className="text-sm text-gray-500 line-through">৳{ticket.originalPrice}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Availability */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${ticket.availability === 'available' ? 'bg-green-500' :
+                            ticket.availability === 'limited' ? 'bg-yellow-500' : 'bg-red-500'
+                          }`}></div>
+                        <span className="text-sm font-medium capitalize">{ticket.availability}</span>
+                      </div>
+                      <span className="text-sm text-gray-600">{ticket.remaining} left</span>
+                    </div>
+
+                    {/* Benefits */}
+                    {selectedTicket?.id === ticket.id && (
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <p className="text-sm font-semibold text-[#090040] mb-2">Includes:</p>
+                        <ul className="text-sm text-gray-600 space-y-1">
+                          {(ticket.benefits || []).map((benefit, index) => (
+                            <li key={index} className="flex items-center gap-2">
+                              <svg className="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              {benefit}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Quantity Selector */}
+              <div className="mb-6">
+                <label className="block text-sm font-semibold text-[#090040] mb-2">Quantity</label>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => handleQuantityChange(-1)}
+                    className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                    </svg>
+                  </button>
+                  <span className="text-xl font-bold text-[#090040] w-8 text-center">{quantity}</span>
+                  <button
+                    onClick={() => handleQuantityChange(1)}
+                    className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              {/* Total */}
+              <div className="bg-gradient-to-r from-[#B13BFF]/10 to-[#471396]/10 p-4 rounded-xl mb-6">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-[#090040]">Total Amount:</span>
+                  <span className="text-2xl font-bold text-[#B13BFF]">
+                    ৳{selectedTicket ? selectedTicket.price * quantity : 0}
+                  </span>
+                </div>
+              </div>
+
+              {/* Book Button */}
+              <button
+                onClick={handleBookNow}
+                disabled={!selectedTicket || selectedTicket.availability === 'sold-out'}
+                className="w-full bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white font-bold py-4 px-6 rounded-2xl hover:from-[#471396] hover:to-[#B13BFF] transition-all duration-300 transform hover:scale-105 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                {selectedTicket?.availability === 'sold-out' ? 'Sold Out' : 'Book Now'}
+              </button>
+
+              {/* Security Info */}
+              <div className="mt-4 text-center text-sm text-gray-600">
+                <div className="flex items-center justify-center gap-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <span>Secure payment & instant confirmation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
