@@ -1,9 +1,48 @@
+import { useState, useEffect } from "react";
 import Marquee from "react-fast-marquee";
-import { getData } from "../../data/carts";
-import getImage from "../../utills/getImage";
+import { getFeaturedEvents, getEventsData } from "../../utils/eventsAPI";
+import getImage from "../../utils/grtImage";
 
 export default function FlagshipEvents() {
-    const cards = getData();
+    const [cards, setCards] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchFeaturedEvents = async () => {
+            try {
+                let featuredEvents = await getFeaturedEvents();
+                
+                // If no featured events, get first 6 events as fallback
+                if (featuredEvents.length === 0) {
+                    const allEvents = await getEventsData();
+                    featuredEvents = allEvents.slice(0, 6);
+                }
+                
+                setCards(featuredEvents);
+            } catch (error) {
+                console.error('Error loading featured events:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchFeaturedEvents();
+    }, []);
+
+    if (loading) {
+        return (
+            <section className="relative py-20 bg-gradient-to-br from-[#090040] via-[#471396] to-[#090040] overflow-hidden">
+                <div className="flex items-center justify-center h-64">
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#B13BFF]"></div>
+                </div>
+            </section>
+        );
+    }
+
+    // Don't render the component if no events are available
+    if (cards.length === 0) {
+        return null;
+    }
 
     return (
         <section className="relative py-20 bg-gradient-to-br from-[#090040] via-[#471396] to-[#090040] overflow-hidden">

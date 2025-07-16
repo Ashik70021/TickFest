@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import getImage from "../../utills/grtImage";
+import getImage from "../../utils/grtImage";
 
+// eslint-disable-next-line react/prop-types
 export default function Cards({ card }) {
   const navigate = useNavigate();
 
@@ -16,25 +17,30 @@ export default function Cards({ card }) {
       navigate(`/events/${card.id}`);
     }
   };
+
   return (
     <div 
       onClick={handleCardClick}
-      className="group relative bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-[#B13BFF]/30 flex flex-col transform hover:-translate-y-3 border border-gray-100 hover:border-[#B13BFF]/20 w-full cursor-pointer"
+      className="group/card relative bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-700 hover:shadow-2xl hover:shadow-[#B13BFF]/30 flex flex-col transform hover:-translate-y-3 border border-gray-100 hover:border-[#B13BFF]/20 w-full cursor-pointer"
+      style={{ 
+        isolation: 'isolate',
+        contain: 'layout style paint'
+      }}
     >
       {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#B13BFF]/5 to-[#471396]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#B13BFF]/5 to-[#471396]/5 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"></div>
       
       {/* Image container with enhanced styling */}
       <div className="relative overflow-hidden h-48 flex-shrink-0">
         <img
           src={getImage(card.cover)}
           alt={card.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
         />
         
         {/* Multiple gradient overlays for depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#090040]/20 via-transparent to-[#B13BFF]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-40 group-hover/card:opacity-60 transition-opacity duration-300"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#090040]/20 via-transparent to-[#B13BFF]/20 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"></div>
         
         {/* Enhanced price badge */}
         <div className="absolute top-6 right-6 bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white px-5 py-2 rounded-full text-sm font-bold shadow-xl backdrop-blur-sm border border-white/20">
@@ -52,7 +58,7 @@ export default function Cards({ card }) {
         </div>
 
         {/* Floating date indicator on image */}
-        <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl border border-white/20 transform group-hover:scale-105 transition-transform duration-300">
+        <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl border border-white/20 transform group-hover/card:scale-105 transition-transform duration-300">
           <div className="text-center">
             <p className="text-xs font-bold text-[#B13BFF] uppercase tracking-wider">
               {card.month?.toUpperCase() || "DEC"}
@@ -68,7 +74,7 @@ export default function Cards({ card }) {
       <div className="relative z-10 p-6 flex-1 flex flex-col min-h-0 transition-all duration-700 group-hover:pb-8">
         {/* Event title and description */}
         <div className="space-y-3 mb-4 flex-shrink-0">
-          <h3 className="text-lg font-bold text-[#090040] group-hover:text-[#471396] transition-colors duration-300 line-clamp-2 leading-snug overflow-hidden">
+          <h3 className="text-lg font-bold text-[#090040] group-hover/card:text-[#471396] transition-colors duration-300 line-clamp-2 leading-snug overflow-hidden">
             {card.name}
           </h3>
           
@@ -76,7 +82,7 @@ export default function Cards({ card }) {
           <div className="relative min-h-0">
             {/* Description for desktop - hidden by default, shown on hover */}
             <div className="hidden md:block">
-              <p className="text-gray-600 leading-relaxed text-sm opacity-0 invisible max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:visible group-hover:max-h-96 group-hover:bg-gradient-to-b group-hover:from-gray-50/90 group-hover:to-white/95 group-hover:p-4 group-hover:rounded-xl group-hover:shadow-lg group-hover:border group-hover:border-[#B13BFF]/20 group-hover:backdrop-blur-sm group-hover:relative group-hover:z-10 group-hover:mb-2">
+              <p className="text-gray-600 leading-relaxed text-sm opacity-0 invisible max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover/card:opacity-100 group-hover/card:visible group-hover/card:max-h-96 group-hover/card:bg-gradient-to-b group-hover/card:from-gray-50/90 group-hover/card:to-white/95 group-hover/card:p-4 group-hover/card:rounded-xl group-hover/card:shadow-lg group-hover/card:border group-hover/card:border-[#B13BFF]/20 group-hover/card:backdrop-blur-sm group-hover/card:relative group-hover/card:z-10 group-hover/card:mb-2">
                 {card.description}
               </p>
             </div>
@@ -90,7 +96,7 @@ export default function Cards({ card }) {
         
         {/* Enhanced location and time info */}
         <div className="space-y-2 mb-4 flex-shrink-0">
-          <div className="flex items-center gap-3 text-sm text-gray-600 bg-gray-50 rounded-xl p-2 group-hover:bg-[#B13BFF]/5 transition-colors duration-300">
+          <div className="flex items-center gap-3 text-sm text-gray-600 bg-gray-50 rounded-xl p-2 group-hover/card:bg-[#B13BFF]/5 transition-colors duration-300">
             <div className="p-1.5 bg-[#B13BFF]/10 rounded-lg flex-shrink-0">
               <svg className="w-3.5 h-3.5 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -100,7 +106,7 @@ export default function Cards({ card }) {
             <span className="font-medium text-xs truncate">{card.location || "Dhaka, Bangladesh"}</span>
           </div>
           
-          <div className="flex items-center gap-3 text-sm text-gray-600 bg-gray-50 rounded-xl p-2 group-hover:bg-[#471396]/5 transition-colors duration-300">
+          <div className="flex items-center gap-3 text-sm text-gray-600 bg-gray-50 rounded-xl p-2 group-hover/card:bg-[#471396]/5 transition-colors duration-300">
             <div className="p-1.5 bg-[#471396]/10 rounded-lg flex-shrink-0">
               <svg className="w-3.5 h-3.5 text-[#471396]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
