@@ -114,10 +114,45 @@ const AdminManageEvent = () => {
                                     <label className="block text-sm font-bold text-[#090040]">End Time</label>
                                     <input onChange={handleChange} name="endTime" type="text" className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#B13BFF]/50 focus:border-[#B13BFF] transition-all duration-300 bg-gray-50 hover:bg-white" placeholder="11:00 PM" required />
                                 </div>
-                                {/* <div className="space-y-2">
-                                    <label className="block text-sm font-bold text-[#090040]">Full Date (ISO)</label>
-                                    <input onChange={handleChange} name="fullDate" type="text" className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#B13BFF]/50 focus:border-[#B13BFF] transition-all duration-300 bg-gray-50 hover:bg-white" placeholder="2024-12-25T19:00:00Z" required />
-                                </div> */}
+                                <div className="space-y-2">
+                                    <label className="block text-sm font-bold text-[#090040]">Featured Event</label>
+                                    <div className="relative">
+                                        <input 
+                                            onChange={handleChange} 
+                                            name="featured" 
+                                            type="checkbox" 
+                                            id="featured-checkbox"
+                                            className="sr-only peer" 
+                                        />
+                                        <label 
+                                            htmlFor="featured-checkbox" 
+                                            className="flex items-center justify-between w-full p-3 bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl cursor-pointer hover:from-[#B13BFF]/5 hover:to-[#471396]/5 hover:border-[#B13BFF]/30 peer-checked:from-[#B13BFF]/10 peer-checked:to-[#471396]/10 peer-checked:border-[#B13BFF] transition-all duration-300 group"
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-5 h-5 bg-white border-2 border-gray-300 rounded-lg peer-checked:border-[#B13BFF] peer-checked:bg-gradient-to-r peer-checked:from-[#B13BFF] peer-checked:to-[#471396] transition-all duration-300 flex items-center justify-center flex-shrink-0">
+                                                    <svg className="w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                </div>
+                                                <div className="min-w-0">
+                                                    <span className="text-sm font-semibold text-[#090040] group-hover:text-[#471396] transition-colors duration-300 block">
+                                                        Mark as Featured
+                                                    </span>
+                                                    <p className="text-xs text-gray-500 leading-tight">
+                                                        Show on homepage
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-6 h-6 bg-gradient-to-r from-[#B13BFF]/20 to-[#471396]/20 rounded-full flex items-center justify-center opacity-0 peer-checked:opacity-100 transition-opacity duration-300">
+                                                    <svg className="w-3 h-3 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
