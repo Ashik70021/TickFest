@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getData } from "../../data/cards";
+import { getFeaturedEvents } from "../../utils/eventsAPI";
 import Cards from "./Cards";
 
 export default function CardList() {
@@ -10,7 +10,7 @@ export default function CardList() {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const cards = await getData();
+        const cards = await getFeaturedEvents();
         // Show only the latest 6 events for the landing page
         const latestEvents = cards.slice(0, 6);
         setCardItems(latestEvents);
