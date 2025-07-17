@@ -18,6 +18,9 @@ const AdminManageEvent = () => {
     const [galleryPreviews, setGalleryPreviews] = useState([]);
     const [organizerLogo, setOrganizerLogo] = useState(null);
     const [organizerLogoPreview, setOrganizerLogoPreview] = useState(null);
+    
+    // API Base URL from environment
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -37,15 +40,13 @@ const AdminManageEvent = () => {
     const handleGalleryChange = (e) => {
         const files = Array.from(e.target.files);
         if (files.length > 0) {
-            setGalleryImages(files);
+            // Limit to 3 images
+            const limitedFiles = files.slice(0, 3);
+            setGalleryImages(limitedFiles);
             
             // Create previews
-            const previews = files.map(file => URL.createObjectURL(file));
+            const previews = limitedFiles.map(file => URL.createObjectURL(file));
             setGalleryPreviews(previews);
-            
-            // Store file names for backend
-            const imageNames = files.map(file => file.name);
-            setInputs(values => ({ ...values, gallery: imageNames }));
         }
     };
 
@@ -55,7 +56,6 @@ const AdminManageEvent = () => {
         if (file) {
             setOrganizerLogo(file);
             setOrganizerLogoPreview(URL.createObjectURL(file));
-            setInputs(values => ({ ...values, organizerLogo: file.name }));
         }
     };
 
@@ -105,54 +105,66 @@ const AdminManageEvent = () => {
                 return;
             }
 
-            // Prepare the event data with all relational data
-            const eventData = {
-                // Basic Information
-                name: inputs.name,
-                slug: inputs.slug,
-                date: parseInt(inputs.date),
-                month: parseInt(inputs.month),
-                year: parseInt(inputs.year),
-                time: inputs.time || '',
-                endTime: inputs.endTime || '',
-                location: inputs.location || '',
-                venue: inputs.venue || '',
-                venueAddress: inputs.venueAddress || '',
-                
-                // Coordinates
-                latitude: parseFloat(inputs.latitude) || 0,
-                longitude: parseFloat(inputs.longitude) || 0,
-                
-                // Event Details
-                category: inputs.category || '',
-                description: inputs.description || '',
-                fullDescription: inputs.fullDescription || '',
-                featured: inputs.featured === true ? 1 : 0,
-                
-                // Media
-                cover: inputs.banner ? inputs.banner.name : 'default.jpg',
-                gallery: inputs.gallery || [],
-                
-                // Organizer Information
-                organizerName: inputs.organizerName || '',
-                organizerEmail: inputs.organizerEmail || '',
-                organizerContact: inputs.organizerContact || '',
-                organizerLogo: inputs.organizerLogo || null,
-                
-                // Relational Data
-                artists: validArtists,
-                ticketTypes: validTicketTypes.map(ticket => ({
-                    ...ticket,
-                    price: parseFloat(ticket.price) || 0,
-                    remaining: parseInt(ticket.remaining) || 0
-                }))
-            };
+            // Create FormData for sending files along with event data
+            const formData = new FormData();
 
-            console.log('Sending event data:', eventData);
+            // Add basic event information
+            formData.append('name', inputs.name);
+            formData.append('slug', inputs.slug);
+            formData.append('date', parseInt(inputs.date));
+            formData.append('month', parseInt(inputs.month));
+            formData.append('year', parseInt(inputs.year));
+            formData.append('time', inputs.time || '');
+            formData.append('endTime', inputs.endTime || '');
+            formData.append('location', inputs.location || '');
+            formData.append('venue', inputs.venue || '');
+            formData.append('venueAddress', inputs.venueAddress || '');
+            
+            // Add coordinates
+            formData.append('latitude', parseFloat(inputs.latitude) || 0);
+            formData.append('longitude', parseFloat(inputs.longitude) || 0);
+            
+            // Add event details
+            formData.append('category', inputs.category || '');
+            formData.append('description', inputs.description || '');
+            formData.append('fullDescription', inputs.fullDescription || '');
+            formData.append('featured', inputs.featured === true ? 1 : 0);
+            
+            // Add organizer information
+            formData.append('organizerName', inputs.organizerName || '');
+            formData.append('organizerEmail', inputs.organizerEmail || '');
+            formData.append('organizerContact', inputs.organizerContact || '');
+            
+            // Add files
+            if (inputs.banner && inputs.banner instanceof File) {
+                formData.append('coverImage', inputs.banner);
+            }
+            
+            if (organizerLogo && organizerLogo instanceof File) {
+                formData.append('organizerLogo', organizerLogo);
+            }
+            
+            // Add gallery images
+            if (galleryImages.length > 0) {
+                galleryImages.forEach((image, index) => {
+                    formData.append(`galleryImage${index}`, image);
+                });
+                formData.append('galleryCount', galleryImages.length);
+            }
+            
+            // Add artists and ticket types as JSON strings
+            formData.append('artists', JSON.stringify(validArtists));
+            formData.append('ticketTypes', JSON.stringify(validTicketTypes.map(ticket => ({
+                ...ticket,
+                price: parseFloat(ticket.price) || 0,
+                remaining: parseInt(ticket.remaining) || 0
+            }))));
 
-            const response = await axios.post('http://localhost/tickfest/api/events', eventData, {
+            console.log('Sending event data with files...');
+
+            const response = await axios.post(`${API_BASE_URL}/api.php/api/events`, formData, {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                 }
             });
 
