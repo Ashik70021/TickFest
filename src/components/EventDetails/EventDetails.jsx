@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import getImage from '../../utills/grtImage';
+import getImage from '../../utils/grtImage';
 import VenueMap from '../common/VenueMap';
 
 export default function EventDetails() {
