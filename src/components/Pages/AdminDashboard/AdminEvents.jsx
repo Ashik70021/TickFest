@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const AdminEvents = () => {
@@ -9,6 +10,9 @@ const AdminEvents = () => {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // React Router navigation
+    const navigate = useNavigate();
 
     // API Base URL from environment
     const API_BASE_URL = import.meta.env.VITE_API_URL;
@@ -72,6 +76,33 @@ const AdminEvents = () => {
 
         fetchEvents();
     }, [API_BASE_URL]);
+
+    // Handler for update functionality
+    const handleUpdateEvent = (eventId) => {
+        // Navigate to update page with event ID
+        navigate(`/admindashboard/events/edit/${eventId}`);
+    };
+
+    // Handler for viewing event details
+    const handleViewEvent = (eventId) => {
+        // Navigate to event details page
+        navigate(`/admindashboard/events/view/${eventId}`);
+    };
+
+    // Handler for deleting event
+    const handleDeleteEvent = async (eventId, eventName) => {
+        if (window.confirm(`Are you sure you want to delete "${eventName}"? This action cannot be undone.`)) {
+            try {
+                await axios.delete(`${API_BASE_URL}/api.php/api/events/${eventId}`);
+                // Refresh events list
+                setEvents(events.filter(event => event.id !== eventId));
+                // You could also show a success message here
+            } catch (error) {
+                console.error('Error deleting event:', error);
+                alert('Failed to delete event. Please try again.');
+            }
+        }
+    };
 
     // Filter and search logic
     const filteredEvents = events.filter(event => {
@@ -389,18 +420,30 @@ const AdminEvents = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div className="flex items-center justify-end space-x-2">
-                                                <button className="bg-blue-100 hover:bg-blue-500 text-blue-600 hover:text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 border border-blue-200">
+                                                <button 
+                                                    onClick={() => handleViewEvent(event.id)}
+                                                    className="bg-blue-100 hover:bg-blue-500 text-blue-600 hover:text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 border border-blue-200"
+                                                    title="View Details"
+                                                >
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                     </svg>
                                                 </button>
-                                                <button className="bg-[#471396] hover:bg-[#B13BFF] text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105">
+                                                <button 
+                                                    onClick={() => handleUpdateEvent(event.id)}
+                                                    className="bg-[#471396] hover:bg-[#B13BFF] text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105"
+                                                    title="Edit Event"
+                                                >
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                                     </svg>
                                                 </button>
-                                                <button className="bg-red-100 hover:bg-red-500 text-red-600 hover:text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 border border-red-200">
+                                                <button 
+                                                    onClick={() => handleDeleteEvent(event.id, event.name)}
+                                                    className="bg-red-100 hover:bg-red-500 text-red-600 hover:text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 border border-red-200"
+                                                    title="Delete Event"
+                                                >
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                     </svg>
@@ -504,13 +547,23 @@ const AdminEvents = () => {
                                     </div>
                                 </div>
                                 <div className="flex space-x-2">
-                                    <button className="flex-1 bg-blue-100 text-blue-600 py-2 px-4 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300 text-sm font-semibold border border-blue-200">
+                                    <button 
+                                        onClick={() => handleViewEvent(event.id)}
+                                        className="flex-1 bg-blue-100 text-blue-600 py-2 px-4 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300 text-sm font-semibold border border-blue-200"
+                                    >
                                         View Details
                                     </button>
-                                    <button className="flex-1 bg-gradient-to-r from-[#471396] to-[#B13BFF] text-white py-2 px-4 rounded-lg hover:from-[#B13BFF] hover:to-[#471396] transition-all duration-300 transform hover:scale-105 text-sm font-semibold">
+                                    <button 
+                                        onClick={() => handleUpdateEvent(event.id)}
+                                        className="flex-1 bg-gradient-to-r from-[#471396] to-[#B13BFF] text-white py-2 px-4 rounded-lg hover:from-[#B13BFF] hover:to-[#471396] transition-all duration-300 transform hover:scale-105 text-sm font-semibold"
+                                    >
                                         Edit Event
                                     </button>
-                                    <button className="bg-red-100 text-red-600 py-2 px-4 rounded-lg hover:bg-red-500 hover:text-white transition-all duration-300 border border-red-200">
+                                    <button 
+                                        onClick={() => handleDeleteEvent(event.id, event.name)}
+                                        className="bg-red-100 text-red-600 py-2 px-4 rounded-lg hover:bg-red-500 hover:text-white transition-all duration-300 border border-red-200"
+                                        title="Delete Event"
+                                    >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg>

@@ -6,6 +6,8 @@ import AdminDashboard from "../layouts/AdminDashboard";
 import AdminDashboardHome from "../components/Pages/AdminDashboard/AdminDashboardHome"; 
 import AdminManageEvent from "../components/Pages/AdminDashboard/AdminManageEvent";
 import AdminEvents from "../components/Pages/AdminDashboard/AdminEvents";
+import AdminUpdateEvent from "../components/Pages/AdminDashboard/AdminUpdateEvent";
+import AdminViewEvent from "../components/Pages/AdminDashboard/AdminViewEvent";
 import AdminUsers from "../components/Pages/AdminDashboard/AdminUsers";
 import AdminTickets from "../components/Pages/AdminDashboard/AdminTickets";
 import AdminReports from "../components/Pages/AdminDashboard/AdminReports";
@@ -69,6 +71,14 @@ export const router = createBrowserRouter([
       {
         path: "events",
         element: <AdminEvents />,
+      },
+      {
+        path: "events/edit/:id",
+        element: <AdminUpdateEvent />,
+      },
+      {
+        path: "events/view/:id",
+        element: <AdminViewEvent />,
       },
       {
         path: "users",
