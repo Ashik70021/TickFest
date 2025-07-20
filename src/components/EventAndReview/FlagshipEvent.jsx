@@ -123,55 +123,7 @@ export default function FlagshipEvents() {
                     <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#B13BFF]/30 to-transparent transform -translate-y-1/2 animate-flow-horizontal"></div>
 
                     {/* First Marquee - Left to Right */}
-                    <div className="relative group">
-                        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#090040] via-[#090040]/80 to-transparent z-10 pointer-events-none"></div>
-                        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#090040] via-[#090040]/80 to-transparent z-10 pointer-events-none"></div>
-
-                        {/* Glow effect on hover */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#B13BFF]/0 via-[#B13BFF]/5 to-[#B13BFF]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-glow"></div>
-
-                        <Marquee speed={80} gradient={false} className="py-4">
-                            {cards.map((card, i) => (
-                                <div
-                                    key={`left-${i}`}
-                                    className="group relative mx-4 bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-500 hover:shadow-[#B13BFF]/30 animate-float-slow"
-                                    style={{
-                                        width: '320px',
-                                        height: '200px',
-                                        animationDelay: `${i * 0.2}s`
-                                    }}
-                                >
-                                    {/* Image with overlay */}
-                                    <div className="relative h-full overflow-hidden">
-                                        <img
-                                            src={getImage(card.cover)}
-                                            alt={card.name}
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                        />
-
-                                        {/* Animated shimmer effect */}
-                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-
-                                        {/* Gradient overlay */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-[#090040]/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
-
-                                        {/* Content overlay */}
-                                        <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                                            <h3 className="text-lg font-bold mb-2 line-clamp-1">{card.name}</h3>
-                                            <p className="text-sm opacity-90 line-clamp-2">{card.description}</p>
-                                        </div>
-
-                                        {/* Hover effect border */}
-                                        <div className="absolute inset-0 border-2 border-[#B13BFF]/0 group-hover:border-[#B13BFF]/50 rounded-3xl transition-all duration-300"></div>
-
-                                        {/* Corner accent */}
-                                        <div className="absolute top-4 right-4 w-3 h-3 bg-[#B13BFF] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-twinkle"></div>
-                                    </div>
-                                </div>
-                            ))}
-                        </Marquee>
-                    </div>
-
+                    
                     {/* Second Marquee - Right to Left */}
                     <div className="relative group">
                         <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#090040] via-[#090040]/80 to-transparent z-10 pointer-events-none"></div>
