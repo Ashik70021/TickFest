@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { getEventsData } from "../../utils/eventsAPI";
 import Cards from "../cards/Cards";
 
@@ -8,8 +9,28 @@ const Events = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("All Events");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [searchParams] = useSearchParams();
 
   const categories = ["All Events", "Concert", "Sports", "Theatre", "Conference", "Festival", "Comedy"];
+
+  // Initialize search filters from URL parameters
+  useEffect(() => {
+    const searchParam = searchParams.get('search');
+    const categoryParam = searchParams.get('category');
+    const locationParam = searchParams.get('location');
+    const dateParam = searchParams.get('date');
+
+    if (searchParam) setSearchTerm(searchParam);
+    if (categoryParam) {
+      // Capitalize first letter to match category format
+      const formattedCategory = categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1);
+      setSelectedCategory(formattedCategory);
+    }
+    if (locationParam) setSelectedLocation(locationParam);
+    if (dateParam) setSelectedDate(dateParam);
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -44,8 +65,24 @@ const Events = () => {
       );
     }
 
+    // Filter by location
+    if (selectedLocation) {
+      filtered = filtered.filter(event => 
+        event.location.toLowerCase().includes(selectedLocation.toLowerCase())
+      );
+    }
+
+    // Filter by date
+    if (selectedDate) {
+      filtered = filtered.filter(event => {
+        const eventDate = new Date(event.date);
+        const searchDate = new Date(selectedDate);
+        return eventDate.toDateString() === searchDate.toDateString();
+      });
+    }
+
     setFilteredEvents(filtered);
-  }, [events, selectedCategory, searchTerm]);
+  }, [events, selectedCategory, searchTerm, selectedLocation, selectedDate]);
 
   if (loading) {
     return (
@@ -134,7 +171,7 @@ const Events = () => {
             </h2>
             <div className="text-sm text-gray-600">
               {searchTerm && (
-                <span>Search results for "<strong>{searchTerm}</strong>"</span>
+                <span>Search results for &ldquo;<strong>{searchTerm}</strong>&rdquo;</span>
               )}
             </div>
           </div>

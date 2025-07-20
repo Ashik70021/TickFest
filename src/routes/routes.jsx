@@ -41,6 +41,7 @@ export const router = createBrowserRouter([
         path: "/signup",
         element: <Signup></Signup>
       },
+
       {
         path: "/events/:eventId",
         element: (

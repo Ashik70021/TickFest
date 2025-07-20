@@ -39,9 +39,9 @@ const Navbar = () => {
             </Link>
         </li>
         <li className='text-xl font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>
-            <Link to="/contact us" className={`relative group ${isActiveLink('/contact us') ? 'text-[#B13BFF]' : ''}`}>
+            <Link to="/contact" className={`relative group ${isActiveLink('/contact') ? 'text-[#B13BFF]' : ''}`}>
                 Contact us
-                <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] transition-all duration-300 ${isActiveLink('/contact us') ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+                <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] transition-all duration-300 ${isActiveLink('/contact') ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </Link>
         </li>
     </>

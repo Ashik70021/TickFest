@@ -1,4 +1,29 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 const Banner = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedLocation, setSelectedLocation] = useState('');
+    const [selectedDate, setSelectedDate] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        
+        // Create search parameters
+        const searchParams = new URLSearchParams();
+        
+        if (searchTerm) searchParams.set('search', searchTerm);
+        if (selectedCategory) searchParams.set('category', selectedCategory);
+        if (selectedLocation) searchParams.set('location', selectedLocation);
+        if (selectedDate) searchParams.set('date', selectedDate);
+        
+        // Navigate to events page with search parameters
+        const queryString = searchParams.toString();
+        navigate(`/events${queryString ? `?${queryString}` : ''}`);
+    };
+
     return (
         <div className="relative w-full min-h-screen overflow-hidden">
             {/* Modern Background with New Color Scheme */}
@@ -171,7 +196,10 @@ const Banner = () => {
 
                         {/* Action Buttons */}
                         <div className="flex flex-col sm:flex-row justify-center gap-6 mb-16">
-                            <button className="group relative bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white font-bold px-10 py-5 rounded-2xl shadow-2xl hover:shadow-[#B13BFF]/40 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden">
+                            <button 
+                                onClick={() => navigate('/events')}
+                                className="group relative bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white font-bold px-10 py-5 rounded-2xl shadow-2xl hover:shadow-[#B13BFF]/40 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden"
+                            >
                                 <div className="absolute inset-0 bg-gradient-to-r from-[#471396] to-[#B13BFF] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                 <span className="relative flex items-center justify-center gap-3 text-lg">
                                     🎫 Browse Events
@@ -201,7 +229,7 @@ const Banner = () => {
                             <div className="relative z-10">
                                 <h3 className="text-3xl font-bold bg-gradient-to-r from-[#090040] to-[#471396] bg-clip-text text-transparent mb-8 text-center">Find Your Perfect Event</h3>
                                 
-                                <form className="space-y-8">
+                                <form className="space-y-8" onSubmit={handleSearch}>
                                     {/* Search Input */}
                                     <div className="relative group">
                                         <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
@@ -211,6 +239,8 @@ const Banner = () => {
                                         </div>
                                         <input
                                             type="text"
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
                                             placeholder="Search for events, artists, venues..."
                                             className="w-full pl-14 pr-6 py-5 text-[#090040] rounded-2xl border-3 border-gray-200 focus:border-[#B13BFF] focus:ring-6 focus:ring-[#B13BFF]/20 transition-all duration-300 text-lg font-medium shadow-lg hover:shadow-xl"
                                         />
@@ -220,7 +250,11 @@ const Banner = () => {
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                         <div className="space-y-3">
                                             <label className="block text-sm font-bold text-[#090040] uppercase tracking-wide">Category</label>
-                                            <select className="w-full px-5 py-4 rounded-2xl border-3 border-gray-200 focus:border-[#B13BFF] focus:ring-6 focus:ring-[#B13BFF]/20 transition-all duration-300 text-[#090040] font-medium shadow-lg hover:shadow-xl">
+                                            <select 
+                                                value={selectedCategory}
+                                                onChange={(e) => setSelectedCategory(e.target.value)}
+                                                className="w-full px-5 py-4 rounded-2xl border-3 border-gray-200 focus:border-[#B13BFF] focus:ring-6 focus:ring-[#B13BFF]/20 transition-all duration-300 text-[#090040] font-medium shadow-lg hover:shadow-xl"
+                                            >
                                                 <option value="">All Categories</option>
                                                 <option value="concert">🎵 Concerts</option>
                                                 <option value="sports">⚽ Sports</option>
@@ -233,7 +267,11 @@ const Banner = () => {
 
                                         <div className="space-y-3">
                                             <label className="block text-sm font-bold text-[#090040] uppercase tracking-wide">Location</label>
-                                            <select className="w-full px-5 py-4 rounded-2xl border-3 border-gray-200 focus:border-[#B13BFF] focus:ring-6 focus:ring-[#B13BFF]/20 transition-all duration-300 text-[#090040] font-medium shadow-lg hover:shadow-xl">
+                                            <select 
+                                                value={selectedLocation}
+                                                onChange={(e) => setSelectedLocation(e.target.value)}
+                                                className="w-full px-5 py-4 rounded-2xl border-3 border-gray-200 focus:border-[#B13BFF] focus:ring-6 focus:ring-[#B13BFF]/20 transition-all duration-300 text-[#090040] font-medium shadow-lg hover:shadow-xl"
+                                            >
                                                 <option value="">Select Location</option>
                                                 <option value="dhaka">📍 Dhaka</option>
                                                 <option value="chittagong">📍 Chittagong</option>
@@ -248,6 +286,8 @@ const Banner = () => {
                                             <label className="block text-sm font-bold text-[#090040] uppercase tracking-wide">Date</label>
                                             <input
                                                 type="date"
+                                                value={selectedDate}
+                                                onChange={(e) => setSelectedDate(e.target.value)}
                                                 className="w-full px-5 py-4 rounded-2xl border-3 border-gray-200 focus:border-[#B13BFF] focus:ring-6 focus:ring-[#B13BFF]/20 transition-all duration-300 text-[#090040] font-medium shadow-lg hover:shadow-xl"
                                             />
                                         </div>
