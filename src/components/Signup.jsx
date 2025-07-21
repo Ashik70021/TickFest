@@ -129,18 +129,41 @@ const Signup = () => {
     const handleGoogleSignIn = async () => {
         try {
             setIsLoading(true);
+            setError(null);
             const result = await googleSignIn();
             
-            // Save Google user to database
+            // Save Google user to database using social-login endpoint
             const userData = {
-                User_ID: result.user.uid,
-                Name: result.user.displayName,
-                Email: result.user.email,
-                User_Type: 'User',
-                Img: result.user.photoURL
+                uid: result.user.uid,
+                name: result.user.displayName || 'User',
+                email: result.user.email,
+                photoURL: result.user.photoURL || null,
+                provider: 'google',
+                createdAt: new Date().toISOString(),
+                lastLogin: new Date().toISOString()
             };
 
-            await saveUserToDatabase(userData);
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/index.php/api/users/social-login`,
+                userData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+
+            // Update Firebase profile with photo URL if available
+            if (result.user.photoURL && updateUserProfile) {
+                try {
+                    await updateUserProfile(result.user.displayName, result.user.photoURL);
+                } catch (profileError) {
+                    console.error('Error updating user profile:', profileError);
+                    // Don't throw error - user can still proceed
+                }
+            }
+
+            console.log('User stored/updated in database:', response.data);
             alert("Google sign in successful!");
             
         } catch (err) {
