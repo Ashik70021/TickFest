@@ -18,6 +18,8 @@ import EventDetails from "../components/EventDetails/EventDetails";
 import Checkout from "../components/Checkout/Checkout";
 import ErrorBoundary from "../components/common/ErrorBoundary";
 import AdminAnalytics from "../components/Pages/AdminDashboard/AdminAnalytics";
+import Contact from "../components/Pages/Contact";
+import UserProfile from "../components/Pages/UserProfile";
 
 
 export const router = createBrowserRouter([
@@ -53,6 +55,14 @@ export const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />
+      },
+      {
+        path: "/contact",
+        element: <Contact></Contact>
+      },
+      {
+        path: "/profile",
+        element: <UserProfile />
       },
     ],
   },
