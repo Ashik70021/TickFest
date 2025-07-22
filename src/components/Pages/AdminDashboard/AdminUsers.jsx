@@ -1,67 +1,139 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const AdminUsers = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterRole, setFilterRole] = useState('all');
     const [filterStatus, setFilterStatus] = useState('all');
     const [sortBy, setSortBy] = useState('name');
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Enhanced dummy data for users
-    const users = [
-        {
-            id: "USR001",
-            name: "Ahmed Rahman",
-            email: "ahmed.rahman@email.com",
-            phone: "+8801712345678",
-            role: "Customer",
-            status: "Active",
-            joinDate: "2024-01-15",
-            lastLogin: "2025-01-12 14:30",
-            eventsAttended: 12,
-            totalSpent: "15,500 BDT",
-            avatar: "https://ui-avatars.com/api/?name=Ahmed+Rahman&background=B13BFF&color=fff"
-        },
-        {
-            id: "USR002",
-            name: "Sarah Ahmed",
-            email: "sarah.ahmed@email.com",
-            phone: "+8801987654321",
-            role: "Event Organizer",
-            status: "Active",
-            joinDate: "2024-03-20",
-            lastLogin: "2025-01-12 09:15",
-            eventsCreated: 8,
-            eventsAttended: 25,
-            totalSpent: "32,000 BDT",
-            totalEarned: "85,000 BDT",
-            avatar: "https://ui-avatars.com/api/?name=Sarah+Ahmed&background=471396&color=fff"
-        },
-        {
-            id: "USR003",
-            name: "Mohammad Khan",
-            email: "mohammad.khan@email.com",
-            phone: "+8801555123456",
-            role: "Admin",
-            status: "Active",
-            joinDate: "2023-12-01",
-            lastLogin: "2025-01-12 16:45",
-            eventsManaged: 45,
-            avatar: "https://ui-avatars.com/api/?name=Mohammad+Khan&background=090040&color=fff"
-        },
-        {
-            id: "USR004",
-            name: "Fatima Begum",
-            email: "fatima.begum@email.com",
-            phone: "+8801777888999",
-            role: "Customer",
-            status: "Inactive",
-            joinDate: "2024-06-12",
-            lastLogin: "2024-12-20 11:20",
-            eventsAttended: 3,
-            totalSpent: "4,500 BDT",
-            avatar: "https://ui-avatars.com/api/?name=Fatima+Begum&background=B13BFF&color=fff"
-        }
-    ];
+    // API Base URL from environment with fallback
+    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+    // Fetch users from database
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                setLoading(true);
+                console.log('Attempting to fetch users from:', `${API_BASE_URL}/index.php/api/users`);
+                
+                const response = await fetch(`${API_BASE_URL}/index.php/api/users`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Users API Response:', data);
+                
+                // Transform the API data to match our component structure
+                const transformedUsers = data.map(user => ({
+                    id: user.uid || user.User_ID || user.id,
+                    name: user.Name || user.displayName || user.name || 'N/A',
+                    email: user.Email || user.email || 'N/A',
+                    phone: user.Phone || user.phone || 'N/A',
+                    role: user.User_Type || user.role || 'user', // Default to 'user'
+                    status: user.Status || user.status || 'Active',
+                    joinDate: user.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A',
+                    lastLogin: user.last_login ? new Date(user.last_login).toLocaleString() : 'N/A',
+                    eventsAttended: user.events_attended || 0,
+                    totalSpent: user.total_spent || '0 BDT',
+                    eventsCreated: user.events_created || 0,
+                    totalEarned: user.total_earned || '0 BDT',
+                    eventsManaged: user.events_managed || 0,
+                    avatar: user.photoURL || user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.Name || user.name || 'User')}&background=B13BFF&color=fff`
+                }));
+
+                setUsers(transformedUsers);
+                setError(null);
+            } catch (err) {
+                console.error('Error fetching users:', err);
+                console.error('API URL being used:', `${API_BASE_URL}/index.php/api/users`);
+                console.error('Error details:', {
+                    message: err.message,
+                    status: err.status,
+                    statusText: err.statusText
+                });
+                
+                let errorMessage = 'Failed to fetch users. ';
+                
+                if (err.name === 'TypeError' && err.message.includes('fetch')) {
+                    errorMessage += 'Network connection failed. Please check if your backend server is running.';
+                } else if (err.status === 404) {
+                    errorMessage += 'API endpoint not found. Please check your backend configuration.';
+                } else if (err.status === 500) {
+                    errorMessage += 'Server error. Please check your backend logs.';
+                } else if (!API_BASE_URL || API_BASE_URL === 'undefined') {
+                    errorMessage += 'API URL not configured. Please set VITE_API_URL in your .env file.';
+                } else {
+                    errorMessage += `${err.message}`;
+                }
+                
+                setError(errorMessage);
+                
+                // For development: Add some mock data as fallback
+                const mockUsers = [
+                    {
+                        id: 'mock-1',
+                        name: 'John Doe',
+                        email: 'john@example.com',
+                        phone: '+1234567890',
+                        role: 'user',
+                        status: 'Active',
+                        joinDate: new Date().toLocaleDateString(),
+                        lastLogin: 'Never',
+                        eventsAttended: 3,
+                        totalSpent: '450 BDT',
+                        eventsCreated: 0,
+                        totalEarned: '0 BDT',
+                        eventsManaged: 0,
+                        avatar: 'https://ui-avatars.com/api/?name=John%20Doe&background=B13BFF&color=fff'
+                    },
+                    {
+                        id: 'mock-2',
+                        name: 'Jane Smith',
+                        email: 'jane@example.com',
+                        phone: '+1234567891',
+                        role: 'organizer',
+                        status: 'Active',
+                        joinDate: new Date().toLocaleDateString(),
+                        lastLogin: '2 hours ago',
+                        eventsAttended: 1,
+                        totalSpent: '150 BDT',
+                        eventsCreated: 5,
+                        totalEarned: '2500 BDT',
+                        eventsManaged: 0,
+                        avatar: 'https://ui-avatars.com/api/?name=Jane%20Smith&background=B13BFF&color=fff'
+                    },
+                    {
+                        id: 'mock-3',
+                        name: 'Admin User',
+                        email: 'admin@example.com',
+                        phone: '+1234567892',
+                        role: 'admin',
+                        status: 'Active',
+                        joinDate: new Date().toLocaleDateString(),
+                        lastLogin: '1 hour ago',
+                        eventsAttended: 0,
+                        totalSpent: '0 BDT',
+                        eventsCreated: 0,
+                        totalEarned: '0 BDT',
+                        eventsManaged: 15,
+                        avatar: 'https://ui-avatars.com/api/?name=Admin%20User&background=B13BFF&color=fff'
+                    }
+                ];
+                
+                console.log('Using mock data due to API error');
+                setUsers(mockUsers);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUsers();
+    }, [API_BASE_URL]);
 
     // Filter and search logic
     const filteredUsers = users.filter(user => {
@@ -76,8 +148,145 @@ const AdminUsers = () => {
     // Stats calculation
     const totalUsers = users.length;
     const activeUsers = users.filter(u => u.status === 'Active').length;
-    const organizers = users.filter(u => u.role === 'Event Organizer').length;
-    const customers = users.filter(u => u.role === 'Customer').length;
+    const organizers = users.filter(u => u.role === 'organizer').length;
+    const customers = users.filter(u => u.role === 'user').length;
+
+    // Handle user role update
+    const handleRoleUpdate = async (userId, newRole) => {
+        try {
+            console.log('=== Role Update Debug Info ===');
+            console.log('User ID:', userId);
+            console.log('New Role:', newRole);
+            console.log('API URL:', `${API_BASE_URL}/index.php/api/users/update-role`);
+            
+            const requestBody = {
+                uid: userId,
+                User_Type: newRole
+            };
+            console.log('Request body:', requestBody);
+            
+            const response = await fetch(`${API_BASE_URL}/index.php/api/users/update-role`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            console.log('Response status:', response.status);
+            console.log('Response ok:', response.ok);
+            console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
+            // Read response text first to debug
+            const responseText = await response.text();
+            console.log('Raw response:', responseText);
+
+            let data;
+            try {
+                data = JSON.parse(responseText);
+            } catch (parseError) {
+                console.error('Failed to parse response as JSON:', parseError);
+                throw new Error(`Server returned invalid JSON: ${responseText}`);
+            }
+
+            console.log('Parsed response data:', data);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}, message: ${data?.message || responseText}`);
+            }
+
+            // Check for successful response patterns
+            if (data.success === true || 
+                data.status === 'success' || 
+                (data.message && data.message.toLowerCase().includes('success')) ||
+                response.status === 200) {
+                
+                console.log('✅ Role update successful');
+                
+                // Update local state
+                setUsers(prevUsers => 
+                    prevUsers.map(user => 
+                        user.id === userId ? { ...user, role: newRole } : user
+                    )
+                );
+                alert('User role updated successfully!');
+            } else {
+                console.log('❌ Role update failed based on response data');
+                throw new Error(data.message || data.error || 'Failed to update role - unexpected response format');
+            }
+        } catch (err) {
+            console.error('=== Role Update Error ===');
+            console.error('Error type:', err.constructor.name);
+            console.error('Error message:', err.message);
+            console.error('Full error:', err);
+            
+            let userMessage = 'Failed to update user role';
+            if (err.message.includes('NetworkError') || err.message.includes('fetch')) {
+                userMessage += ': Network connection failed. Please check your server.';
+            } else if (err.message.includes('HTTP error')) {
+                userMessage += `: Server error (${err.message})`;
+            } else if (err.message.includes('invalid JSON')) {
+                userMessage += ': Server returned invalid response format.';
+            } else {
+                userMessage += `: ${err.message}`;
+            }
+            
+            alert(userMessage + ' Please try again.');
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#471396] mx-auto mb-4"></div>
+                    <p className="text-gray-600">Loading users...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                <div className="max-w-md w-full bg-white/80 backdrop-blur-lg rounded-2xl p-8 border border-gray-200 shadow-lg">
+                    <div className="text-center">
+                        <div className="text-red-500 mb-4">
+                            <svg className="mx-auto h-16 w-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 className="text-lg font-semibold text-gray-800 mb-2">Error Loading Users</h3>
+                        <p className="text-gray-600 mb-4">{error}</p>
+                        
+                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4 text-left text-sm">
+                            <p className="text-yellow-800 font-medium mb-1">Debug Info:</p>
+                            <p className="text-yellow-700">API URL: {API_BASE_URL || 'Not configured'}/index.php/api/users</p>
+                            <p className="text-yellow-700">Environment: {import.meta.env.MODE}</p>
+                        </div>
+                        
+                        <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                            <button 
+                                onClick={() => window.location.reload()} 
+                                className="bg-[#471396] text-white px-4 py-2 rounded-lg hover:bg-[#B13BFF] transition-colors"
+                            >
+                                Retry
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    setError(null);
+                                    setLoading(false);
+                                }} 
+                                className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
+                            >
+                                Continue with Mock Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -160,7 +369,7 @@ const AdminUsers = () => {
                         <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-6 border border-gray-200 hover:bg-white/90 transition-all duration-300 shadow-lg">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-gray-600 text-sm">Customers</p>
+                                    <p className="text-gray-600 text-sm">Users</p>
                                     <p className="text-3xl font-bold text-gray-800">{customers}</p>
                                 </div>
                                 <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
@@ -199,8 +408,8 @@ const AdminUsers = () => {
                                     className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#B13BFF] transition-all duration-300"
                                 >
                                     <option value="all">All Roles</option>
-                                    <option value="customer">Customer</option>
-                                    <option value="event organizer">Event Organizer</option>
+                                    <option value="user">User</option>
+                                    <option value="organizer">Organizer</option>
                                     <option value="admin">Admin</option>
                                 </select>
 
@@ -265,13 +474,21 @@ const AdminUsers = () => {
                                             <div className="text-gray-500">{user.phone}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
-                                                user.role === 'Admin' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
-                                                user.role === 'Event Organizer' ? 'bg-[#471396]/20 text-[#B13BFF] border border-[#B13BFF]/30' :
-                                                'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                                            }`}>
-                                                {user.role}
-                                            </span>
+                                            <div className="flex items-center">
+                                                <select
+                                                    value={user.role}
+                                                    onChange={(e) => handleRoleUpdate(user.id, e.target.value)}
+                                                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#B13BFF] ${
+                                                        user.role === 'admin' ? 'bg-red-500/20 text-red-400 border-red-500/30' :
+                                                        user.role === 'organizer' ? 'bg-[#471396]/20 text-[#B13BFF] border-[#B13BFF]/30' :
+                                                        'bg-blue-500/20 text-blue-400 border-blue-500/30'
+                                                    }`}
+                                                >
+                                                    <option value="user">User</option>
+                                                    <option value="organizer">Organizer</option>
+                                                    <option value="admin">Admin</option>
+                                                </select>
+                                            </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${user.status === 'Active' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'}`}>
@@ -279,24 +496,24 @@ const AdminUsers = () => {
                                                 {user.status}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/80">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                             <div>Joined: {user.joinDate}</div>
-                                            <div className="text-white/60">Last: {user.lastLogin}</div>
+                                            <div className="text-gray-500">Last: {user.lastLogin}</div>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/80">
-                                            {user.role === 'Event Organizer' ? (
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                            {user.role === 'organizer' ? (
                                                 <div>
                                                     <div>Created: {user.eventsCreated} events</div>
-                                                    <div className="text-white/60">Earned: {user.totalEarned}</div>
+                                                    <div className="text-gray-500">Earned: {user.totalEarned}</div>
                                                 </div>
-                                            ) : user.role === 'Admin' ? (
+                                            ) : user.role === 'admin' ? (
                                                 <div>
                                                     <div>Managed: {user.eventsManaged} events</div>
                                                 </div>
                                             ) : (
                                                 <div>
                                                     <div>Attended: {user.eventsAttended} events</div>
-                                                    <div className="text-white/60">Spent: {user.totalSpent}</div>
+                                                    <div className="text-gray-500">Spent: {user.totalSpent}</div>
                                                 </div>
                                             )}
                                         </td>
@@ -328,13 +545,13 @@ const AdminUsers = () => {
                 </div>
 
                 {/* No results message */}
-                {filteredUsers.length === 0 && (
+                {filteredUsers.length === 0 && !loading && (
                     <div className="text-center py-12">
-                        <svg className="mx-auto h-12 w-12 text-white/50 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                        <h3 className="text-lg font-semibold text-white mb-2">No users found</h3>
-                        <p className="text-white/70">Try adjusting your search criteria or add a new user.</p>
+                        <h3 className="text-lg font-semibold text-gray-800 mb-2">No users found</h3>
+                        <p className="text-gray-600">Try adjusting your search criteria or add a new user.</p>
                     </div>
                 )}
             </div>
