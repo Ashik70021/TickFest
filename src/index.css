@@ -782,3 +782,63 @@ html {
 .animate-wave-reverse {
   animation: wave-reverse 6s ease-in-out infinite;
 }
+
+/* Additional animations for Activities page */
+@keyframes float-up {
+  0% {
+    opacity: 0.6;
+    transform: translateY(100vh) scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10vh) scale(1);
+  }
+}
+
+.animate-float-up {
+  animation: float-up linear infinite;
+}
+
+@keyframes patternMove {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes wave-slow {
+  0% {
+    d: path("M0,400 Q300,200 600,400 T1200,400");
+  }
+  50% {
+    d: path("M0,400 Q300,600 600,400 T1200,400");
+  }
+  100% {
+    d: path("M0,400 Q300,200 600,400 T1200,400");
+  }
+}
+
+.animate-wave-slow {
+  animation: wave-slow 12s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}

@@ -1,11 +1,24 @@
 import { Link, useLocation } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
-import { FaUser, FaTicketAlt, FaHeart, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaUser, FaTicketAlt, FaHeart, FaCog, FaSignOutAlt, FaTachometerAlt } from "react-icons/fa";
+import { getUserTypeFromAPI } from "../../utils/userUtils";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
     const location = useLocation();
+    const [userType, setUserType] = useState('user');
+
+    // Fetch user type when user changes
+    useEffect(() => {
+        if (user?.email) {
+            getUserTypeFromAPI(user.email).then(type => {
+                setUserType(type);
+            });
+        } else {
+            setUserType('user');
+        }
+    }, [user]);
 
     const handleSignOut = () => {
         logOut()
@@ -59,15 +72,33 @@ const Navbar = () => {
                 <div>
                     <h3 className="font-bold text-lg">{user?.displayName || "User"}</h3>
                     <p className="text-sm text-gray-300">{user?.email}</p>
+                    <span className="text-xs px-2 py-1 bg-[#B13BFF] rounded-full capitalize">
+                        {userType}
+                    </span>
                 </div>
             </div>
 
             {/* Menu Items */}
             <div className="mt-4 space-y-2">
-                <Link to="/profile" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
-                    <FaUser className="text-[#B13BFF]" />
-                    <span>Profile</span>
-                </Link>
+                {/* Dynamic Dashboard/Profile Link */}
+                {userType === 'user' ? (
+                    <Link to="/profile" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
+                        <FaUser className="text-[#B13BFF]" />
+                        <span>Profile</span>
+                    </Link>
+                ) : userType === 'organizer' ? (
+                    <Link to="/organizerdashboard" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
+                        <FaTachometerAlt className="text-[#B13BFF]" />
+                        <span>Dashboard</span>
+                    </Link>
+                ) : (
+                    <Link to="/admindashboard/adminhome" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
+                        <FaTachometerAlt className="text-[#B13BFF]" />
+                        <span>Admin Dashboard</span>
+                    </Link>
+                )}
+                
+                {/* Common Menu Items */}
                 <Link to="/my-tickets" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
                     <FaTicketAlt className="text-[#B13BFF]" />
                     <span>My Tickets</span>
@@ -80,12 +111,7 @@ const Navbar = () => {
                     <FaCog className="text-[#B13BFF]" />
                     <span>Settings</span>
                 </Link>
-                {user?.email === 'admin@tickfest.com' && (
-                    <Link to="/admindashboard/adminhome" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
-                        <FaCog className="text-[#B13BFF]" />
-                        <span>Admin Dashboard</span>
-                    </Link>
-                )}
+                
                 <button 
                     onClick={handleSignOut}
                     className="flex items-center gap-3 p-3 w-full hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300 text-left"
