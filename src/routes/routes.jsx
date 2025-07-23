@@ -18,6 +18,13 @@ import EventDetails from "../components/EventDetails/EventDetails";
 import Checkout from "../components/Checkout/Checkout";
 import ErrorBoundary from "../components/common/ErrorBoundary";
 import AdminAnalytics from "../components/Pages/AdminDashboard/AdminAnalytics";
+import Contact from "../components/Pages/Contact";
+import UserProfile from "../components/Pages/UserDashboard/UserProfile";
+
+import PrivateRoute from "../components/common/PrivateRoute";
+import OrganizerDashboard from "../layouts/OrganizerDashboard";
+import OrganizerHome from "../components/Pages/OrganizerDashboard/OrganizerHome";
+import Activities from "../components/Pages/Activities";
 
 
 export const router = createBrowserRouter([
@@ -54,15 +61,39 @@ export const router = createBrowserRouter([
         path: "/checkout",
         element: <Checkout />
       },
+      {
+        path: "/contact",
+        element: <Contact></Contact>
+      },
+      {
+        path: "/activities",
+        element: <Activities></Activities>
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute>
+            <UserProfile />
+          </PrivateRoute>
+        )
+      },
     ],
   },
   // Admin dashboard
   {
     path: "admindashboard",
-    element: <AdminDashboard />,
+    element: (
+      <PrivateRoute>
+        <AdminDashboard />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "adminhome", 
+        element: <AdminDashboardHome />, 
+      },
+      {
+        path: "", 
         element: <AdminDashboardHome />, 
       },
       {
@@ -100,6 +131,25 @@ export const router = createBrowserRouter([
       {
         path: "profile",
         element: <AdminProfile />,
+      },
+    ],
+  },
+  // Organizer dashboard
+  {
+    path: "organizerdashboard",
+    element: (
+      <PrivateRoute>
+        <OrganizerDashboard />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "home", 
+        element: <OrganizerHome />, 
+      },
+      {
+        path: "",
+        element: <OrganizerHome />,
       },
     ],
   },

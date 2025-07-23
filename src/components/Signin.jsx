@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import { FaGoogle, FaFacebookF } from 'react-icons/fa';
 import axios from 'axios';
@@ -11,6 +11,9 @@ const Signin = () => {
     const [isFacebookLoading, setIsFacebookLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const location = useLocation();
+    
+    const from = location.state?.from?.pathname || "/";
 
     // Function to store user data from social login in database
     const storeUserInDatabase = async (userData) => {
@@ -53,7 +56,7 @@ const Signin = () => {
         try {
             const result = await signIn(email, password);
             setUser(result.user);
-            navigate('/');
+            navigate(from, { replace: true });
         } catch (err) {
             setError(err.message || 'Login failed');
             console.error('Login error:', err);
@@ -91,7 +94,7 @@ const Signin = () => {
                 }
             }
 
-            navigate('/');
+            navigate(from, { replace: true });
 
         } catch (err) {
             setError(err.message || 'Google sign-in failed');
@@ -135,7 +138,7 @@ const Signin = () => {
                 }
             }
 
-            navigate('/');
+            navigate(from, { replace: true });
 
         } catch (err) {
             setError(err.message || 'Facebook sign-in failed');
