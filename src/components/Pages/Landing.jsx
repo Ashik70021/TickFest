@@ -3,12 +3,14 @@ import CardList from "../cards/CardList";
 import FlagshipEvents from "../EventAndReview/FlagshipEvent";
 import MakeOwnEvent from "../MakeOwnEvent/MakeOwnEvent";
 import Partner from "../Partner";
+import FAQ from "../FAQ/FAQ";
 const Landing = () => {
     return (
         <div>
             <Banner></Banner>
             <CardList></CardList>
             <MakeOwnEvent></MakeOwnEvent>
+            <FAQ></FAQ>
             <FlagshipEvents></FlagshipEvents>
             <Partner></Partner>
         </div>

@@ -46,9 +46,9 @@ const Navbar = () => {
             </Link>
         </li>
         <li className='text-xl font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>
-            <Link to="/activities" className={`relative group ${isActiveLink('/activities') ? 'text-[#B13BFF]' : ''}`}>
-                Activities
-                <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] transition-all duration-300 ${isActiveLink('/activities') ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+            <Link to="/about-us" className={`relative group ${isActiveLink('/about-us') ? 'text-[#B13BFF]' : ''}`}>
+                About Us
+                <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#B13BFF] to-[#471396] transition-all duration-300 ${isActiveLink('/about-us') ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </Link>
         </li>
         <li className='text-xl font-medium hover:text-[#B13BFF] transition-all duration-300 transform hover:scale-105'>

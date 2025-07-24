@@ -24,7 +24,7 @@ import UserProfile from "../components/Pages/UserDashboard/UserProfile";
 import PrivateRoute from "../components/common/PrivateRoute";
 import OrganizerDashboard from "../layouts/OrganizerDashboard";
 import OrganizerHome from "../components/Pages/OrganizerDashboard/OrganizerHome";
-import Activities from "../components/Pages/Activities";
+import AboutUs from "../components/Pages/AboutUs";
 
 
 export const router = createBrowserRouter([
@@ -66,8 +66,8 @@ export const router = createBrowserRouter([
         element: <Contact></Contact>
       },
       {
-        path: "/activities",
-        element: <Activities></Activities>
+        path: "/about-us",
+        element: <AboutUs></AboutUs>
       },
       {
         path: "/profile",
