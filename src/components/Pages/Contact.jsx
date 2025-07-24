@@ -43,32 +43,95 @@ const Contact = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="relative min-h-screen bg-white overflow-hidden">
+            {/* Background Watermark Design with Animations */}
+            <div className="absolute inset-0 opacity-5 pointer-events-none">
+                {/* Animated Contact-related Icons */}
+                <div className="absolute top-20 left-10 text-[#232360] text-9xl font-bold transform rotate-12 animate-pulse">📞</div>
+                <div className="absolute top-40 right-20 text-[#232360] text-7xl font-bold transform -rotate-12 animate-bounce">✉️</div>
+                <div className="absolute bottom-32 left-1/4 text-[#232360] text-6xl font-bold transform rotate-45 animate-pulse">📍</div>
+                <div className="absolute bottom-20 right-1/3 text-[#232360] text-8xl font-bold transform -rotate-45 animate-bounce">💬</div>
+                <div className="absolute top-1/2 right-1/2 text-[#232360] text-5xl font-bold transform rotate-90 animate-pulse">📧</div>
+                <div className="absolute top-3/4 left-1/5 text-[#232360] text-6xl font-bold transform -rotate-30 animate-bounce">📱</div>
+                <div className="absolute bottom-1/5 right-1/5 text-[#232360] text-7xl font-bold transform rotate-30 animate-pulse">📠</div>
+                <div className="absolute top-1/3 left-1/3 text-[#232360] text-4xl font-bold transform rotate-60 animate-bounce">🌐</div>
+                
+                {/* Floating Phone Icons with Different Animations */}
+                <div className="absolute top-16 left-1/2 text-[#232360] text-2xl animate-float-slow">📞</div>
+                <div className="absolute top-1/4 right-1/5 text-[#232360] text-3xl animate-float-medium">📱</div>
+                <div className="absolute bottom-1/4 left-1/6 text-[#232360] text-2xl animate-float-fast">📞</div>
+                <div className="absolute top-2/3 right-2/3 text-[#232360] text-2xl animate-twinkle">📧</div>
+                <div className="absolute bottom-1/3 left-2/3 text-[#232360] text-3xl animate-float-slow">✉️</div>
+                
+                {/* Animated Geometric Shapes */}
+                <div className="absolute top-32 right-1/4 w-24 h-24 border-4 border-[#232360] rounded-full transform rotate-45 animate-spin-slow"></div>
+                <div className="absolute bottom-40 left-1/3 w-16 h-16 bg-[#232360] transform rotate-12 animate-pulse"></div>
+                <div className="absolute top-1/2 left-20 w-20 h-20 border-4 border-[#232360] transform rotate-45 animate-bounce"></div>
+                <div className="absolute top-1/3 right-10 w-12 h-12 bg-[#232360] rounded-full animate-pulse"></div>
+                <div className="absolute bottom-1/4 right-20 w-18 h-18 border-2 border-[#232360] rounded-full animate-spin-slow"></div>
+                
+                {/* Contact Bubbles with Phone Ring Animation */}
+                <div className="absolute top-1/5 left-2/5 w-8 h-8 border-2 border-[#232360] rounded-full animate-ping opacity-30"></div>
+                <div className="absolute bottom-1/5 right-2/5 w-6 h-6 border-2 border-[#232360] rounded-full animate-ping opacity-20" style={{animationDelay: '1s'}}></div>
+                <div className="absolute top-2/5 left-1/5 w-10 h-10 border-2 border-[#232360] rounded-full animate-ping opacity-25" style={{animationDelay: '2s'}}></div>
+                
+                {/* Text Watermarks */}
+                <div className="absolute top-1/4 left-1/2 transform -rotate-12 text-[#232360] text-4xl font-bold opacity-30 animate-pulse">CONTACT</div>
+                <div className="absolute bottom-1/3 right-1/4 transform rotate-12 text-[#232360] text-3xl font-bold opacity-30 animate-bounce">SUPPORT</div>
+                <div className="absolute top-3/4 left-1/4 transform -rotate-45 text-[#232360] text-2xl font-bold opacity-30 animate-pulse">HELP</div>
+                <div className="absolute bottom-1/6 left-1/2 transform rotate-25 text-[#232360] text-2xl font-bold opacity-25 animate-bounce">CALL US</div>
+                <div className="absolute top-1/6 right-1/3 transform -rotate-20 text-[#232360] text-3xl font-bold opacity-25 animate-pulse">REACH OUT</div>
+                
+                {/* Signal Wave Animation */}
+                <div className="absolute top-1/4 right-1/6">
+                    <div className="relative">
+                        <div className="w-4 h-4 bg-[#232360] rounded-full animate-ping opacity-20"></div>
+                        <div className="absolute inset-0 w-4 h-4 bg-[#232360] rounded-full animate-ping opacity-30" style={{animationDelay: '0.5s'}}></div>
+                        <div className="absolute inset-0 w-4 h-4 bg-[#232360] rounded-full animate-ping opacity-40" style={{animationDelay: '1s'}}></div>
+                    </div>
+                </div>
+                
+                {/* Additional Animated Elements */}
+                <div className="absolute top-16 right-1/3 w-8 h-8 bg-gradient-to-r from-[#B13BFF] to-[#471396] rounded-full animate-bounce opacity-20"></div>
+                <div className="absolute bottom-16 left-1/2 w-6 h-6 bg-gradient-to-r from-[#471396] to-[#232360] transform rotate-45 animate-pulse opacity-20"></div>
+                <div className="absolute top-3/5 right-1/4 w-10 h-10 bg-gradient-to-r from-[#B13BFF] to-[#471396] rounded-full animate-float-slow opacity-15"></div>
+                <div className="absolute bottom-2/5 left-1/5 w-7 h-7 bg-gradient-to-r from-[#471396] to-[#232360] transform rotate-12 animate-twinkle opacity-20"></div>
+            </div>
+
+            {/* Subtle Animated Background Pattern */}
+            <div className="absolute inset-0 opacity-3">
+                <div className="absolute inset-0 animate-pulse" style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23232360' fill-opacity='0.1'%3E%3Ccircle cx='50' cy='50' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                    backgroundSize: '100px 100px',
+                    animation: 'patternMove 30s linear infinite'
+                }}></div>
+            </div>
+
             {/* Hero Section */}
-            <div className="bg-gradient-to-r from-[#090040] via-[#471396] to-[#B13BFF] py-20">
+            <div className="relative z-10 bg-white py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-5xl font-black text-white mb-6">
-                        Get In <span className="text-yellow-300">Touch</span>
+                    <h1 className="text-5xl font-black text-[#232360] mb-6">
+                        Get In <span className="bg-gradient-to-r from-[#B13BFF] to-[#471396] bg-clip-text text-transparent">Touch</span>
                     </h1>
-                    <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                    <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
                         Have questions about events? Want to organize something special? 
                         We&apos;re here to help make your event dreams come true!
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <div className="flex items-center gap-2 text-white/80">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex items-center gap-2 text-gray-700">
+                            <svg className="w-5 h-5 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
                             <span>24/7 Support</span>
                         </div>
-                        <div className="flex items-center gap-2 text-white/80">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex items-center gap-2 text-gray-700">
+                            <svg className="w-5 h-5 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                             <span>Quick Response</span>
                         </div>
-                        <div className="flex items-center gap-2 text-white/80">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex items-center gap-2 text-gray-700">
+                            <svg className="w-5 h-5 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
@@ -79,7 +142,7 @@ const Contact = () => {
             </div>
 
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Contact Form */}
                     <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
@@ -326,7 +389,7 @@ const Contact = () => {
             </div>
 
             {/* Map Section */}
-            <div className="bg-white py-16">
+            <div className="relative z-10 bg-white py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl font-bold text-[#090040] mb-4">Find Us on Map</h2>
@@ -461,15 +524,15 @@ const Contact = () => {
             </div>
 
             {/* Bottom CTA */}
-            <div className="bg-gradient-to-r from-[#090040] via-[#471396] to-[#B13BFF] py-16">
+            <div className="relative z-10 bg-white py-16">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-3xl font-bold text-white mb-4">Ready to Create Amazing Events?</h2>
-                    <p className="text-xl text-white/90 mb-8">Join thousands of event organizers who trust TickFest</p>
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-[#232360] to-[#471396] bg-clip-text text-transparent mb-4">Ready to Create Amazing Events?</h2>
+                    <p className="text-xl text-gray-600 mb-8">Join thousands of event organizers who trust TickFest</p>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <button className="px-8 py-3 bg-white text-[#471396] rounded-xl font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
+                        <button className="px-8 py-3 bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white rounded-xl font-bold hover:from-[#471396] hover:to-[#B13BFF] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                             Start Organizing
                         </button>
-                        <button className="px-8 py-3 border-2 border-white text-white rounded-xl font-bold hover:bg-white hover:text-[#471396] transition-all duration-300 transform hover:scale-105">
+                        <button className="px-8 py-3 border-2 border-[#B13BFF] text-[#471396] rounded-xl font-bold hover:bg-[#B13BFF] hover:text-white transition-all duration-300 transform hover:scale-105">
                             Browse Events
                         </button>
                     </div>

@@ -26,7 +26,7 @@ import UserTypeRedirect from "../components/UserTypeRedirect";
 import PrivateRoute from "../components/PrivateRoute";
 import OrganizerDashboard from "../layouts/OrganizerDashboard";
 import OrganizerHome from "../components/Pages/OrganizerDashboard/OrganizerHome";
-import Activities from "../components/Pages/Activities";
+import AboutUs from "../components/Pages/AboutUs";
 
 
 export const router = createBrowserRouter([
@@ -68,8 +68,8 @@ export const router = createBrowserRouter([
         element: <Contact></Contact>
       },
       {
-        path: "/activities",
-        element: <Activities></Activities>
+        path: "/about-us",
+        element: <AboutUs></AboutUs>
       },
       {
         path: "/dashboard",
