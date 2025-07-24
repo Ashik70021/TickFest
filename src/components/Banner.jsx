@@ -219,8 +219,8 @@ const Banner = () => {
                         </div>
                     </div>
 
-                    {/* Advanced Search Card */}
-                    <div className="max-w-6xl mx-auto">
+                    {/* Advanced Search Card - Hidden on Mobile */}
+                    <div className="max-w-6xl mx-auto hidden md:block">
                         <div className="bg-gradient-to-br from-white/95 to-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-10 border border-[#B13BFF]/20 relative overflow-hidden">
                             {/* Background decoration */}
                             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#B13BFF]/10 to-[#471396]/10 rounded-full -translate-y-16 translate-x-16"></div>
