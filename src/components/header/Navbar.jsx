@@ -89,14 +89,14 @@ const Navbar = () => {
                 ) : userType === 'organizer' ? (
                     <Link to="/organizerdashboard" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
                         <FaTachometerAlt className="text-[#B13BFF]" />
-                        <span>Dashboard</span>
+                        <span>Organizer Dashboard</span>
                     </Link>
-                ) : (
-                    <Link to="/admindashboard/adminhome" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
+                ) : userType === 'admin' ? (
+                    <Link to="/admindashboard" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
                         <FaTachometerAlt className="text-[#B13BFF]" />
                         <span>Admin Dashboard</span>
                     </Link>
-                )}
+                ) : null}
                 
                 {/* Common Menu Items */}
                 <Link to="/my-tickets" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
