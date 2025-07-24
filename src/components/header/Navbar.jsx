@@ -162,7 +162,7 @@ const Navbar = () => {
                         </div>
                     ) : (
                         <Link to="/signin">
-                            <button type="button" className="group relative px-8 py-3 font-bold rounded-2xl bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white shadow-lg hover:shadow-[#B13BFF]/40 transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                            <button type="button" className="group relative px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base font-bold rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white shadow-lg hover:shadow-[#B13BFF]/40 transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
                                 <div className="absolute inset-0 bg-gradient-to-r from-[#471396] to-[#B13BFF] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                 <span className="relative">Sign In</span>
                             </button>
