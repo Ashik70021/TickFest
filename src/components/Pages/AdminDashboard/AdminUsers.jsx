@@ -8,9 +8,16 @@ const AdminUsers = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    
+    // Modal states
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [showViewModal, setShowViewModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [editingUser, setEditingUser] = useState(null);
 
     // API Base URL from environment with fallback
-    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     // Fetch users from database
     useEffect(() => {
@@ -34,7 +41,7 @@ const AdminUsers = () => {
                     name: user.Name || user.displayName || user.name || 'N/A',
                     email: user.Email || user.email || 'N/A',
                     phone: user.Phone || user.phone || 'N/A',
-                    role: user.User_Type || user.role || 'user', // Default to 'user'
+                    role: user.User_Type || user.userType || user.role || 'user', // Default to 'user'
                     status: user.Status || user.status || 'Active',
                     joinDate: user.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A',
                     lastLogin: user.last_login ? new Date(user.last_login).toLocaleString() : 'N/A',
@@ -72,61 +79,7 @@ const AdminUsers = () => {
                 }
                 
                 setError(errorMessage);
-                
-                // For development: Add some mock data as fallback
-                const mockUsers = [
-                    {
-                        id: 'mock-1',
-                        name: 'John Doe',
-                        email: 'john@example.com',
-                        phone: '+1234567890',
-                        role: 'user',
-                        status: 'Active',
-                        joinDate: new Date().toLocaleDateString(),
-                        lastLogin: 'Never',
-                        eventsAttended: 3,
-                        totalSpent: '450 BDT',
-                        eventsCreated: 0,
-                        totalEarned: '0 BDT',
-                        eventsManaged: 0,
-                        avatar: 'https://ui-avatars.com/api/?name=John%20Doe&background=B13BFF&color=fff'
-                    },
-                    {
-                        id: 'mock-2',
-                        name: 'Jane Smith',
-                        email: 'jane@example.com',
-                        phone: '+1234567891',
-                        role: 'organizer',
-                        status: 'Active',
-                        joinDate: new Date().toLocaleDateString(),
-                        lastLogin: '2 hours ago',
-                        eventsAttended: 1,
-                        totalSpent: '150 BDT',
-                        eventsCreated: 5,
-                        totalEarned: '2500 BDT',
-                        eventsManaged: 0,
-                        avatar: 'https://ui-avatars.com/api/?name=Jane%20Smith&background=B13BFF&color=fff'
-                    },
-                    {
-                        id: 'mock-3',
-                        name: 'Admin User',
-                        email: 'admin@example.com',
-                        phone: '+1234567892',
-                        role: 'admin',
-                        status: 'Active',
-                        joinDate: new Date().toLocaleDateString(),
-                        lastLogin: '1 hour ago',
-                        eventsAttended: 0,
-                        totalSpent: '0 BDT',
-                        eventsCreated: 0,
-                        totalEarned: '0 BDT',
-                        eventsManaged: 15,
-                        avatar: 'https://ui-avatars.com/api/?name=Admin%20User&background=B13BFF&color=fff'
-                    }
-                ];
-                
-                console.log('Using mock data due to API error');
-                setUsers(mockUsers);
+                setUsers([]);  // Set empty array instead of mock data
             } finally {
                 setLoading(false);
             }
@@ -151,22 +104,41 @@ const AdminUsers = () => {
     const organizers = users.filter(u => u.role === 'organizer').length;
     const customers = users.filter(u => u.role === 'user').length;
 
-    // Handle user role update
-    const handleRoleUpdate = async (userId, newRole) => {
+    // Handle user edit
+    const handleEditUser = (user) => {
+        setEditingUser({ ...user });
+        setShowEditModal(true);
+    };
+
+    // Handle user view
+    const handleViewUser = (user) => {
+        setSelectedUser(user);
+        setShowViewModal(true);
+    };
+
+    // Handle user delete
+    const handleDeleteUser = (user) => {
+        setSelectedUser(user);
+        setShowDeleteModal(true);
+    };
+
+    // Save edited user
+    const handleSaveEdit = async () => {
         try {
-            console.log('=== Role Update Debug Info ===');
-            console.log('User ID:', userId);
-            console.log('New Role:', newRole);
-            console.log('API URL:', `${API_BASE_URL}/index.php/api/users/update-role`);
+            console.log('=== User Update Debug Info ===');
+            console.log('Editing User:', editingUser);
             
             const requestBody = {
-                uid: userId,
-                User_Type: newRole
+                Name: editingUser.name,
+                Email: editingUser.email,
+                Phone: editingUser.phone,
+                User_Type: editingUser.role,
+                Status: editingUser.status
             };
             console.log('Request body:', requestBody);
             
-            const response = await fetch(`${API_BASE_URL}/index.php/api/users/update-role`, {
-                method: 'POST',
+            const response = await fetch(`${API_BASE_URL}/user_api.php/user/${editingUser.id}`, {
+                method: 'PUT',
                 headers: { 
                     'Content-Type': 'application/json' 
                 },
@@ -174,10 +146,6 @@ const AdminUsers = () => {
             });
 
             console.log('Response status:', response.status);
-            console.log('Response ok:', response.ok);
-            console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-
-            // Read response text first to debug
             const responseText = await response.text();
             console.log('Raw response:', responseText);
 
@@ -189,49 +157,76 @@ const AdminUsers = () => {
                 throw new Error(`Server returned invalid JSON: ${responseText}`);
             }
 
-            console.log('Parsed response data:', data);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}, message: ${data?.message || responseText}`);
+            }
+
+            if (data.success === true || data.status === 'success' || response.status === 200) {
+                console.log('✅ User update successful');
+                
+                // Update local state
+                setUsers(prevUsers => 
+                    prevUsers.map(user => 
+                        user.id === editingUser.id ? editingUser : user
+                    )
+                );
+                
+                setShowEditModal(false);
+                setEditingUser(null);
+                alert('User updated successfully!');
+            } else {
+                throw new Error(data.message || data.error || 'Failed to update user');
+            }
+        } catch (err) {
+            console.error('Error updating user:', err);
+            alert(`Failed to update user: ${err.message}`);
+        }
+    };
+
+    // Confirm delete user
+    const handleConfirmDelete = async () => {
+        try {
+            console.log('=== User Delete Debug Info ===');
+            console.log('Deleting User:', selectedUser);
+            
+            const response = await fetch(`${API_BASE_URL}/user_api.php/user/${selectedUser.id}`, {
+                method: 'DELETE',
+                headers: { 
+                    'Content-Type': 'application/json' 
+                }
+            });
+
+            console.log('Response status:', response.status);
+            const responseText = await response.text();
+            console.log('Raw response:', responseText);
+
+            let data;
+            try {
+                data = JSON.parse(responseText);
+            } catch (parseError) {
+                console.error('Failed to parse response as JSON:', parseError);
+                throw new Error(`Server returned invalid JSON: ${responseText}`);
+            }
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}, message: ${data?.message || responseText}`);
             }
 
-            // Check for successful response patterns
-            if (data.success === true || 
-                data.status === 'success' || 
-                (data.message && data.message.toLowerCase().includes('success')) ||
-                response.status === 200) {
+            if (data.success === true || data.status === 'success' || response.status === 200) {
+                console.log('✅ User delete successful');
                 
-                console.log('✅ Role update successful');
+                // Remove user from local state
+                setUsers(prevUsers => prevUsers.filter(user => user.id !== selectedUser.id));
                 
-                // Update local state
-                setUsers(prevUsers => 
-                    prevUsers.map(user => 
-                        user.id === userId ? { ...user, role: newRole } : user
-                    )
-                );
-                alert('User role updated successfully!');
+                setShowDeleteModal(false);
+                setSelectedUser(null);
+                alert('User deleted successfully!');
             } else {
-                console.log('❌ Role update failed based on response data');
-                throw new Error(data.message || data.error || 'Failed to update role - unexpected response format');
+                throw new Error(data.message || data.error || 'Failed to delete user');
             }
         } catch (err) {
-            console.error('=== Role Update Error ===');
-            console.error('Error type:', err.constructor.name);
-            console.error('Error message:', err.message);
-            console.error('Full error:', err);
-            
-            let userMessage = 'Failed to update user role';
-            if (err.message.includes('NetworkError') || err.message.includes('fetch')) {
-                userMessage += ': Network connection failed. Please check your server.';
-            } else if (err.message.includes('HTTP error')) {
-                userMessage += `: Server error (${err.message})`;
-            } else if (err.message.includes('invalid JSON')) {
-                userMessage += ': Server returned invalid response format.';
-            } else {
-                userMessage += `: ${err.message}`;
-            }
-            
-            alert(userMessage + ' Please try again.');
+            console.error('Error deleting user:', err);
+            alert(`Failed to delete user: ${err.message}`);
         }
     };
 
@@ -265,21 +260,12 @@ const AdminUsers = () => {
                             <p className="text-yellow-700">Environment: {import.meta.env.MODE}</p>
                         </div>
                         
-                        <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                        <div className="flex justify-center">
                             <button 
                                 onClick={() => window.location.reload()} 
                                 className="bg-[#471396] text-white px-4 py-2 rounded-lg hover:bg-[#B13BFF] transition-colors"
                             >
                                 Retry
-                            </button>
-                            <button 
-                                onClick={() => {
-                                    setError(null);
-                                    setLoading(false);
-                                }} 
-                                className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
-                            >
-                                Continue with Mock Data
                             </button>
                         </div>
                     </div>
@@ -474,21 +460,13 @@ const AdminUsers = () => {
                                             <div className="text-gray-500">{user.phone}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="flex items-center">
-                                                <select
-                                                    value={user.role}
-                                                    onChange={(e) => handleRoleUpdate(user.id, e.target.value)}
-                                                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#B13BFF] ${
-                                                        user.role === 'admin' ? 'bg-red-500/20 text-red-400 border-red-500/30' :
-                                                        user.role === 'organizer' ? 'bg-[#471396]/20 text-[#B13BFF] border-[#B13BFF]/30' :
-                                                        'bg-blue-500/20 text-blue-400 border-blue-500/30'
-                                                    }`}
-                                                >
-                                                    <option value="user">User</option>
-                                                    <option value="organizer">Organizer</option>
-                                                    <option value="admin">Admin</option>
-                                                </select>
-                                            </div>
+                                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
+                                                user.role === 'Admin' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
+                                                user.role === 'Organizer' ? 'bg-[#471396]/20 text-[#B13BFF] border border-[#B13BFF]/30' :
+                                                'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                                            }`}>
+                                                {user.role}
+                                            </span>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${user.status === 'Active' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'}`}>
@@ -519,18 +497,30 @@ const AdminUsers = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div className="flex items-center justify-end space-x-2">
-                                                <button className="bg-[#471396] hover:bg-[#B13BFF] text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105">
+                                                <button 
+                                                    onClick={() => handleEditUser(user)}
+                                                    className="bg-[#471396] hover:bg-[#B13BFF] text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105"
+                                                    title="Edit User"
+                                                >
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                                     </svg>
                                                 </button>
-                                                <button className="bg-blue-500/20 hover:bg-blue-500 text-blue-400 hover:text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 border border-blue-500/30">
+                                                <button 
+                                                    onClick={() => handleViewUser(user)}
+                                                    className="bg-blue-500/20 hover:bg-blue-500 text-blue-400 hover:text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 border border-blue-500/30"
+                                                    title="View User Details"
+                                                >
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                     </svg>
                                                 </button>
-                                                <button className="bg-red-500/20 hover:bg-red-500 text-red-400 hover:text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 border border-red-500/30">
+                                                <button 
+                                                    onClick={() => handleDeleteUser(user)}
+                                                    className="bg-red-500/20 hover:bg-red-500 text-red-400 hover:text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 border border-red-500/30"
+                                                    title="Delete User"
+                                                >
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                     </svg>
@@ -555,6 +545,150 @@ const AdminUsers = () => {
                     </div>
                 )}
             </div>
+
+            {/* Edit User Modal */}
+            {showEditModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md">
+                        <h3 className="text-xl font-bold text-white mb-4">Edit User</h3>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-1">Name</label>
+                                <input
+                                    type="text"
+                                    value={editingUser?.name || ''}
+                                    onChange={(e) => setEditingUser({...editingUser, name: e.target.value})}
+                                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                                <input
+                                    type="email"
+                                    value={editingUser?.email || ''}
+                                    onChange={(e) => setEditingUser({...editingUser, email: e.target.value})}
+                                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-1">Phone</label>
+                                <input
+                                    type="text"
+                                    value={editingUser?.phone || ''}
+                                    onChange={(e) => setEditingUser({...editingUser, phone: e.target.value})}
+                                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-1">Status</label>
+                                <select
+                                    value={editingUser?.status || ''}
+                                    onChange={(e) => setEditingUser({...editingUser, status: e.target.value})}
+                                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                >
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-1">User Type</label>
+                                <select
+                                    value={editingUser?.role || ''}
+                                    onChange={(e) => setEditingUser({...editingUser, role: e.target.value})}
+                                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                >
+                                    <option value="user">User</option>
+                                    <option value="organizer">Organizer</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="flex justify-end space-x-3 mt-6">
+                            <button
+                                onClick={() => setShowEditModal(false)}
+                                className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleSaveEdit}
+                                className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+                            >
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* View User Modal */}
+            {showViewModal && selectedUser && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md">
+                        <h3 className="text-xl font-bold text-white mb-4">User Details</h3>
+                        <div className="space-y-3">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300">Name</label>
+                                <p className="text-white">{selectedUser.name}</p>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300">Email</label>
+                                <p className="text-white">{selectedUser.email}</p>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300">User Type</label>
+                                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                    selectedUser.user_type === 'admin' 
+                                        ? 'bg-red-100 text-red-800' 
+                                        : selectedUser.user_type === 'organizer'
+                                        ? 'bg-blue-100 text-blue-800'
+                                        : 'bg-green-100 text-green-800'
+                                }`}>
+                                    {selectedUser.user_type}
+                                </span>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300">Created At</label>
+                                <p className="text-white">{selectedUser.created_at ? new Date(selectedUser.created_at).toLocaleDateString() : 'N/A'}</p>
+                            </div>
+                        </div>
+                        <div className="flex justify-end mt-6">
+                            <button
+                                onClick={() => setShowViewModal(false)}
+                                className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete Confirmation Modal */}
+            {showDeleteModal && selectedUser && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md">
+                        <h3 className="text-xl font-bold text-white mb-4">Confirm Delete</h3>
+                        <p className="text-gray-300 mb-6">
+                            Are you sure you want to delete user <strong>{selectedUser.name}</strong>? This action cannot be undone.
+                        </p>
+                        <div className="flex justify-end space-x-3">
+                            <button
+                                onClick={() => setShowDeleteModal(false)}
+                                className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleConfirmDelete}
+                                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                            >
+                                Delete User
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
