@@ -20,8 +20,10 @@ import ErrorBoundary from "../components/common/ErrorBoundary";
 import AdminAnalytics from "../components/Pages/AdminDashboard/AdminAnalytics";
 import Contact from "../components/Pages/Contact";
 import UserProfile from "../components/Pages/UserDashboard/UserProfile";
+import Unauthorized from "../components/Pages/Unauthorized";
+import UserTypeRedirect from "../components/UserTypeRedirect";
 
-import PrivateRoute from "../components/common/PrivateRoute";
+import PrivateRoute from "../components/PrivateRoute";
 import OrganizerDashboard from "../layouts/OrganizerDashboard";
 import OrganizerHome from "../components/Pages/OrganizerDashboard/OrganizerHome";
 import AboutUs from "../components/Pages/AboutUs";
@@ -70,20 +72,32 @@ export const router = createBrowserRouter([
         element: <AboutUs></AboutUs>
       },
       {
-        path: "/profile",
+        path: "/dashboard",
         element: (
           <PrivateRoute>
+            <UserTypeRedirect />
+          </PrivateRoute>
+        )
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute requiredUserType="user">
             <UserProfile />
           </PrivateRoute>
         )
       },
+      {
+        path: "/unauthorized",
+        element: <Unauthorized />
+      },
     ],
   },
-  // Admin dashboard
+  // Admin dashboard - Only accessible by admin users
   {
     path: "admindashboard",
     element: (
-      <PrivateRoute>
+      <PrivateRoute requiredUserType="admin">
         <AdminDashboard />
       </PrivateRoute>
     ),
@@ -134,11 +148,11 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  // Organizer dashboard
+  // Organizer dashboard - Only accessible by organizer users
   {
     path: "organizerdashboard",
     element: (
-      <PrivateRoute>
+      <PrivateRoute requiredUserType="organizer">
         <OrganizerDashboard />
       </PrivateRoute>
     ),
