@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const VenueMap = ({ venue, venueAddress, coordinates }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -75,6 +76,14 @@ const VenueMap = ({ venue, venueAddress, coordinates }) => {
       </div>
     </div>
   );
+};
+VenueMap.propTypes = {
+  venue: PropTypes.string,
+  venueAddress: PropTypes.string,
+  coordinates: PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+  }),
 };
 
 export default VenueMap;
