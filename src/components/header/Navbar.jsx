@@ -135,7 +135,7 @@ const Navbar = () => {
                             {link}
                         </ul>
                     </div>
-                    <a className="text-3xl md:text-5xl font-black pl-2 md:pl-4 bg-gradient-to-r from-[#B13BFF] via-white to-[#B13BFF] bg-clip-text text-transparent hover:from-white hover:to-[#B13BFF] transition-all duration-500 cursor-pointer">
+                    <a className="text-3xl md:text-5xl font-black pl-2 md:pl-4 bg-gradient-to-r from-[#B13BFF] via-white to-[#B13BFF] bg-clip-text text-transparent hover:from-white hover:to-[#B13BFF] transition-all duration-500 cursor-pointer" href="/">
                         tick<span className="text-[#B13BFF]">Fest</span>
                     </a>
                 </div>
