@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { AuthContext } from "../../../Providers/AuthProvider";
 
 const MyEvents = () => {
@@ -23,8 +24,40 @@ const MyEvents = () => {
 
         setEvents(userEvents);
         setLoading(false);
+        toast.success("Events loaded successfully!", {
+          style: {
+            background: "linear-gradient(90deg, #B13BFF 0%, #471396 100%)",
+            color: "#fff",
+            padding: "16px",
+            borderRadius: "12px",
+            fontSize: "14px",
+            fontWeight: "600",
+            boxShadow: "0 10px 25px rgba(177, 59, 255, 0.3)",
+          },
+          iconTheme: {
+            primary: "#fff",
+            secondary: "#B13BFF",
+          },
+          duration: 3000,
+        });
       } catch (error) {
         console.error("Error fetching events:", error);
+        toast.error("Failed to load events. Please try again.", {
+          style: {
+            background: "linear-gradient(90deg, #ff4757 0%, #c44569 100%)",
+            color: "#fff",
+            padding: "16px",
+            borderRadius: "12px",
+            fontSize: "14px",
+            fontWeight: "600",
+            boxShadow: "0 10px 25px rgba(255, 71, 87, 0.3)",
+          },
+          iconTheme: {
+            primary: "#fff",
+            secondary: "#ff4757",
+          },
+          duration: 4000,
+        });
         setLoading(false);
       }
     };
@@ -173,10 +206,46 @@ const MyEvents = () => {
             </div>
 
             <div className="flex gap-2 mt-4">
-              <button className="flex-1 bg-gradient-to-r from-[#B13BFF]/20 to-[#471396]/20 text-[#471396] py-2 px-4 rounded-xl font-semibold hover:from-[#B13BFF]/30 hover:to-[#471396]/30 transition-all duration-300 text-sm">
+              <button
+                onClick={() =>
+                  toast("📊 Analytics page coming soon!", {
+                    icon: "🚀",
+                    style: {
+                      background:
+                        "linear-gradient(90deg, #74b9ff 0%, #0984e3 100%)",
+                      color: "#fff",
+                      padding: "16px",
+                      borderRadius: "12px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      boxShadow: "0 10px 25px rgba(116, 185, 255, 0.3)",
+                    },
+                    duration: 2500,
+                  })
+                }
+                className="flex-1 bg-gradient-to-r from-[#B13BFF]/20 to-[#471396]/20 text-[#471396] py-2 px-4 rounded-xl font-semibold hover:from-[#B13BFF]/30 hover:to-[#471396]/30 transition-all duration-300 text-sm"
+              >
                 📊 Analytics
               </button>
-              <button className="flex-1 bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white py-2 px-4 rounded-xl font-semibold hover:from-[#471396] hover:to-[#B13BFF] transition-all duration-300 text-sm">
+              <button
+                onClick={() =>
+                  toast("✏️ Edit functionality coming soon!", {
+                    icon: "⚡",
+                    style: {
+                      background:
+                        "linear-gradient(90deg, #B13BFF 0%, #471396 100%)",
+                      color: "#fff",
+                      padding: "16px",
+                      borderRadius: "12px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      boxShadow: "0 10px 25px rgba(177, 59, 255, 0.3)",
+                    },
+                    duration: 2500,
+                  })
+                }
+                className="flex-1 bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white py-2 px-4 rounded-xl font-semibold hover:from-[#471396] hover:to-[#B13BFF] transition-all duration-300 text-sm"
+              >
                 ✏️ Edit
               </button>
             </div>
@@ -197,6 +266,42 @@ const MyEvents = () => {
           </p>
         </div>
       )}
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 3000,
+          style: {
+            background: "linear-gradient(90deg, #B13BFF 0%, #471396 100%)",
+            color: "#fff",
+            padding: "16px",
+            borderRadius: "12px",
+            fontSize: "14px",
+            fontWeight: "600",
+            boxShadow: "0 10px 25px rgba(177, 59, 255, 0.3)",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+          },
+          // Default options for specific types
+          success: {
+            iconTheme: {
+              primary: "#fff",
+              secondary: "#B13BFF",
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: "#fff",
+              secondary: "#ff4757",
+            },
+          },
+        }}
+      />
     </div>
   );
 };
