@@ -43,29 +43,30 @@ export default function CardList() {
         <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-[#B13BFF]/5 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
       </div>
 
-      <div className="relative z-10 flex flex-col justify-center items-center px-6 md:px-12 py-16">
+      <div className="relative z-10 flex flex-col justify-center items-center px-4 sm:px-6 md:px-12 py-12 sm:py-16">
         {/* Enhanced Header Section */}
-        <div className="text-center mb-20 max-w-4xl">
-          <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#B13BFF]/20 to-[#471396]/20 rounded-full border border-[#B13BFF]/30 mb-8">
-            <span className="text-[#B13BFF] mr-2">🎪</span>
-            <span className="text-[#090040] font-semibold">Featured Events</span>
+        <div className="text-center mb-12 sm:mb-16 md:mb-20 max-w-4xl">
+          <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-[#B13BFF]/20 to-[#471396]/20 rounded-full border border-[#B13BFF]/30 mb-6 sm:mb-8">
+            <span className="text-[#B13BFF] mr-2 text-sm sm:text-base">🎪</span>
+            <span className="text-[#090040] font-semibold text-sm sm:text-base">Featured Events</span>
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-black text-[#090040] mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#090040] mb-4 sm:mb-6 leading-tight">
             <span className="block">Discover</span>
             <span className="block bg-gradient-to-r from-[#471396] to-[#B13BFF] bg-clip-text text-transparent">
               Amazing Events
             </span>
           </h1>
           
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed px-4 sm:px-0">
             From electrifying concerts to inspiring conferences, find the perfect events that match your interests and create unforgettable memories.
           </p>
         </div>
 
-        {/* Enhanced Cards Grid */}
+        {/* Enhanced Cards Grid - Desktop and Mobile Responsive */}
         <div className="w-full max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {/* Desktop Grid (hidden on mobile) */}
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
             {cardItems.map((card, index) => (
               <div
                 key={card.id}
@@ -79,22 +80,70 @@ export default function CardList() {
               </div>
             ))}
           </div>
+
+          {/* Mobile Carousel (visible only on mobile) */}
+          <div className="md:hidden">
+            <div className="relative">
+              {/* Carousel Container */}
+              <div className="overflow-x-auto scrollbar-hide scroll-smooth-x">
+                <div className="flex gap-4 pb-4 px-2" style={{ width: 'max-content' }}>
+                  {cardItems.map((card, index) => (
+                    <div
+                      key={card.id}
+                      className="flex-shrink-0 w-72 sm:w-80 scroll-snap-item animate-fade-in-up"
+                      style={{
+                        animationDelay: `${index * 0.1}s`,
+                        animationFillMode: 'both'
+                      }}
+                    >
+                      <Cards card={card} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Scroll Indicator */}
+              <div className="flex justify-center mt-4 space-x-2">
+                <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full border border-[#B13BFF]/20 shadow-sm">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                  </svg>
+                  <span className="text-xs sm:text-sm text-[#471396] font-medium">Swipe to explore</span>
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 text-[#B13BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Mobile-specific viewing hint */}
+              <div className="flex justify-between items-center mt-4 px-2">
+                <div className="flex items-center gap-2 text-gray-500">
+                  <div className="w-2 h-2 bg-[#B13BFF] rounded-full animate-pulse"></div>
+                  <span className="text-xs">Showing {cardItems.length} featured events</span>
+                </div>
+                <div className="text-xs text-[#471396] font-medium">
+                  {cardItems.length} of 12+
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Enhanced Load More Section */}
-        <div className="mt-20 text-center">
-          <div className="space-y-6">
-            <p className="text-gray-600 font-medium">
+        <div className="mt-16 sm:mt-20 text-center">
+          <div className="space-y-4 sm:space-y-6">
+            <p className="text-gray-600 font-medium text-sm sm:text-base">
               Showing {cardItems.length} of 12+ amazing events
             </p>
             <Link 
               to="/events"
-              className="group relative inline-block bg-gradient-to-r from-[#471396] to-[#B13BFF] hover:from-[#B13BFF] hover:to-[#471396] text-white font-bold px-12 py-4 rounded-2xl shadow-xl hover:shadow-[#B13BFF]/30 transform hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+              className="group relative inline-block bg-gradient-to-r from-[#471396] to-[#B13BFF] hover:from-[#B13BFF] hover:to-[#471396] text-white font-bold px-8 sm:px-10 md:px-12 py-3 sm:py-4 text-sm sm:text-base rounded-xl sm:rounded-2xl shadow-xl hover:shadow-[#B13BFF]/30 transform hover:-translate-y-1 transition-all duration-300 overflow-hidden"
             >
               <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <span className="relative flex items-center justify-center gap-3">
-                Load More Events
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="relative flex items-center justify-center gap-2 sm:gap-3">
+                <span className="hidden sm:inline">Load More Events</span>
+                <span className="sm:hidden">View All Events</span>
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
               </span>

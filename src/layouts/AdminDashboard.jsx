@@ -25,12 +25,12 @@ const AdminDashboard = () => {
         <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
             {/* Enhanced Sidebar */}
             <div className={`fixed md:static z-40 top-0 left-0 h-screen w-72 bg-gradient-to-b from-[#090040] via-[#471396] to-[#B13BFF] text-white shadow-2xl transition-transform transform flex flex-col ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
-                
+
                 {/* Animated background elements */}
                 <div className="absolute inset-0 overflow-hidden">
                     <div className="absolute top-10 left-10 w-20 h-20 bg-white/5 rounded-full animate-pulse"></div>
                     <div className="absolute bottom-20 right-10 w-16 h-16 bg-white/5 rounded-full animate-bounce"></div>
-                    <div className="absolute top-1/2 left-5 w-12 h-12 bg-white/5 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+                    <div className="absolute top-1/2 left-5 w-12 h-12 bg-white/5 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
                 </div>
 
                 {/* Logo/Brand Section */}
@@ -39,10 +39,12 @@ const AdminDashboard = () => {
                         <div className="w-12 h-12 bg-gradient-to-r from-[#B13BFF] to-white rounded-xl flex items-center justify-center">
                             <span className="text-2xl font-black text-[#090040]">T</span>
                         </div>
-                        <div>
-                            <h2 className="text-xl font-black">TickFest</h2>
-                            <p className="text-xs text-white/70">Admin Panel</p>
-                        </div>
+                        <Link to="/">
+                            <div>
+                                <h2 className="text-xl font-black">TickFest</h2>
+                                <p className="text-xs text-white/70">Admin Panel</p>
+                            </div>
+                        </Link>
                     </div>
                 </div>
 
@@ -71,15 +73,13 @@ const AdminDashboard = () => {
                         <Link
                             key={item.path}
                             to={item.path}
-                            className={`group flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 ${
-                                isActive(item.path)
+                            className={`group flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 ${isActive(item.path)
                                     ? "bg-white/20 text-white shadow-lg backdrop-blur-sm border border-white/30"
                                     : "hover:bg-white/10 text-white/80 hover:text-white"
-                            }`}
+                                }`}
                         >
-                            <div className={`text-2xl transition-transform duration-300 group-hover:scale-110 ${
-                                isActive(item.path) ? "animate-bounce" : ""
-                            }`}>
+                            <div className={`text-2xl transition-transform duration-300 group-hover:scale-110 ${isActive(item.path) ? "animate-bounce" : ""
+                                }`}>
                                 {item.icon}
                             </div>
                             <span className="font-semibold text-sm tracking-wide">{item.label}</span>

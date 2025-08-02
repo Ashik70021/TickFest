@@ -18,6 +18,15 @@ import EventDetails from "../components/EventDetails/EventDetails";
 import Checkout from "../components/Checkout/Checkout";
 import ErrorBoundary from "../components/common/ErrorBoundary";
 import AdminAnalytics from "../components/Pages/AdminDashboard/AdminAnalytics";
+import Contact from "../components/Pages/Contact";
+import UserProfile from "../components/Pages/UserDashboard/UserProfile";
+import Unauthorized from "../components/Pages/Unauthorized";
+import UserTypeRedirect from "../components/UserTypeRedirect";
+
+import PrivateRoute from "../components/PrivateRoute";
+import OrganizerDashboard from "../layouts/OrganizerDashboard";
+import OrganizerHome from "../components/Pages/OrganizerDashboard/OrganizerHome";
+import AboutUs from "../components/Pages/AboutUs";
 
 
 export const router = createBrowserRouter([
@@ -41,6 +50,7 @@ export const router = createBrowserRouter([
         path: "/signup",
         element: <Signup></Signup>
       },
+
       {
         path: "/events/:eventId",
         element: (
@@ -53,15 +63,51 @@ export const router = createBrowserRouter([
         path: "/checkout",
         element: <Checkout />
       },
+      {
+        path: "/contact",
+        element: <Contact></Contact>
+      },
+      {
+        path: "/about-us",
+        element: <AboutUs></AboutUs>
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <UserTypeRedirect />
+          </PrivateRoute>
+        )
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute requiredUserType="user">
+            <UserProfile />
+          </PrivateRoute>
+        )
+      },
+      {
+        path: "/unauthorized",
+        element: <Unauthorized />
+      },
     ],
   },
-  // Admin dashboard
+  // Admin dashboard - Only accessible by admin users
   {
     path: "admindashboard",
-    element: <AdminDashboard />,
+    element: (
+      <PrivateRoute requiredUserType="admin">
+        <AdminDashboard />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "adminhome", 
+        element: <AdminDashboardHome />, 
+      },
+      {
+        path: "", 
         element: <AdminDashboardHome />, 
       },
       {
@@ -99,6 +145,25 @@ export const router = createBrowserRouter([
       {
         path: "profile",
         element: <AdminProfile />,
+      },
+    ],
+  },
+  // Organizer dashboard - Only accessible by organizer users
+  {
+    path: "organizerdashboard",
+    element: (
+      <PrivateRoute requiredUserType="organizer">
+        <OrganizerDashboard />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "home", 
+        element: <OrganizerHome />, 
+      },
+      {
+        path: "",
+        element: <OrganizerHome />,
       },
     ],
   },
