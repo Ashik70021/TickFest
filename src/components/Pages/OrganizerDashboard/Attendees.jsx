@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const Attendees = () => {
   const [events, setEvents] = useState([]);
@@ -108,8 +109,40 @@ const Attendees = () => {
 
         setEvents(userEvents);
         setLoading(false);
+        toast.success("Attendee data loaded successfully!", {
+          style: {
+            background: "linear-gradient(90deg, #B13BFF 0%, #471396 100%)",
+            color: "#fff",
+            padding: "16px",
+            borderRadius: "12px",
+            fontSize: "14px",
+            fontWeight: "600",
+            boxShadow: "0 10px 25px rgba(177, 59, 255, 0.3)",
+          },
+          iconTheme: {
+            primary: "#fff",
+            secondary: "#B13BFF",
+          },
+          duration: 3000,
+        });
       } catch (error) {
         console.error("Error fetching events:", error);
+        toast.error("Failed to load events data. Please try again.", {
+          style: {
+            background: "linear-gradient(90deg, #ff4757 0%, #c44569 100%)",
+            color: "#fff",
+            padding: "16px",
+            borderRadius: "12px",
+            fontSize: "14px",
+            fontWeight: "600",
+            boxShadow: "0 10px 25px rgba(255, 71, 87, 0.3)",
+          },
+          iconTheme: {
+            primary: "#fff",
+            secondary: "#ff4757",
+          },
+          duration: 4000,
+        });
         setLoading(false);
       }
     };
@@ -202,6 +235,22 @@ const Attendees = () => {
     a.download = "attendees.csv";
     a.click();
     window.URL.revokeObjectURL(url);
+    toast.success("Attendees data exported successfully!", {
+      style: {
+        background: "linear-gradient(90deg, #00b894 0%, #00a085 100%)",
+        color: "#fff",
+        padding: "16px",
+        borderRadius: "12px",
+        fontSize: "14px",
+        fontWeight: "600",
+        boxShadow: "0 10px 25px rgba(0, 184, 148, 0.3)",
+      },
+      iconTheme: {
+        primary: "#fff",
+        secondary: "#00b894",
+      },
+      duration: 3000,
+    });
   };
 
   if (loading) {
@@ -411,10 +460,48 @@ const Attendees = () => {
                     </td>
                     <td className="py-4 px-4">
                       <div className="flex gap-2">
-                        <button className="text-[#B13BFF] hover:text-[#471396] font-semibold text-xs bg-[#B13BFF]/10 hover:bg-[#B13BFF]/20 px-3 py-1 rounded-lg transition-all duration-300">
+                        <button
+                          onClick={() =>
+                            toast(`👤 Viewing details for ${attendee.name}`, {
+                              icon: "👁️",
+                              style: {
+                                background:
+                                  "linear-gradient(90deg, #74b9ff 0%, #0984e3 100%)",
+                                color: "#fff",
+                                padding: "16px",
+                                borderRadius: "12px",
+                                fontSize: "14px",
+                                fontWeight: "600",
+                                boxShadow:
+                                  "0 10px 25px rgba(116, 185, 255, 0.3)",
+                              },
+                              duration: 2500,
+                            })
+                          }
+                          className="text-[#B13BFF] hover:text-[#471396] font-semibold text-xs bg-[#B13BFF]/10 hover:bg-[#B13BFF]/20 px-3 py-1 rounded-lg transition-all duration-300"
+                        >
                           View
                         </button>
-                        <button className="text-gray-600 hover:text-gray-800 font-semibold text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-lg transition-all duration-300">
+                        <button
+                          onClick={() =>
+                            toast(`📧 Contacting ${attendee.name}`, {
+                              icon: "📞",
+                              style: {
+                                background:
+                                  "linear-gradient(90deg, #fdcb6e 0%, #e17055 100%)",
+                                color: "#fff",
+                                padding: "16px",
+                                borderRadius: "12px",
+                                fontSize: "14px",
+                                fontWeight: "600",
+                                boxShadow:
+                                  "0 10px 25px rgba(253, 203, 110, 0.3)",
+                              },
+                              duration: 2500,
+                            })
+                          }
+                          className="text-gray-600 hover:text-gray-800 font-semibold text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-lg transition-all duration-300"
+                        >
                           Contact
                         </button>
                       </div>
@@ -438,6 +525,42 @@ const Attendees = () => {
           </div>
         )}
       </div>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 3000,
+          style: {
+            background: "linear-gradient(90deg, #B13BFF 0%, #471396 100%)",
+            color: "#fff",
+            padding: "16px",
+            borderRadius: "12px",
+            fontSize: "14px",
+            fontWeight: "600",
+            boxShadow: "0 10px 25px rgba(177, 59, 255, 0.3)",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+          },
+          // Default options for specific types
+          success: {
+            iconTheme: {
+              primary: "#fff",
+              secondary: "#B13BFF",
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: "#fff",
+              secondary: "#ff4757",
+            },
+          },
+        }}
+      />
     </div>
   );
 };

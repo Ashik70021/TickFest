@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const Analytics = () => {
   const [events, setEvents] = useState([]);
@@ -22,8 +23,40 @@ const Analytics = () => {
 
         setEvents(userEvents);
         setLoading(false);
+        toast.success("Analytics data loaded successfully!", {
+          style: {
+            background: "linear-gradient(90deg, #B13BFF 0%, #471396 100%)",
+            color: "#fff",
+            padding: "16px",
+            borderRadius: "12px",
+            fontSize: "14px",
+            fontWeight: "600",
+            boxShadow: "0 10px 25px rgba(177, 59, 255, 0.3)",
+          },
+          iconTheme: {
+            primary: "#fff",
+            secondary: "#B13BFF",
+          },
+          duration: 3000,
+        });
       } catch (error) {
         console.error("Error fetching events:", error);
+        toast.error("Failed to load analytics data. Please try again.", {
+          style: {
+            background: "linear-gradient(90deg, #ff4757 0%, #c44569 100%)",
+            color: "#fff",
+            padding: "16px",
+            borderRadius: "12px",
+            fontSize: "14px",
+            fontWeight: "600",
+            boxShadow: "0 10px 25px rgba(255, 71, 87, 0.3)",
+          },
+          iconTheme: {
+            primary: "#fff",
+            secondary: "#ff4757",
+          },
+          duration: 4000,
+        });
         setLoading(false);
       }
     };
@@ -139,7 +172,25 @@ const Analytics = () => {
               Deep insights into your event performance
             </p>
           </div>
-          <button className="bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white px-6 py-3 rounded-xl font-semibold hover:from-[#471396] hover:to-[#B13BFF] transition-all duration-300 transform hover:scale-105 shadow-lg">
+          <button
+            onClick={() =>
+              toast("📈 Report export functionality coming soon!", {
+                icon: "💾",
+                style: {
+                  background:
+                    "linear-gradient(90deg, #00b894 0%, #00a085 100%)",
+                  color: "#fff",
+                  padding: "16px",
+                  borderRadius: "12px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  boxShadow: "0 10px 25px rgba(0, 184, 148, 0.3)",
+                },
+                duration: 3000,
+              })
+            }
+            className="bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white px-6 py-3 rounded-xl font-semibold hover:from-[#471396] hover:to-[#B13BFF] transition-all duration-300 transform hover:scale-105 shadow-lg"
+          >
             📈 Export Report
           </button>
         </div>
@@ -527,6 +578,42 @@ const Analytics = () => {
           </p>
         </div>
       )}
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 3000,
+          style: {
+            background: "linear-gradient(90deg, #B13BFF 0%, #471396 100%)",
+            color: "#fff",
+            padding: "16px",
+            borderRadius: "12px",
+            fontSize: "14px",
+            fontWeight: "600",
+            boxShadow: "0 10px 25px rgba(177, 59, 255, 0.3)",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+          },
+          // Default options for specific types
+          success: {
+            iconTheme: {
+              primary: "#fff",
+              secondary: "#B13BFF",
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: "#fff",
+              secondary: "#ff4757",
+            },
+          },
+        }}
+      />
     </div>
   );
 };
