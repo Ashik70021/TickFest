@@ -1,11 +1,20 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../../Providers/AuthProvider';
 import { FiEdit3, FiCalendar, FiCreditCard, FiSettings, FiUser, FiMail, FiPhone, FiMapPin, FiDownload, FiEye, FiStar } from 'react-icons/fi';
 
 const UserProfile = () => {
-    const { user } = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
     const [activeTab, setActiveTab] = useState('overview');
     const [isEditing, setIsEditing] = useState(false);
+    
+    // Debug information
+    useEffect(() => {
+        console.log('UserProfile component mounted');
+        console.log('User:', user);
+        console.log('Loading:', loading);
+        console.log('API URL:', import.meta.env.VITE_API_URL);
+    }, [user, loading]);
+    
     const [userInfo, setUserInfo] = useState({
         displayName: user?.displayName || 'John Doe',
         email: user?.email || 'john@example.com',

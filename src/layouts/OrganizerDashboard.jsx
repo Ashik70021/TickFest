@@ -23,12 +23,6 @@ const OrganizerDashboard = () => {
             description: 'Manage Your Events'
         },
         {
-            path: '/organizerdashboard/create-event',
-            icon: '✨',
-            label: 'Create Event',
-            description: 'Add New Event'
-        },
-        {
             path: '/organizerdashboard/tickets',
             icon: '🎫',
             label: 'Ticket Sales',
