@@ -26,6 +26,12 @@ import UserTypeRedirect from "../components/UserTypeRedirect";
 import PrivateRoute from "../components/PrivateRoute";
 import OrganizerDashboard from "../layouts/OrganizerDashboard";
 import OrganizerHome from "../components/Pages/OrganizerDashboard/OrganizerHome";
+import MyEvents from "../components/Pages/OrganizerDashboard/MyEvents";
+import TicketSales from "../components/Pages/OrganizerDashboard/TicketSales";
+import Attendees from "../components/Pages/OrganizerDashboard/Attendees";
+import Revenue from "../components/Pages/OrganizerDashboard/Revenue";
+import Analytics from "../components/Pages/OrganizerDashboard/Analytics";
+import OrganizerProfile from "../components/Pages/OrganizerDashboard/OrganizerProfile";
 import AboutUs from "../components/Pages/AboutUs";
 
 
@@ -164,6 +170,30 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <OrganizerHome />,
+      },
+      {
+        path: "myevents",
+        element: <MyEvents />,
+      },
+      {
+        path: "tickets",
+        element: <TicketSales />,
+      },
+      {
+        path: "attendees",
+        element: <Attendees />,
+      },
+      {
+        path: "revenue",
+        element: <Revenue />,
+      },
+      {
+        path: "analytics",
+        element: <Analytics />,
+      },
+      {
+        path: "profile",
+        element: <OrganizerProfile />,
       },
     ],
   },
