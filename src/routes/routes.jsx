@@ -94,6 +94,10 @@ export const router = createBrowserRouter([
         )
       },
       {
+        path: "/profile-dev",
+        element: <UserProfile />  // Development route without authentication
+      },
+      {
         path: "/unauthorized",
         element: <Unauthorized />
       },
