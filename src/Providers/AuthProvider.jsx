@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../firebase-config/firebase.config";
+import { clearUserTypeCache } from "../utils/userUtils";
 
 
 export const AuthContext = createContext(null);
@@ -40,12 +41,21 @@ const AuthProvider = ({ children }) => {
     // SignOut User
     const logOut = () => {
         setLoading(true);
+        // Clear any cached user type data
+        clearUserTypeCache();
         return signOut(auth);
     }
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
+            console.log('Auth state changed:', currentUser ? currentUser.email : 'No user');
             setUser(currentUser);
-            console.log('Current User', currentUser);
+            
+            // Clear cached user type if user logged out
+            if (!currentUser) {
+                clearUserTypeCache();
+            }
+            
             setLoading(false);
         });
         return () => {

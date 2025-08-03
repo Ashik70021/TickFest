@@ -99,7 +99,7 @@ const Navbar = () => {
                 ) : null}
                 
                 {/* Common Menu Items */}
-                <Link to="/my-tickets" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
+                {/* <Link to="/my-tickets" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
                     <FaTicketAlt className="text-[#B13BFF]" />
                     <span>My Tickets</span>
                 </Link>
@@ -110,7 +110,7 @@ const Navbar = () => {
                 <Link to="/settings" className="flex items-center gap-3 p-3 hover:bg-[#B13BFF]/20 rounded-lg transition-all duration-300">
                     <FaCog className="text-[#B13BFF]" />
                     <span>Settings</span>
-                </Link>
+                </Link> */}
                 
                 <button 
                     onClick={handleSignOut}
@@ -135,7 +135,7 @@ const Navbar = () => {
                             {link}
                         </ul>
                     </div>
-                    <a className="text-3xl md:text-5xl font-black pl-2 md:pl-4 bg-gradient-to-r from-[#B13BFF] via-white to-[#B13BFF] bg-clip-text text-transparent hover:from-white hover:to-[#B13BFF] transition-all duration-500 cursor-pointer">
+                    <a className="text-3xl md:text-5xl font-black pl-2 md:pl-4 bg-gradient-to-r from-[#B13BFF] via-white to-[#B13BFF] bg-clip-text text-transparent hover:from-white hover:to-[#B13BFF] transition-all duration-500 cursor-pointer" href="/">
                         tick<span className="text-[#B13BFF]">Fest</span>
                     </a>
                 </div>
