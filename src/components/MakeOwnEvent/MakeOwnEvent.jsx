@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import TwoPeople from "../../assets/image-6.png";
 
 export default function MakeOwnEvent() {
@@ -140,7 +141,7 @@ export default function MakeOwnEvent() {
 
             {/* Enhanced CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button className="group relative bg-gradient-to-r from-[#B13BFF] via-[#471396] to-[#B13BFF] hover:from-[#471396] hover:via-[#B13BFF] hover:to-[#471396] text-white font-bold py-4 px-8 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-[#B13BFF]/40 overflow-hidden">
+              <button onClick={() => Navigate('/contact')} className="group relative bg-gradient-to-r from-[#B13BFF] via-[#471396] to-[#B13BFF] hover:from-[#471396] hover:via-[#B13BFF] hover:to-[#471396] text-white font-bold py-4 px-8 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-[#B13BFF]/40 overflow-hidden">
                 {/* Button animation overlay */}
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
 
