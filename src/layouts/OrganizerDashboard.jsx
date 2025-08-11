@@ -49,7 +49,7 @@ const OrganizerDashboard = () => {
         {
             path: '/organizerdashboard/profile',
             icon: '⚙️',
-            label: 'Settings',
+            label: 'Profiles',
             description: 'Profile & Preferences'
         }
     ];
@@ -215,15 +215,6 @@ const OrganizerDashboard = () => {
                                     </div>
                                 </button>
                             </div>
-
-                            {/* Quick Create Event Button */}
-                            <Link
-                                to="/organizerdashboard/create-event"
-                                className="bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white px-4 md:px-6 py-3 rounded-xl font-semibold hover:from-[#471396] hover:to-[#B13BFF] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2"
-                            >
-                                <span className="text-lg">✨</span>
-                                <span className="hidden sm:inline">Create Event</span>
-                            </Link>
                         </div>
                     </div>
                 </header>
