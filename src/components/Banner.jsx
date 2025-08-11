@@ -208,7 +208,7 @@ const Banner = () => {
                                     </svg>
                                 </span>
                             </button>
-                            <button className="group relative bg-gradient-to-r from-[#090040] to-[#471396] backdrop-blur-sm text-white font-bold px-10 py-5 rounded-2xl border-2 border-[#B13BFF]/50 hover:border-[#B13BFF] hover:bg-gradient-to-r hover:from-[#471396] hover:to-[#B13BFF] transform hover:-translate-y-2 transition-all duration-500 shadow-xl hover:shadow-[#471396]/40">
+                            <button onClick={() => navigate('/contact')} className="group relative bg-gradient-to-r from-[#090040] to-[#471396] backdrop-blur-sm text-white font-bold px-10 py-5 rounded-2xl border-2 border-[#B13BFF]/50 hover:border-[#B13BFF] hover:bg-gradient-to-r hover:from-[#471396] hover:to-[#B13BFF] transform hover:-translate-y-2 transition-all duration-500 shadow-xl hover:shadow-[#471396]/40">
                                 <span className="relative flex items-center justify-center gap-3 text-lg">
                                     🚀 Create Event
                                     <svg className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

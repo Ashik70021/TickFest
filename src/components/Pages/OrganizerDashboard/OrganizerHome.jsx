@@ -1,17 +1,25 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../../Providers/AuthProvider';
 
 const OrganizerHome = () => {
     const { user } = useContext(AuthContext);
+    const [revealedCards, setRevealedCards] = useState({});
 
     // Mock data - replace with real API calls
     const stats = {
         totalEvents: 12,
         activeEvents: 5,
         totalTicketsSold: 1247,
-        totalRevenue: '₹89,450',
-        thisMonthRevenue: '₹23,600',
-        pendingPayouts: '₹15,200'
+        totalRevenue: '৳89,450',
+        thisMonthRevenue: '৳23,600',
+        pendingPayouts: '৳615,200'
+    };
+
+    const toggleCardReveal = (cardId) => {
+        setRevealedCards(prev => ({
+            ...prev,
+            [cardId]: !prev[cardId]
+        }));
     };
 
     const recentEvents = [
@@ -21,7 +29,7 @@ const OrganizerHome = () => {
             date: '2025-02-15',
             status: 'Active',
             ticketsSold: 156,
-            revenue: '₹23,400',
+            revenue: '৳23,400',
             image: '/api/placeholder/80/80'
         },
         {
@@ -30,7 +38,7 @@ const OrganizerHome = () => {
             date: '2025-03-20',
             status: 'Planning',
             ticketsSold: 89,
-            revenue: '₹12,650',
+            revenue: '৳12,650',
             image: '/api/placeholder/80/80'
         },
         {
@@ -39,7 +47,7 @@ const OrganizerHome = () => {
             date: '2025-01-30',
             status: 'Completed',
             ticketsSold: 234,
-            revenue: '₹18,720',
+            revenue: '৳18,720',
             image: '/api/placeholder/80/80'
         }
     ];
@@ -86,10 +94,10 @@ const OrganizerHome = () => {
                     </div>
                     <div className="flex flex-col sm:flex-row gap-3">
                         <button className="bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold hover:from-[#471396] hover:to-[#B13BFF] transition-all duration-300 transform hover:scale-105 shadow-lg text-sm md:text-base">
-                            ✨ Create New Event
+                            📊 View Analytics
                         </button>
                         <button className="border border-[#B13BFF] text-[#B13BFF] px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold hover:bg-[#B13BFF] hover:text-white transition-all duration-300 text-sm md:text-base">
-                            📊 View Analytics
+                            🎭 My Events
                         </button>
                     </div>
                 </div>
@@ -130,37 +138,64 @@ const OrganizerHome = () => {
                     <p className="text-sm text-gray-600 font-medium">Tickets Sold</p>
                 </div>
 
-                <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-4 md:p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                <div 
+                    className="bg-white/80 backdrop-blur-lg rounded-2xl p-4 md:p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+                    onClick={() => toggleCardReveal('totalRevenue')}
+                >
                     <div className="flex items-center justify-between mb-3">
                         <div className="w-10 h-10 bg-yellow-100 rounded-xl flex items-center justify-center">
                             <span className="text-xl">💰</span>
                         </div>
                         <span className="text-xs text-yellow-600 font-semibold bg-yellow-100 px-2 py-1 rounded-full">+15%</span>
                     </div>
-                    <p className="text-2xl md:text-3xl font-black text-gray-800">{stats.totalRevenue}</p>
-                    <p className="text-sm text-gray-600 font-medium">Total Revenue</p>
+                    <p className={`text-2xl md:text-3xl font-black text-gray-800 transition-all duration-300 ${
+                        revealedCards.totalRevenue ? '' : 'filter blur-sm'
+                    }`}>
+                        {stats.totalRevenue}
+                    </p>
+                    <p className="text-sm text-gray-600 font-medium">
+                        Total Revenue {!revealedCards.totalRevenue && '(Click to reveal)'}
+                    </p>
                 </div>
 
-                <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-4 md:p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                <div 
+                    className="bg-white/80 backdrop-blur-3xl rounded-2xl p-4 md:p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+                    onClick={() => toggleCardReveal('thisMonthRevenue')}
+                >
                     <div className="flex items-center justify-between mb-3">
                         <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center">
                             <span className="text-xl">📈</span>
                         </div>
                         <span className="text-xs text-indigo-600 font-semibold bg-indigo-100 px-2 py-1 rounded-full">This Month</span>
                     </div>
-                    <p className="text-2xl md:text-3xl font-black text-gray-800">{stats.thisMonthRevenue}</p>
-                    <p className="text-sm text-gray-600 font-medium">Month Revenue</p>
+                    <p className={`text-2xl md:text-3xl font-black text-gray-800 transition-all duration-300 ${
+                        revealedCards.thisMonthRevenue ? '' : 'filter blur-sm'
+                    }`}>
+                        {stats.thisMonthRevenue}
+                    </p>
+                    <p className="text-sm text-gray-600 font-medium">
+                        Month Revenue {!revealedCards.thisMonthRevenue && '(Click to reveal)'}
+                    </p>
                 </div>
 
-                <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-4 md:p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                <div 
+                    className="bg-white/80 backdrop-blur-lg rounded-2xl p-4 md:p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+                    onClick={() => toggleCardReveal('pendingPayouts')}
+                >
                     <div className="flex items-center justify-between mb-3">
                         <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
                             <span className="text-xl">⏳</span>
                         </div>
                         <span className="text-xs text-orange-600 font-semibold bg-orange-100 px-2 py-1 rounded-full">Pending</span>
                     </div>
-                    <p className="text-2xl md:text-3xl font-black text-gray-800">{stats.pendingPayouts}</p>
-                    <p className="text-sm text-gray-600 font-medium">Pending Payouts</p>
+                    <p className={`text-2xl md:text-3xl font-black text-gray-800 transition-all duration-300 ${
+                        revealedCards.pendingPayouts ? '' : 'filter blur-sm'
+                    }`}>
+                        {stats.pendingPayouts}
+                    </p>
+                    <p className="text-sm text-gray-600 font-medium">
+                        Pending Payouts {!revealedCards.pendingPayouts && '(Click to reveal)'}
+                    </p>
                 </div>
             </div>
 
@@ -231,14 +266,7 @@ const OrganizerHome = () => {
             {/* Quick Actions */}
             <div className="bg-white/80 backdrop-blur-lg rounded-3xl p-6 shadow-xl border border-white/20">
                 <h3 className="text-xl font-black text-gray-800 mb-6">Quick Actions</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-                    <button className="flex flex-col items-center gap-3 p-4 bg-gradient-to-r from-[#B13BFF]/10 to-[#471396]/10 rounded-2xl hover:from-[#B13BFF]/20 hover:to-[#471396]/20 transition-all duration-300 transform hover:scale-105 border border-[#B13BFF]/20">
-                        <div className="w-12 h-12 bg-gradient-to-r from-[#B13BFF] to-[#471396] rounded-xl flex items-center justify-center">
-                            <span className="text-white text-xl">✨</span>
-                        </div>
-                        <span className="text-sm font-semibold text-gray-800 text-center">Create Event</span>
-                    </button>
-                    
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
                     <button className="flex flex-col items-center gap-3 p-4 bg-blue-50 rounded-2xl hover:bg-blue-100 transition-all duration-300 transform hover:scale-105">
                         <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
                             <span className="text-white text-xl">📊</span>
@@ -271,7 +299,7 @@ const OrganizerHome = () => {
                         <div className="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center">
                             <span className="text-white text-xl">⚙️</span>
                         </div>
-                        <span className="text-sm font-semibold text-gray-800 text-center">Settings</span>
+                        <span className="text-sm font-semibold text-gray-800 text-center">Profile</span>
                     </button>
                 </div>
             </div>
