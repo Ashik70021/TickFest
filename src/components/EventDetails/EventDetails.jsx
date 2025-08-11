@@ -28,9 +28,8 @@ export default function EventDetails() {
         }
 
         setEvent(eventData);
-        if (eventData.ticketTypes && eventData.ticketTypes.length > 0) {
-          setSelectedTicket(eventData.ticketTypes[0]);
-        }
+        // Remove auto-selection of first ticket
+        // Let user select a ticket explicitly
       } catch (err) {
         setError(err.message);
       } finally {
@@ -87,7 +86,10 @@ export default function EventDetails() {
   };
 
   const handleBookNow = () => {
-    if (!selectedTicket) return;
+    if (!selectedTicket) {
+      alert("Please select a ticket type first.");
+      return;
+    }
 
     const bookingData = {
       event: event,
@@ -141,7 +143,6 @@ export default function EventDetails() {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#090040]/60 to-[#B13BFF]/40"></div>
 
         {/* Event Header Info */}
         <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -530,6 +531,9 @@ export default function EventDetails() {
                     ৳{selectedTicket ? selectedTicket.price * quantity : 0}
                   </span>
                 </div>
+                {!selectedTicket && (
+                  <p className="text-sm text-gray-600 mt-2 text-center">Please select a ticket type above</p>
+                )}
               </div>
 
               {/* Book Button */}
@@ -538,7 +542,8 @@ export default function EventDetails() {
                 disabled={!selectedTicket || selectedTicket.availability === 'sold-out'}
                 className="w-full bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white font-bold py-4 px-6 rounded-2xl hover:from-[#471396] hover:to-[#B13BFF] transition-all duration-300 transform hover:scale-105 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
-                {selectedTicket?.availability === 'sold-out' ? 'Sold Out' : 'Book Now'}
+                {!selectedTicket ? 'Select a Ticket' : 
+                 selectedTicket.availability === 'sold-out' ? 'Sold Out' : 'Book Now'}
               </button>
 
               {/* Security Info */}
