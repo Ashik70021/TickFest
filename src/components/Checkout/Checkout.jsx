@@ -25,6 +25,25 @@ export default function Checkout() {
     );
   }
 
+  const handlePayment = () => {
+    // Generate the ticket URL using environment variable (simplified - no database required)
+    const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost/tickfest';
+    const ticketType = bookingData.ticket?.name || 'VIP'; // Use selected ticket type or default to VIP
+    const quantity = bookingData.quantity || 1;
+    
+    const ticketUrl = `${baseUrl}/ticket_generator.php?action=generate_ticket&ticket_type=${encodeURIComponent(ticketType)}&quantity=${quantity}`;
+    
+    // Show success message
+    alert('🎉 Payment successful! Your ticket is being generated and will download automatically.');
+    
+    window.open(ticketUrl, '_blank');
+    
+    setTimeout(() => {
+      localStorage.removeItem('bookingData');
+      navigate('/');
+    }, 2000);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4">
@@ -67,6 +86,9 @@ export default function Checkout() {
                     </div>
                   </div>
                 </div>
+                
+                {/* Demo User Info */}
+                
               </div>
 
               {/* Payment Form */}
@@ -77,14 +99,11 @@ export default function Checkout() {
                   
                   <div className="space-y-4">
                     <button 
-                      onClick={() => {
-                        alert('Payment successful! This is a demo.');
-                        localStorage.removeItem('bookingData');
-                        navigate('/');
-                      }}
-                      className="w-full bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white font-bold py-4 px-6 rounded-2xl hover:from-[#471396] hover:to-[#B13BFF] transition-all duration-300"
+                      onClick={handlePayment}
+                      className="w-full bg-gradient-to-r from-[#B13BFF] to-[#471396] text-white font-bold py-4 px-6 rounded-2xl hover:from-[#471396] hover:to-[#B13BFF] transition-all duration-300 flex items-center justify-center gap-2"
                     >
-                      Complete Payment - ৳{bookingData.total}
+                      <span>🎫</span>
+                      Complete Payment & Get Ticket - ৳{bookingData.total}
                     </button>
                     
                     <button 
